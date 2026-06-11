@@ -184,6 +184,7 @@ function Menu() {
 
 function Gallery() {
   const [visible, setVisible] = useState(false);
+  const [lightbox, setLightbox] = useState<number | null>(null);
   const ref = useRef<HTMLElement>(null);
   useEffect(() => {
     const el = ref.current;
@@ -193,6 +194,17 @@ function Gallery() {
     return () => obs.disconnect();
   }, []);
 
+  useEffect(() => {
+    if (lightbox === null) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLightbox(null);
+      if (e.key === "ArrowLeft") setLightbox((prev) => (prev !== null ? (prev - 1 + GALLERY.length) % GALLERY.length : null));
+      if (e.key === "ArrowRight") setLightbox((prev) => (prev !== null ? (prev + 1) % GALLERY.length : null));
+    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [lightbox]);
+
   return (
     <section className="section" id="galeria" ref={ref}>
       <div className="container">
@@ -200,12 +212,22 @@ function Gallery() {
         <h2 className="section-title">Ambiente y cocina</h2>
         <div className="gallery-grid">
           {GALLERY.map((img, i) => (
-            <div key={i} className={`gallery-item fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: `${i * 0.08}s` }}>
+            <div key={i} className={`gallery-item fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: `${i * 0.08}s` }} onClick={() => setLightbox(i)}>
               <img src={img.src} alt={img.alt} loading="lazy" className="gallery-img" />
+              <div className="gallery-overlay"><span>Ampliar</span></div>
             </div>
           ))}
         </div>
       </div>
+
+      {lightbox !== null && (
+        <div className="lightbox" onClick={() => setLightbox(null)}>
+          <button className="lightbox-close" onClick={() => setLightbox(null)} aria-label="Cerrar">&times;</button>
+          <button className="lightbox-nav lightbox-prev" onClick={(e) => { e.stopPropagation(); setLightbox((lightbox - 1 + GALLERY.length) % GALLERY.length); }} aria-label="Anterior">&#8249;</button>
+          <button className="lightbox-nav lightbox-next" onClick={(e) => { e.stopPropagation(); setLightbox((lightbox + 1) % GALLERY.length); }} aria-label="Siguiente">&#8250;</button>
+          <img src={GALLERY[lightbox].src} alt={GALLERY[lightbox].alt} className="lightbox-img" onClick={(e) => e.stopPropagation()} />
+        </div>
+      )}
     </section>
   );
 }
