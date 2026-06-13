@@ -290,10 +290,29 @@ function Reviews() {
 }
 
 function Reservation() {
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const [booked, setBooked] = useState<string[]>(() => {
+    try { return JSON.parse(localStorage.getItem("dichoso_bookings") || "[]"); }
+    catch { return []; }
+  });
+
+  const isBooked = (t: string) => booked.includes(`${date}|${t}`);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const key = `${date}|${time}`;
+    if (booked.includes(key)) { alert("Esa hora ya está reservada. Elige otra."); return; }
+    const updated = [...booked, key];
+    setBooked(updated);
+    localStorage.setItem("dichoso_bookings", JSON.stringify(updated));
     alert("Reserva recibida. Le contactaremos para confirmar. También puede llamarnos al 664 24 32 80.");
   };
+
+  const times = [
+    { group: "Almuerzo", slots: ["13:00","13:30","14:00","14:30","15:00","15:30"] },
+    { group: "Cena",     slots: ["20:00","20:30","21:00","21:30","22:00"] },
+  ];
 
   return (
     <section className="section" id="reservas">
@@ -304,27 +323,26 @@ function Reservation() {
           <div className="form-row">
             <div className="form-group">
               <label className="form-label">Fecha</label>
-              <input type="date" className="form-input" required />
+              <input type="date" className="form-input" required value={date} onChange={(e) => { setDate(e.target.value); setTime(""); }} />
             </div>
             <div className="form-group">
               <label className="form-label">Hora</label>
-              <select className="form-input" required defaultValue="">
+              <select className="form-input" required value={time} onChange={(e) => setTime(e.target.value)}>
                 <option value="" disabled>Seleccionar</option>
-                <optgroup label="Almuerzo">
-                  <option>13:00</option><option>13:30</option>
-                  <option>14:00</option><option>14:30</option>
-                  <option>15:00</option><option>15:30</option>
-                </optgroup>
-                <optgroup label="Cena">
-                  <option>20:00</option><option>20:30</option>
-                  <option>21:00</option><option>21:30</option>
-                  <option>22:00</option>
-                </optgroup>
+                {times.map((g) => (
+                  <optgroup key={g.group} label={g.group}>
+                    {g.slots.map((t) => (
+                      <option key={t} value={t} disabled={!!date && isBooked(t)}>
+                        {t}{date && isBooked(t) ? " — reservada" : ""}
+                      </option>
+                    ))}
+                  </optgroup>
+                ))}
               </select>
             </div>
             <div className="form-group">
               <label className="form-label">Personas</label>
-              <select className="form-input" required defaultValue="">
+              <select className="form-input" required>
                 <option value="" disabled>N.º</option>
                 {[1,2,3,4,5,6,7,8,9,10].map(n => (
                   <option key={n}>{n}</option>
