@@ -340,11 +340,6 @@ function Reservation() {
 
     setSending(false);
     setDone(true);
-
-    const cleanPhone = phone.replace(/[^0-9]/g, "");
-    const waNumber = cleanPhone.startsWith("34") ? cleanPhone : `34${cleanPhone}`;
-    const text = `🍽️ Reserva confirmada en Dichoso\n\n${name}, su mesa está lista:\n📅 ${date}\n⏰ ${time}\n👥 ${persons} personas${note ? `\n📝 ${note}` : ""}\n\n📍 Av. de los Descubrimientos, 11, Mairena\n📞 664 24 32 80\n\n¡Gracias por confiar en nosotros!`;
-    setTimeout(() => window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`, "_blank"), 500);
   };
 
   const times = [
