@@ -309,26 +309,38 @@ function Reservation() {
     e.preventDefault();
     const key = `${date}|${time}`;
     if (booked.includes(key)) return;
-
     const updated = [...booked, key];
     setBooked(updated);
     localStorage.setItem("dichoso_bookings", JSON.stringify(updated));
 
     const cleanPhone = phone.replace(/[^0-9]/g, "");
     const waNumber = cleanPhone.startsWith("34") ? cleanPhone : `34${cleanPhone}`;
-
     const text = `🍽️ Reserva confirmada en Dichoso\n\n${name}, su mesa está lista:\n📅 ${date}\n⏰ ${time}\n👥 ${persons} personas${note ? `\n📝 ${note}` : ""}\n\n📍 Av. de los Descubrimientos, 11, Mairena\n📞 664 24 32 80\n\n¡Gracias por confiar en nosotros!`;
-    window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`, "_blank");
+    window.location.href = `https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`;
 
     setDone(true);
-    setTimeout(() => setDone(false), 2500);
-    setDate(""); setTime(""); setName(""); setPhone(""); setPersons(""); setNote("");
   };
 
   const times = [
     { group: "Almuerzo", slots: ["13:00","13:30","14:00","14:30","15:00","15:30"] },
     { group: "Cena",     slots: ["20:00","20:30","21:00","21:30","22:00"] },
   ];
+
+  if (done) {
+    return (
+      <section className="section" id="reservas">
+        <div className="container container-narrow">
+          <p className="section-eyebrow">Reservas</p>
+          <h2 className="section-title">Reserve su mesa</h2>
+          <div className="reservation-done">
+            <span className="reservation-done-icon">✓</span>
+            <p className="reservation-done-text">Reserva confirmada.<br />Recibirás un WhatsApp con la información.</p>
+            <a href={`tel:+34${PHONE}`} className="btn btn-gold">Llamar · 664 24 32 80</a>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="section" id="reservas">
@@ -382,8 +394,8 @@ function Reservation() {
             <textarea className="form-input form-textarea" value={note} onChange={(e) => setNote(e.target.value)} placeholder="Alergias, celebraciones, preferencias..." />
           </div>
           <div className="form-actions">
-            <button type="submit" className={`btn btn-lg ${done ? "btn-ok" : (time && isBooked(time) ? "btn-disabled" : "btn-gold")}`} disabled={!date || !time || !name || !phone || !persons || isBooked(time)}>
-              {done ? "✓ Reservado" : (time && isBooked(time) ? "No disponible" : "Confirmar reserva")}
+            <button type="submit" className={`btn btn-lg ${time && isBooked(time) ? "btn-disabled" : "btn-gold"}`} disabled={!date || !time || !name || !phone || !persons || isBooked(time)}>
+              {time && isBooked(time) ? "No disponible" : "Confirmar reserva"}
             </button>
             <a href={`tel:+34${PHONE}`} className="btn btn-outline btn-lg">
               Llamar · 664 24 32 80
