@@ -292,6 +292,12 @@ function Reviews() {
 function Reservation() {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [persons, setPersons] = useState("");
+  const [note, setNote] = useState("");
+  const [msg, setMsg] = useState<{ text: string; ok: boolean } | null>(null);
+
   const [booked, setBooked] = useState<string[]>(() => {
     try { return JSON.parse(localStorage.getItem("dichoso_bookings") || "[]"); }
     catch { return []; }
@@ -299,14 +305,28 @@ function Reservation() {
 
   const isBooked = (t: string) => booked.includes(`${date}|${t}`);
 
+  useEffect(() => {
+    if (!msg) return;
+    const t = setTimeout(() => setMsg(null), 5000);
+    return () => clearTimeout(t);
+  }, [msg]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const key = `${date}|${time}`;
-    if (booked.includes(key)) { alert("Esa hora ya está reservada. Elige otra."); return; }
+    if (booked.includes(key)) {
+      setMsg({ text: "Esa hora ya está reservada. Elige otra.", ok: false });
+      return;
+    }
     const updated = [...booked, key];
     setBooked(updated);
     localStorage.setItem("dichoso_bookings", JSON.stringify(updated));
-    alert("Reserva recibida. Le contactaremos para confirmar. También puede llamarnos al 664 24 32 80.");
+
+    const text = `Hola ${name}, su reserva en Dichoso ha sido confirmada:\n📅 ${date}\n⏰ ${time}\n👥 ${persons} personas${note ? `\n📝 ${note}` : ""}\n\nGracias por confiar en nosotros.`;
+    window.open(`https://wa.me/34${PHONE}?text=${encodeURIComponent(text)}`, "_blank");
+
+    setMsg({ text: "Reserva confirmada. Te enviamos los detalles por WhatsApp.", ok: true });
+    setDate(""); setTime(""); setName(""); setPhone(""); setPersons(""); setNote("");
   };
 
   const times = [
@@ -319,6 +339,9 @@ function Reservation() {
       <div className="container container-narrow">
         <p className="section-eyebrow">Reservas</p>
         <h2 className="section-title">Reserve su mesa</h2>
+
+        {msg && <div className={`form-msg ${msg.ok ? "ok" : "err"}`}>{msg.text}</div>}
+
         <form className="form" onSubmit={handleSubmit}>
           <div className="form-row">
             <div className="form-group">
@@ -342,10 +365,10 @@ function Reservation() {
             </div>
             <div className="form-group">
               <label className="form-label">Personas</label>
-              <select className="form-input" required>
+              <select className="form-input" required value={persons} onChange={(e) => setPersons(e.target.value)}>
                 <option value="" disabled>N.º</option>
                 {[1,2,3,4,5,6,7,8,9,10].map(n => (
-                  <option key={n}>{n}</option>
+                  <option key={n} value={n}>{n}</option>
                 ))}
               </select>
             </div>
@@ -353,19 +376,19 @@ function Reservation() {
           <div className="form-row">
             <div className="form-group">
               <label className="form-label">Nombre</label>
-              <input type="text" className="form-input" placeholder="Su nombre" required />
+              <input type="text" className="form-input" required value={name} onChange={(e) => setName(e.target.value)} placeholder="Su nombre" />
             </div>
             <div className="form-group">
               <label className="form-label">Teléfono</label>
-              <input type="tel" className="form-input" placeholder="600 000 000" required />
+              <input type="tel" className="form-input" required value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="600 000 000" />
             </div>
           </div>
           <div className="form-group">
             <label className="form-label">Comentarios</label>
-            <textarea className="form-input form-textarea" placeholder="Alergias, celebraciones, preferencias..." />
+            <textarea className="form-input form-textarea" value={note} onChange={(e) => setNote(e.target.value)} placeholder="Alergias, celebraciones, preferencias..." />
           </div>
           <div className="form-actions">
-            <button type="submit" className="btn btn-gold btn-lg">
+            <button type="submit" className="btn btn-gold btn-lg" disabled={!date || !time || !name || !phone || !persons}>
               Confirmar reserva
             </button>
             <a href={`tel:+34${PHONE}`} className="btn btn-outline btn-lg">
