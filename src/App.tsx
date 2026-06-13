@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import "./App.css";
 import { db } from "./firebase";
-import { collection, addDoc, onSnapshot, query, where } from "firebase/firestore";
+import { collection, doc, setDoc, onSnapshot, query, where, runTransaction } from "firebase/firestore";
 
 /* ── Data ──────────────────────────────────────── */
 const PHONE = "664243280";
@@ -301,10 +301,11 @@ function Reservation() {
   const [done, setDone] = useState(false);
   const [booked, setBooked] = useState<string[]>([]);
   const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (!date) { setBooked([]); return; }
-    const q = query(collection(db, "bookings"), where("date", "==", date));
+    const q = query(collection(db, "slots"), where("date", "==", date));
     const unsub = onSnapshot(q, (snap) => {
       setBooked(snap.docs.map((d) => d.data().time));
     });
@@ -315,21 +316,37 @@ function Reservation() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (booked.includes(time)) return;
+    setError("");
     setSending(true);
 
-    await addDoc(collection(db, "bookings"), {
-      date, time, name, phone, persons, note,
-      createdAt: new Date().toISOString(),
-    });
+    try {
+      const slotId = `${date}_${time}`;
+      await runTransaction(db, async (transaction) => {
+        const ref = doc(db, "slots", slotId);
+        const snap = await transaction.get(ref);
+        if (snap.exists()) throw new Error("ocupado");
+        transaction.set(ref, {
+          date, time, name, phone, persons, note,
+          createdAt: new Date().toISOString(),
+        });
+      });
 
-    const cleanPhone = phone.replace(/[^0-9]/g, "");
-    const waNumber = cleanPhone.startsWith("34") ? cleanPhone : `34${cleanPhone}`;
-    const text = `🍽️ Reserva confirmada en Dichoso\n\n${name}, su mesa está lista:\n📅 ${date}\n⏰ ${time}\n👥 ${persons} personas${note ? `\n📝 ${note}` : ""}\n\n📍 Av. de los Descubrimientos, 11, Mairena\n📞 664 24 32 80\n\n¡Gracias por confiar en nosotros!`;
-    window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`, "_blank");
+      const cleanPhone = phone.replace(/[^0-9]/g, "");
+      const waNumber = cleanPhone.startsWith("34") ? cleanPhone : `34${cleanPhone}`;
+      const text = `🍽️ Reserva confirmada en Dichoso\n\n${name}, su mesa está lista:\n📅 ${date}\n⏰ ${time}\n👥 ${persons} personas${note ? `\n📝 ${note}` : ""}\n\n📍 Av. de los Descubrimientos, 11, Mairena\n📞 664 24 32 80\n\n¡Gracias por confiar en nosotros!`;
+      window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`, "_blank");
 
-    setSending(false);
-    setDone(true);
+      setSending(false);
+      setDone(true);
+    } catch (err: unknown) {
+      setSending(false);
+      const msg = err instanceof Error ? err.message : "";
+      if (msg === "ocupado") {
+        setError("Este horario acaba de ser reservado por otra persona.");
+      } else {
+        setError("Error al reservar. Inténtalo de nuevo o llámanos.");
+      }
+    }
   };
 
   const times = [
@@ -358,6 +375,8 @@ function Reservation() {
       <div className="container container-narrow">
         <p className="section-eyebrow">Reservas</p>
         <h2 className="section-title">Reserve su mesa</h2>
+
+        {error && <div className="form-msg err">{error}</div>}
 
         <form className="form" onSubmit={handleSubmit}>
           <div className="form-row">
