@@ -647,8 +647,188 @@
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
-/* ── Mantel Scroll Section overrides ─────────── */
-.bg-surface { background-color: #FAF7F2; }
+/* ── Mantel Section ──────────────────────────── */
+.mantel-section {
+  position: relative;
+  overflow: hidden;
+  padding: 5rem 0;
+  background-color: #C9AA7A;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.16), transparent 28%),
+    radial-gradient(circle at 80% 70%, rgba(78,53,37,0.10), transparent 30%),
+    linear-gradient(105deg, rgba(255,255,255,0.10) 0%, transparent 18%, rgba(78,53,37,0.08) 35%, transparent 55%, rgba(255,255,255,0.08) 75%, transparent 100%),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,0.045) 0px,
+      rgba(255,255,255,0.045) 1px,
+      transparent 1px,
+      transparent 14px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(78,53,37,0.035) 0px,
+      rgba(78,53,37,0.035) 1px,
+      transparent 1px,
+      transparent 16px
+    );
+}
+.mantel-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg,
+      transparent 0%,
+      rgba(255,255,255,0.11) 18%,
+      transparent 30%,
+      rgba(78,53,37,0.08) 48%,
+      transparent 62%,
+      rgba(255,255,255,0.09) 78%,
+      transparent 100%
+    );
+  opacity: 0.75;
+}
+.mantel-inner {
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  z-index: 1;
+}
+.mantel-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+.mantel-eyebrow {
+  font-family: "Roboto Condensed", sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #FAF7F2;
+  opacity: 0.8;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.mantel-title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  color: #FAF7F2;
+  font-weight: 400;
+  line-height: 1.15;
+  margin-bottom: 0.5rem;
+}
+.mantel-desc {
+  font-family: "Roboto Condensed", sans-serif;
+  font-size: 0.85rem;
+  color: #FAF7F2;
+  opacity: 0.7;
+  max-width: 480px;
+  margin: 0 auto;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+}
+.mantel-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+.mantel-card {
+  background: rgba(250, 247, 242, 0.94);
+  border: 1px solid #D9CDBE;
+  box-shadow: 0 16px 40px rgba(78, 53, 37, 0.08);
+  backdrop-filter: blur(6px);
+}
+.mantel-card-body {
+  padding: 1.5rem 1.75rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.mantel-card-dark {
+  background: #6B4B34;
+  border: 1px solid rgba(184,145,104,0.2);
+}
+.mantel-card-icon {
+  width: 20px;
+  height: 20px;
+  color: #B89168;
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+.mantel-card-dark .mantel-card-icon {
+  color: #B89168;
+}
+.mantel-card-label {
+  font-family: "Roboto Condensed", sans-serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #B89168;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+.mantel-card-title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: #4E3525;
+  line-height: 1.25;
+  margin-bottom: 0.35rem;
+}
+.mantel-card-text {
+  font-family: "Roboto Condensed", sans-serif;
+  font-size: 0.8rem;
+  color: #7A6553;
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+}
+.mantel-btn {
+  display: inline-block;
+  padding: 0.55rem 1.25rem;
+  background: #4E3525;
+  color: #FAF7F2;
+  font-family: "Roboto Condensed", sans-serif;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: filter 0.25s, transform 0.2s;
+  cursor: pointer;
+  border: none;
+}
+.mantel-btn:hover {
+  filter: brightness(1.15);
+  transform: translateY(-1px);
+}
+.mantel-btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.mantel-btn-outline {
+  display: inline-block;
+  padding: 0.55rem 1.25rem;
+  border: 1px solid #B89168;
+  color: #B89168;
+  background: transparent;
+  font-family: "Roboto Condensed", sans-serif;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.25s, color 0.25s, transform 0.2s;
+  cursor: pointer;
+}
+.mantel-btn-outline:hover {
+  background: #B89168;
+  color: #FAF7F2;
+  transform: translateY(-1px);
+}
 
 /* ── Responsive ──────────────────────────────── */
 @media (max-width: 768px) {
@@ -662,6 +842,11 @@
   .map-wrapper  { height: 260px; }
   .especiales-grid { grid-template-columns: repeat(2, 1fr); }
   .reviews-grid { grid-template-columns: 1fr; }
+  .mantel-section { padding: 3.5rem 0; }
+  .mantel-cards { grid-template-columns: 1fr; gap: 1rem; }
+  .mantel-header { margin-bottom: 2.5rem; }
+  .mantel-card-body { padding: 1.25rem 1.5rem; }
+  .mantel-card-title { font-size: 1.05rem; }
 }
 @media (max-width: 480px) {
   .especiales-grid { grid-template-columns: 1fr; }
