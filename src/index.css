@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #FAF7F2;
-  --color-surface: #F1E9DD;
-  --color-primary: #6B4B34;
-  --color-accent: #B89168;
-  --color-brown: #6B4B34;
-  --color-text: #4E3525;
-  --color-border: #D9CDBE;
+  --color-background: #F5E8D8;
+  --color-surface: #E8DCC8;
+  --color-primary: #C8A97E;
+  --color-accent: #C8A97E;
+  --color-brown: #6B4423;
+  --color-text: #6B4423;
+  --color-border: #C8A97E;
 
-  --font-serif: "Cormorant Garamond", Georgia, serif;
-  --font-sans: "Roboto Condensed", sans-serif;
-  --font-cursive: "Pinyon Script", cursive;
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans: "Sora", sans-serif;
+  --font-cursive: "Alex Brush", cursive;
 }
 
 *, *::before, *::after {
@@ -21,15 +21,15 @@
 }
 
 :root {
-  --bg: #FAF7F2;
-  --bg-card: #F1E9DD;
-  --gold: #6B4B34;
-  --gold-dim: #4E3525;
-  --cream: #4E3525;
-  --muted: #7A6553;
-  --border: #D9CDBE;
-  --accent: #B89168;
-  --white: #FAF7F2;
+  --bg: #F5E8D8;
+  --bg-card: #E8DCC8;
+  --gold: #6B4423;
+  --gold-dim: #6B4423;
+  --cream: #6B4423;
+  --muted: #8B7D6B;
+  --border: #C8A97E;
+  --accent: #C8A97E;
+  --white: #F5E8D8;
 }
 
 html {
