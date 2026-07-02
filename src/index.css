@@ -1,3 +1,19 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #FAF7F2;
+  --color-surface: #F1E9DD;
+  --color-primary: #6B4B34;
+  --color-accent: #B89168;
+  --color-brown: #6B4B34;
+  --color-text: #4E3525;
+  --color-border: #D9CDBE;
+
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Roboto Condensed", sans-serif;
+  --font-cursive: "Pinyon Script", cursive;
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import { supabase } from "./supabase";
+import ScrollMantelSection from "./components/ScrollMantelSection";
 
 /* ── Data ──────────────────────────────────────── */
 const PHONE = "664243280";
@@ -98,15 +99,6 @@ const ESPECIALES = [
   { name: "Croquetas", desc: "Elige tu variedad favorita", price: "5€" },
 ];
 
-const GALLERY = [
-  { src: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=600&fit=crop", alt: "Interior del restaurante" },
-  { src: "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&h=600&fit=crop", alt: "Ambiente del restaurante" },
-  { src: "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=800&h=600&fit=crop", alt: "Cocina abierta" },
-  { src: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&h=600&fit=crop", alt: "Plato estrella" },
-  { src: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=600&fit=crop", alt: "Decoración de plato" },
-  { src: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=800&h=600&fit=crop", alt: "Comida y copas" },
-];
-
 const REVIEWS = [
   { text: "Tapas muy ricas, cerveza helada y camareros muy amables.", author: "Cliente Google" },
   { text: "Lo que más me ha gustado han sido los arroces y las croquetas de setas.", author: "Cliente Google" },
@@ -144,7 +136,7 @@ function Hero() {
 
   return (
     <section className="hero" id="hero">
-      <div className="hero-overlay" />
+      <div className="hero-watermark">Dichoso</div>
       <div className="hero-content">
         <p className={`hero-eyebrow fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.2s" }}>Mairena del Aljarafe · Sevilla</p>
         <h1 className={`hero-title fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.4s" }}>
@@ -154,33 +146,28 @@ function Hero() {
         <p className={`hero-subtitle fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.6s" }}>
           Cocina contemporánea, producto cuidado y una experiencia gastronómica diferente.
         </p>
+        <p className={`hero-slogan fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.7s" }}>
+          Dichoso el día que entraste por aquí
+        </p>
         <div className={`hero-actions fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.8s" }}>
           <button
-            className="btn btn-outline"
+            className="btn btn-gold"
             onClick={() => document.getElementById("carta")?.scrollIntoView({ behavior: "smooth" })}
           >
             Ver carta
           </button>
           <button
-            className="btn btn-gold"
+            className="btn btn-outline"
             onClick={() => document.getElementById("reservas")?.scrollIntoView({ behavior: "smooth" })}
           >
             Reservar mesa
           </button>
-          <a href={`tel:+34${PHONE}`} className="btn btn-ghost">Llamar</a>
-          <a href={MAPS_URL} target="_blank" rel="noreferrer" className="btn btn-ghost">
-            Cómo llegar
-          </a>
         </div>
       </div>
-      <button
-        className="scroll-indicator"
-        onClick={() => document.getElementById("nosotros")?.scrollIntoView({ behavior: "smooth" })}
-        aria-label="Desplazar hacia abajo"
-      >
-        <span className="scroll-label">Descubrir</span>
-        <span className="scroll-arrow">↓</span>
-      </button>
+      <div className="hero-scroll-line">
+        <span className="hero-scroll-text">Desliza</span>
+        <span className="hero-scroll-bar" />
+      </div>
     </section>
   );
 }
@@ -216,24 +203,34 @@ function About() {
 }
 
 function Menu() {
+  const [catIndex, setCatIndex] = useState(0);
+  const current = MENU_DATA[catIndex];
+
   return (
     <section className="section" id="carta">
-      <div className="container">
+      <div className="container container-narrow">
         <div className="carta-intro">
           <h2 className="carta-logo">Dichoso</h2>
           <p className="carta-subtitle">Tapas y arroces</p>
+          <p className="carta-slogan">Dichoso el día que entraste por aquí</p>
         </div>
-        <div className="carta-grid">
-          {MENU_DATA.map((cat) => (
-            <div key={cat.title} className="carta-block">
-              <h3 className="carta-block-title">{cat.title}</h3>
-              {cat.items.map((item) => (
-                <div key={item.name} className="carta-row">
-                  <span className="carta-name">{item.name}</span>
-                  <span className="carta-dots" />
-                  <span className="carta-price">{item.price}</span>
-                </div>
-              ))}
+        <div className="carta-tabs">
+          {MENU_DATA.map((cat, i) => (
+            <button
+              key={cat.title}
+              className={`carta-tab ${i === catIndex ? "active" : ""}`}
+              onClick={() => setCatIndex(i)}
+            >
+              {cat.title}
+            </button>
+          ))}
+        </div>
+        <div className="carta-list" key={catIndex}>
+          {current.items.map((item, i) => (
+            <div key={item.name} className="carta-item" style={{ animationDelay: `${i * 0.08}s` }}>
+              <span className="carta-item-name">{item.name}</span>
+              <span className="carta-item-dots" />
+              <span className="carta-item-price">{item.price}</span>
             </div>
           ))}
         </div>
@@ -267,13 +264,18 @@ function Especiales() {
   );
 }
 
-function Gallery() {
+function MantelSection() {
+  return <ScrollMantelSection />;
+}
+
+function SloganSection() {
   return (
-    <section className="section" id="galeria">
-      <div className="container">
-        <p className="section-eyebrow">Galería</p>
-        <h2 className="section-title">Ambiente y cocina</h2>
-        <p className="gallery-note">Próximamente podrás ver aquí nuestras instalaciones y platos.</p>
+    <section className="slogan-section">
+      <div className="container container-narrow">
+        <p className="slogan-text" style={{ fontFamily: "'Pinyon Script', serif" }}>
+          Dichoso el día que entraste por aquí
+        </p>
+        <p className="slogan-sub">Una experiencia gastronómica para recordar</p>
       </div>
     </section>
   );
@@ -527,7 +529,8 @@ export default function App() {
         <About />
         <Menu />
         <Especiales />
-        <Gallery />
+        <MantelSection />
+        <SloganSection />
         <Reviews />
         <Reservation />
         <Location />
