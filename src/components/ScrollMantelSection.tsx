@@ -1,42 +1,40 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
-import { BookOpen, UtensilsCrossed, Heart, Phone, ChevronLeft, ChevronRight } from 'lucide-react';
+import { BookOpen, UtensilsCrossed, Heart, Phone } from 'lucide-react';
 
-const rows = [
+const desktopRows = [
   {
-    label: 'Qué ofrecemos',
-    title: 'Tapas, arroces y producto',
+    label: 'Qué ofrecemos', title: 'Tapas, arroces y producto',
     text: 'Una carta pensada para compartir: entrantes, fritos, platos del mar, arroces en paella y postres caseros con una mirada contemporánea.',
-    icon: BookOpen,
-    visualFirst: true,
+    icon: BookOpen, visualFirst: true,
     btn: { label: 'Ver carta', href: '#carta' },
   },
   {
-    label: 'Nuestra carta',
-    title: 'Sabores que sorprenden',
+    label: 'Nuestra carta', title: 'Sabores que sorprenden',
     text: 'Desde unas croquetas cremosas hasta arroces con personalidad, Dichoso combina cocina cercana, producto cuidado y platos con carácter.',
-    icon: UtensilsCrossed,
-    visualFirst: false,
+    icon: UtensilsCrossed, visualFirst: false,
     btn: { label: 'Ver carta', href: '#carta' },
   },
   {
-    label: 'Especiales Dichoso',
-    title: 'Los imprescindibles',
+    label: 'Especiales Dichoso', title: 'Los imprescindibles',
     text: 'Navajas, berberechos, tortilla, sándwich de cecina, arroces, tarta de queso y torrija: platos pensados para volver.',
-    icon: Heart,
-    visualFirst: true,
+    icon: Heart, visualFirst: true,
     btn: { label: 'Ver especiales', href: '#especiales' },
   },
   {
-    label: 'Reserva y ven',
-    title: 'Dichoso el día que entraste por aquí',
+    label: 'Reserva y ven', title: 'Dichoso el día que entraste por aquí',
     text: 'Reserva tu mesa en Mairena del Aljarafe y disfruta de una experiencia cálida, honesta y diferente.',
-    icon: Phone,
-    visualFirst: false,
-    isDark: true,
+    icon: Phone, visualFirst: false, isDark: true,
     btn: { label: 'Reservar mesa', href: '#reservas' },
     btn2: { label: 'Cómo llegar', href: 'https://maps.google.com/?q=Av.+de+los+Descubrimientos+11,+Mairena+del+Aljarafe' },
   },
+];
+
+const mobileCards = [
+  { label: 'Qué ofrecemos', title: 'Tapas, arroces y producto', text: 'Entrantes, fritos, platos del mar, arroces en paella y postres caseros para compartir.', icon: BookOpen, btn: { label: 'Ver carta', href: '#carta' } },
+  { label: 'Nuestra carta', title: 'Sabores que sorprenden', text: 'Cocina cercana, producto cuidado y platos con carácter.', icon: UtensilsCrossed, btn: { label: 'Ver carta', href: '#carta' } },
+  { label: 'Especiales Dichoso', title: 'Los imprescindibles', text: 'Navajas, berberechos, croquetas, tortilla, arroces, tarta de queso y torrija.', icon: Heart, btn: { label: 'Ver especiales', href: '#especiales' } },
+  { label: 'Reserva y ven', title: 'Dichoso el día que entraste por aquí', text: 'Reserva tu mesa en Mairena del Aljarafe y disfruta de una experiencia cálida y diferente.', icon: Phone, btn: { label: 'Reservar mesa', href: '#reservas' }, isDark: true },
 ];
 
 function Placeholder({ icon: Icon }: { icon: typeof BookOpen }) {
@@ -45,7 +43,7 @@ function Placeholder({ icon: Icon }: { icon: typeof BookOpen }) {
       <div className="mantel-visual-bg">
         <span className="mantel-visual-brand">Dichoso</span>
         <div className="mantel-visual-overlay">
-          <div className="mantel-visual-icon"><Icon size={26} strokeWidth={1} /></div>
+          <Icon size={26} strokeWidth={1} className="mantel-visual-icon" />
           <span className="mantel-visual-tag">Imagen próximamente</span>
         </div>
       </div>
@@ -53,7 +51,7 @@ function Placeholder({ icon: Icon }: { icon: typeof BookOpen }) {
   );
 }
 
-function TextBlock({ row }: { row: typeof rows[0] }) {
+function DesktopText({ row }: { row: typeof desktopRows[0] }) {
   const Icon = row.icon;
   return (
     <div className={`mantel-text ${row.isDark ? 'mantel-text-dark' : ''}`}>
@@ -81,9 +79,6 @@ export default function ScrollMantelSection() {
   });
   const clothScale = useTransform(scrollYProgress, [0, 0.4], [0, 1]);
 
-  const [cardIdx, setCardIdx] = useState(0);
-  const total = rows.length;
-
   return (
     <section id="experiencia" ref={sectionRef} className="mantel-section">
       <motion.div
@@ -92,14 +87,14 @@ export default function ScrollMantelSection() {
       />
 
       <div className="mantel-container">
-        {/* Desktop */}
+        {/* Desktop alternating rows */}
         <div className="mantel-desktop">
-          {rows.map((row, i) => (
+          {desktopRows.map((row, i) => (
             <div key={row.label} className="mantel-row">
               <div className="mantel-row-grid">
                 {row.visualFirst ? (
                   <>
-                    <motion.div className="mantel-col-visual"
+                    <motion.div className="mantel-col"
                       initial={{ opacity: 0, x: -32 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: false, amount: 0.25 }}
@@ -107,26 +102,26 @@ export default function ScrollMantelSection() {
                     >
                       <Placeholder icon={row.icon} />
                     </motion.div>
-                    <motion.div className="mantel-col-text"
+                    <motion.div className="mantel-col"
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: false, amount: 0.25 }}
                       transition={{ duration: 0.65, ease, delay: 0.08 }}
                     >
-                      <TextBlock row={row} />
+                      <DesktopText row={row} />
                     </motion.div>
                   </>
                 ) : (
                   <>
-                    <motion.div className="mantel-col-text"
+                    <motion.div className="mantel-col"
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: false, amount: 0.25 }}
                       transition={{ duration: 0.65, ease, delay: 0.08 }}
                     >
-                      <TextBlock row={row} />
+                      <DesktopText row={row} />
                     </motion.div>
-                    <motion.div className="mantel-col-visual"
+                    <motion.div className="mantel-col"
                       initial={{ opacity: 0, x: 32 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: false, amount: 0.25 }}
@@ -141,29 +136,42 @@ export default function ScrollMantelSection() {
           ))}
         </div>
 
-        {/* Mobile carousel */}
+        {/* Mobile compact cards */}
         <div className="mantel-mobile">
-          <div className="mantel-carousel-viewport">
-            <motion.div className="mantel-carousel-track"
-              animate={{ x: -(cardIdx * 100) + '%' }}
-              transition={{ type: 'spring', stiffness: 300, damping: 30, mass: 0.8 }}
-            >
-              {rows.map((row, i) => (
-                <div key={i} className="mantel-carousel-slide">
-                  <Placeholder icon={row.icon} />
-                  <TextBlock row={row} />
-                </div>
-              ))}
-            </motion.div>
+          <div className="mantel-mobile-header">
+            <span className="mantel-mobile-eyebrow">Experiencia Dichoso</span>
+            <p className="mantel-mobile-sub">Tapas, arroces y producto para compartir</p>
           </div>
-          <div className="mantel-carousel-controls">
-            <button className="mantel-carousel-arrow" onClick={() => setCardIdx(Math.max(0, cardIdx - 1))} disabled={cardIdx === 0}><ChevronLeft size={16} /></button>
-            <div className="mantel-carousel-dots">
-              {rows.map((_, i) => (
-                <button key={i} className={`mantel-carousel-dot ${i === cardIdx ? 'active' : ''}`} onClick={() => setCardIdx(i)} />
-              ))}
-            </div>
-            <button className="mantel-carousel-arrow" onClick={() => setCardIdx(Math.min(total - 1, cardIdx + 1))} disabled={cardIdx === total - 1}><ChevronRight size={16} /></button>
+          <div className="mantel-mobile-grid">
+            {mobileCards.map((card, i) => {
+              const Icon = card.icon;
+              return (
+                <motion.div
+                  key={card.label}
+                  className={`mantel-mobile-card ${card.isDark ? 'mantel-mobile-dark' : ''}`}
+                  initial={{ opacity: 0, y: 18 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: false, amount: 0.2 }}
+                  transition={{ duration: 0.5, ease, delay: i * 0.07 }}
+                >
+                  <div className="mantel-mobile-card-row">
+                    <div className={`mantel-mobile-icon-wrap ${card.isDark ? 'mantel-mobile-icon-dark' : ''}`}>
+                      <Icon size={18} strokeWidth={1.5} />
+                    </div>
+                    <div className="mantel-mobile-card-body">
+                      <span className="mantel-mobile-label">{card.label}</span>
+                      <h4 className="mantel-mobile-title">{card.title}</h4>
+                      <p className="mantel-mobile-text">{card.text}</p>
+                      {card.btn && (
+                        <a href={card.btn.href} className={`mantel-mobile-btn ${card.isDark ? 'mantel-mobile-btn-dark' : ''}`}>
+                          {card.btn.label}
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </div>
