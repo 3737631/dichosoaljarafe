@@ -95,13 +95,14 @@
 /* ── Hero ────────────────────────────────────── */
 .hero {
   position: relative;
-  min-height: calc(100vh - 84px);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   background: var(--background);
-  padding: 120px 24px 88px;
+  box-sizing: border-box;
+  min-height: calc(100vh - 84px);
+  padding: 96px 24px 88px;
 }
 .hero-watermark {
   position: absolute;
@@ -632,8 +633,9 @@
   .navbar-links .btn { padding: 0.45rem 1rem; font-size: 0.6rem; }
 
   .hero {
+    box-sizing: border-box;
     min-height: calc(100svh - 76px);
-    padding: 100px 20px 64px;
+    padding: 80px 20px 64px;
   }
   .hero-slogan {
     font-size: 38px;
