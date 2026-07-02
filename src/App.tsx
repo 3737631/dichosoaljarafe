@@ -223,27 +223,34 @@ function About() {
 }
 
 function Menu() {
+  const [catIndex, setCatIndex] = useState(0);
+  const current = MENU_DATA[catIndex];
+
   return (
-    <section className="carta-section" id="carta">
-      <div className="carta-container">
+    <section className="section" id="carta">
+      <div className="container container-narrow">
         <div className="carta-header">
           <h2 className="carta-logo">Dichoso</h2>
           <p className="carta-subtitle">Tapas y arroces</p>
           <p className="carta-phrase">Dichoso el día que entraste por aquí</p>
         </div>
-
-        <div className="carta-grid">
-          {MENU_DATA.map((cat) => (
-            <div key={cat.title} className="carta-category">
-              <h3 className="carta-category-title">{cat.title}</h3>
-              <div className="carta-divider" />
-              {cat.items.map((item) => (
-                <div key={item.name} className="carta-item">
-                  <span className="carta-item-name">{item.name}</span>
-                  <span className="carta-item-dots" />
-                  <span className="carta-item-price">{item.price}</span>
-                </div>
-              ))}
+        <div className="carta-tabs">
+          {MENU_DATA.map((cat, i) => (
+            <button
+              key={cat.title}
+              className={`carta-tab ${i === catIndex ? "active" : ""}`}
+              onClick={() => setCatIndex(i)}
+            >
+              {cat.title}
+            </button>
+          ))}
+        </div>
+        <div className="carta-list" key={catIndex}>
+          {current.items.map((item, i) => (
+            <div key={item.name} className="carta-item-row" style={{ animationDelay: `${i * 0.1}s` }}>
+              <span className="carta-item-name">{item.name}</span>
+              <span className="carta-item-dots" />
+              <span className="carta-item-price">{item.price}</span>
             </div>
           ))}
         </div>
