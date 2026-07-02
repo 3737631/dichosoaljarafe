@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
+import { motion } from "motion/react";
 import "./App.css";
 import { supabase } from "./supabase";
 import ScrollMantelSection from "./components/ScrollMantelSection";
-import NavigationMap from "./components/NavigationMap";
 
 /* ── Data ──────────────────────────────────────── */
 const PHONE = "664243280";
@@ -163,9 +163,6 @@ function Hero() {
           </button>
         </div>
       </div>
-      <div className="hero-scroll-line">
-        <span className="hero-scroll-bar" />
-      </div>
     </section>
   );
 }
@@ -187,11 +184,18 @@ function About() {
             </blockquote>
           </div>
           <div className="features-grid">
-            {FEATURES.map((f) => (
-              <div key={f.label} className="feature-card">
+            {FEATURES.map((f, i) => (
+              <motion.div
+                key={f.label}
+                className="feature-card"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{ duration: 0.55, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+              >
                 <h4 className="feature-title">{f.label}</h4>
                 <p className="feature-desc">{f.desc}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -244,20 +248,27 @@ function Especiales() {
         <p className="section-eyebrow">Especiales</p>
         <h2 className="section-title">Especiales Dichoso</h2>
         <div className="especiales-grid">
-          {ESPECIALES.map((esp) => (
-            <div key={esp.name} className="especial-card">
-              <div className="especial-img">
-                <div className="especial-img-inner">
-                  <span className="especial-img-icon">⊞</span>
-                  <span className="especial-img-label">Imagen próximamente</span>
+          {ESPECIALES.map((esp, i) => (
+            <motion.div
+              key={esp.name}
+              className="especial-card"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.15 }}
+              transition={{ duration: 0.5, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
+            >
+                <div className="especial-img">
+                  <div className="especial-img-inner">
+                    <span className="especial-img-icon">⊞</span>
+                    <span className="especial-img-label">Imagen próximamente</span>
+                  </div>
                 </div>
-              </div>
               <div className="especial-body">
                 <h3 className="especial-name">{esp.name}</h3>
                 {esp.desc && <p className="especial-desc">{esp.desc}</p>}
                 <span className="especial-price">{esp.price}</span>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -290,12 +301,19 @@ function Reviews() {
         <p className="section-eyebrow">Opiniones</p>
         <h2 className="section-title">Lo que dicen nuestros clientes</h2>
         <div className="reviews-grid">
-          {REVIEWS.map((r) => (
-            <div key={r.text} className="review-card">
+          {REVIEWS.map((r, i) => (
+            <motion.div
+              key={r.text}
+              className="review-card"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.2 }}
+              transition={{ duration: 0.5, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+            >
               <div className="review-stars">★★★★★</div>
               <p className="review-text">"{r.text}"</p>
               <span className="review-author">{r.author}</span>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -396,7 +414,14 @@ function Reservation() {
 
         {error && <div className="form-msg err">{error}</div>}
 
-        <form className="form" onSubmit={handleSubmit}>
+        <motion.form
+          className="form"
+          onSubmit={handleSubmit}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.15 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
           <div className="form-row">
             <div className="form-group">
               <label className="form-label">Fecha</label>
@@ -448,7 +473,7 @@ function Reservation() {
               Llamar · 664 24 32 80
             </a>
           </div>
-        </form>
+        </motion.form>
       </div>
     </section>
   );
@@ -460,7 +485,13 @@ function Location() {
       <div className="container">
         <p className="section-eyebrow">Cómo llegar</p>
         <h2 className="section-title">Ubicación</h2>
-        <div className="location-grid">
+        <motion.div
+          className="location-grid"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.15 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
           <div className="location-info">
             <div className="location-info-inner">
               <p className="location-address">{ADDRESS}</p>
@@ -489,7 +520,7 @@ function Location() {
               <p className="map-placeholder-sub">Av. de los Descubrimientos 11, Mairena del Aljarafe</p>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -497,7 +528,13 @@ function Location() {
 
 function Footer() {
   return (
-    <footer className="footer">
+    <motion.footer
+      className="footer"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: false, amount: 0.1 }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+    >
       <div className="container">
         <div className="footer-grid">
           <div>
@@ -520,7 +557,7 @@ function Footer() {
           <p>© {new Date().getFullYear()} Dichoso. Todos los derechos reservados.</p>
         </div>
       </div>
-    </footer>
+    </motion.footer>
   );
 }
 
@@ -529,7 +566,6 @@ export default function App() {
   return (
     <>
       <Navbar />
-      <NavigationMap />
       <main>
         <Hero />
         <About />
