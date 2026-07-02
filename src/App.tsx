@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import { supabase } from "./supabase";
 import ScrollMantelSection from "./components/ScrollMantelSection";
+import NavigationMap from "./components/NavigationMap";
 
 /* ── Data ──────────────────────────────────────── */
 const PHONE = "664243280";
@@ -285,7 +286,7 @@ function SloganSection() {
 
 function Reviews() {
   return (
-    <section className="section reviews-section">
+    <section className="section reviews-section" id="resenas">
       <div className="container">
         <p className="section-eyebrow">Opiniones</p>
         <h2 className="section-title">Lo que dicen nuestros clientes</h2>
@@ -529,6 +530,7 @@ export default function App() {
   return (
     <>
       <Navbar />
+      <NavigationMap />
       <main>
         <Hero />
         <About />
