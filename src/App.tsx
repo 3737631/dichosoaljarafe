@@ -8,8 +8,6 @@ const PHONE = "664243280";
 const ADDRESS = "Av. de los Descubrimientos, 11, 41927 Mairena del Aljarafe";
 const MAPS_URL =
   "https://maps.google.com/?q=Av.+de+los+Descubrimientos+11,+Mairena+del+Aljarafe";
-const MAPS_EMBED =
-  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3173.5!2d-6.06!3d37.34!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzfCsDIwJzI0LjAiTiA2wrAwMyczNi4wIlc!5e0!3m2!1ses!2ses!4v1700000000000!5m2!1ses!2ses";
 
 const FEATURES = [
   { label: "Cocina contemporánea", desc: "Tradición reinventada con técnicas modernas." },
@@ -174,10 +172,10 @@ function Hero() {
 
 function About() {
   return (
-    <section className="section bg-card" id="nosotros">
+    <section className="section about-compact" id="nosotros">
       <div className="container">
-        <div className="about-grid">
-          <div className="about-text">
+        <div className="about-compact-grid">
+          <div className="about-compact-text">
             <p className="section-eyebrow">Nuestra filosofía</p>
             <h2 className="section-title">Elevando lo cotidiano</h2>
             <p>
@@ -249,7 +247,10 @@ function Especiales() {
           {ESPECIALES.map((esp) => (
             <div key={esp.name} className="especial-card">
               <div className="especial-img">
-                <span>Imagen próximamente</span>
+                <div className="especial-img-inner">
+                  <span className="especial-img-icon">⊞</span>
+                  <span className="especial-img-label">Imagen próximamente</span>
+                </div>
               </div>
               <div className="especial-body">
                 <h3 className="especial-name">{esp.name}</h3>
@@ -272,7 +273,8 @@ function SloganSection() {
   return (
     <section className="slogan-section">
       <div className="container container-narrow">
-        <p className="slogan-text" style={{ fontFamily: "'Pinyon Script', serif" }}>
+        <p className="slogan-eyebrow">Dichoso</p>
+        <p className="slogan-text">
           Dichoso el día que entraste por aquí
         </p>
         <p className="slogan-sub">Una experiencia gastronómica para recordar</p>
@@ -460,32 +462,32 @@ function Location() {
         <h2 className="section-title">Ubicación</h2>
         <div className="location-grid">
           <div className="location-info">
-            <p className="location-address">{ADDRESS}</p>
-            <div className="location-actions">
-              <a href={MAPS_URL} target="_blank" rel="noreferrer" className="btn btn-outline">
-                Abrir en Maps
-              </a>
-              <a href={`tel:+34${PHONE}`} className="btn btn-gold">
-                Llamar
-              </a>
-            </div>
-            <div className="schedule">
-              <h4 className="schedule-title">Horario</h4>
-              <p>Almuerzo: 13:00 – 16:30</p>
-              <p>Cena: 20:00 – 00:00</p>
+            <div className="location-info-inner">
+              <p className="location-address">{ADDRESS}</p>
+              <div className="location-actions">
+                <a href={MAPS_URL} target="_blank" rel="noreferrer" className="btn btn-outline">
+                  Abrir en Maps
+                </a>
+                <a href={`tel:+34${PHONE}`} className="btn btn-gold">
+                  Llamar
+                </a>
+              </div>
+              <div className="schedule">
+                <h4 className="schedule-title">Horario</h4>
+                <p>Almuerzo: 13:00 – 16:30</p>
+                <p>Cena: 20:00 – 00:00</p>
+              </div>
             </div>
           </div>
           <div className="map-wrapper">
-            <iframe
-              title="Dichoso — Ubicación"
-              src={MAPS_EMBED}
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
+            <div className="map-placeholder">
+              <svg className="map-placeholder-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#B89168" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+              <p className="map-placeholder-text">Ubicación en mapa</p>
+              <p className="map-placeholder-sub">Av. de los Descubrimientos 11, Mairena del Aljarafe</p>
+            </div>
           </div>
         </div>
       </div>
@@ -511,6 +513,9 @@ function Footer() {
             <a href={`tel:+34${PHONE}`} className="footer-link">664 24 32 80</a>
           </div>
         </div>
+        <div className="footer-slogan-line">
+          <span className="footer-slogan">Dichoso el día que entraste por aquí</span>
+        </div>
         <div className="footer-bottom">
           <p>© {new Date().getFullYear()} Dichoso. Todos los derechos reservados.</p>
         </div>
@@ -527,9 +532,9 @@ export default function App() {
       <main>
         <Hero />
         <About />
+        <MantelSection />
         <Menu />
         <Especiales />
-        <MantelSection />
         <SloganSection />
         <Reviews />
         <Reservation />

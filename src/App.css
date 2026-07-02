@@ -58,16 +58,21 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.25rem 2.5rem;
-  background: rgba(250, 247, 242, 0.92);
+  padding: 1.1rem 2.5rem;
+  background: rgba(250, 247, 242, 0.95);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
+  min-height: 64px;
+  overflow: visible;
 }
 .navbar-logo {
   font-family: "Pinyon Script", cursive;
-  font-size: 2rem;
+  font-size: 2.2rem;
   color: var(--accent);
   line-height: 1;
+  padding: 0;
+  margin: 0;
+  display: inline-block;
 }
 .navbar-links {
   display: flex;
@@ -85,6 +90,7 @@
   font-family: "Roboto Condensed", sans-serif;
   font-weight: 400;
   transition: color 0.25s;
+  padding: 0;
 }
 .nav-link:hover { color: var(--accent); }
 
@@ -97,6 +103,7 @@
   justify-content: center;
   overflow: hidden;
   background: var(--background);
+  padding: 5rem 0 0;
 }
 .hero-watermark {
   position: absolute;
@@ -104,7 +111,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   font-family: "Pinyon Script", cursive;
-  font-size: clamp(12rem, 30vw, 30rem);
+  font-size: clamp(10rem, 28vw, 26rem);
   color: var(--accent);
   opacity: 0.04;
   pointer-events: none;
@@ -134,6 +141,7 @@
   color: var(--text);
   margin-bottom: 1.5rem;
   line-height: 1.05;
+  letter-spacing: -0.02em;
 }
 .hero-title em {
   color: var(--accent);
@@ -144,7 +152,7 @@
   font-size: 1.15rem;
   color: var(--muted);
   max-width: 600px;
-  margin: 0 auto 1rem;
+  margin: 0 auto 1.25rem;
   line-height: 1.7;
   font-family: "Roboto Condensed", sans-serif;
   font-weight: 300;
@@ -154,7 +162,7 @@
   font-family: "Pinyon Script", cursive;
   font-size: clamp(1.5rem, 4vw, 2.5rem);
   color: var(--accent);
-  opacity: 0.7;
+  opacity: 0.75;
   margin-bottom: 2.5rem;
 }
 .hero-actions {
@@ -162,7 +170,6 @@
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
-  margin-bottom: 5rem;
 }
 .hero-scroll-line {
   position: absolute;
@@ -189,29 +196,33 @@
   animation: scrollPulse 2s ease-in-out infinite;
 }
 
-/* ── About ───────────────────────────────────── */
-.about-grid {
+/* ── About Compact ───────────────────────────── */
+.about-compact {
+  padding: 5rem 0;
+  background: var(--bg-card);
+}
+.about-compact-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 4rem;
+  gap: 3rem;
   align-items: center;
 }
-.about-text {
+.about-compact-text {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1rem;
   color: var(--muted);
   font-size: 1rem;
   line-height: 1.8;
 }
-.about-text .section-eyebrow { margin-bottom: 0.5rem; }
-.about-text .section-title { margin-bottom: 1rem; }
+.about-compact-text .section-eyebrow { margin-bottom: 0.5rem; }
+.about-compact-text .section-title { margin-bottom: 0.75rem; }
 .quote {
   border-left: 2px solid var(--accent);
   padding: 0.75rem 1.25rem;
   font-style: italic;
   color: var(--accent);
-  margin-top: 0.5rem;
+  margin-top: 0.25rem;
   font-family: "Cormorant Garamond", serif;
   font-size: 1.15rem;
   line-height: 1.5;
@@ -219,16 +230,16 @@
 .features-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  gap: 1.5rem;
 }
-.feature-card { display: flex; flex-direction: column; gap: 0.3rem; }
+.feature-card { display: flex; flex-direction: column; gap: 0.25rem; }
 .feature-title {
   font-family: "Cormorant Garamond", serif;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   color: var(--text);
   font-weight: 500;
 }
-.feature-desc  { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+.feature-desc  { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
 
 /* ── Carta / Menu (Tabbed) ──────────────────── */
 .carta-intro {
@@ -269,12 +280,13 @@
   font-size: 0.65rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  padding: 0.5rem 1rem;
+  padding: 0.55rem 1.1rem;
   border: 1px solid var(--accent);
   background: transparent;
   color: var(--accent);
   cursor: pointer;
   transition: all 0.25s ease;
+  border-radius: 0;
 }
 .carta-tab:hover {
   background: var(--accent);
@@ -301,6 +313,9 @@
   line-height: 1.4;
   animation: menuFadeIn 0.35s ease-out both;
 }
+.carta-item:nth-child(even) {
+  background: rgba(184,145,104,0.03);
+}
 .carta-item-name {
   white-space: normal;
   font-weight: 300;
@@ -317,6 +332,7 @@
   font-weight: 500;
   color: var(--accent);
   margin-left: auto;
+  padding-left: 0.5rem;
 }
 
 /* ── Especiales ─────────────────────────────── */
@@ -345,14 +361,26 @@
   align-items: center;
   justify-content: center;
   border-bottom: 1px solid var(--border);
+  position: relative;
 }
-.especial-img span {
+.especial-img-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  opacity: 0.55;
+}
+.especial-img-icon {
+  font-size: 1.5rem;
+  color: var(--accent);
+  line-height: 1;
+}
+.especial-img-label {
   font-family: "Roboto Condensed", sans-serif;
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--muted);
-  opacity: 0.6;
 }
 .especial-body {
   padding: 1rem 1.25rem 1.25rem;
@@ -387,11 +415,22 @@
   text-align: center;
   background: var(--bg-card);
 }
-.slogan-text {
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
+.slogan-eyebrow {
+  font-family: "Pinyon Script", cursive;
+  font-size: 2rem;
   color: var(--accent);
+  opacity: 0.4;
+  margin-bottom: 0.5rem;
+  line-height: 1;
+}
+.slogan-text {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  color: var(--text);
   line-height: 1.2;
   margin-bottom: 0.75rem;
+  font-weight: 400;
+  font-style: italic;
 }
 .slogan-sub {
   font-family: "Roboto Condensed", sans-serif;
@@ -403,7 +442,7 @@
 
 /* ── Reviews ─────────────────────────────────── */
 .reviews-section {
-  background: var(--bg-card);
+  background: var(--background);
 }
 .reviews-grid {
   display: grid;
@@ -436,7 +475,7 @@
   font-size: 0.9rem;
   font-weight: 300;
   outline: none;
-  transition: border-color 0.25s;
+  transition: border-color 0.25s, box-shadow 0.25s;
   width: 100%;
   height: 48px;
   min-height: 48px;
@@ -445,7 +484,7 @@
   -webkit-appearance: none;
   border-radius: 0;
 }
-.form-input:focus { border-color: var(--accent); }
+.form-input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(184,145,104,0.1); }
 .form-input option { background: #FAF7F2; color: var(--text); }
 .form-textarea { height: 48px; min-height: 48px; resize: none; padding-top: 0.75rem; }
 .form-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.75rem; }
@@ -456,7 +495,7 @@
   margin-bottom: 1.25rem;
   text-align: center;
 }
-.form-msg.err { background: rgba(239,68,68,0.08); color: #c0392b; border: 1px solid rgba(239,68,68,0.2); }
+.form-msg.err { background: rgba(239,68,68,0.06); color: #c0392b; border: 1px solid rgba(239,68,68,0.15); }
 .reservation-done {
   text-align: center;
   padding: 3rem 1rem;
@@ -468,7 +507,6 @@
 .reservation-done-icon {
   width: 56px;
   height: 56px;
-  border-radius: 50%;
   background: var(--accent);
   color: #FAF7F2;
   font-size: 1.5rem;
@@ -486,7 +524,6 @@
 .reservation-detail {
   background: rgba(107,75,52,0.04);
   border: 1px solid rgba(107,75,52,0.15);
-  border-radius: 0;
   padding: 1.25rem 1.5rem;
   text-align: left;
   width: 100%;
@@ -509,29 +546,77 @@
   gap: 3rem;
   align-items: start;
 }
+.location-info {
+  background: #FAF7F2;
+  border: 1px solid var(--border);
+  padding: 1.75rem;
+}
+.location-info-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
 .location-address {
   font-size: 1rem;
   color: var(--text);
   line-height: 1.6;
-  margin-bottom: 1.5rem;
   font-family: "Cormorant Garamond", serif;
 }
-.location-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; }
-.schedule       { border-top: 1px solid var(--border); padding-top: 1.5rem; }
+.location-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+.schedule       { border-top: 1px solid var(--border); padding-top: 1.25rem; }
 .schedule-title { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; font-family: "Roboto Condensed", sans-serif; }
 .schedule p     { font-size: 0.85rem; color: var(--muted); line-height: 1.8; font-family: "Roboto Condensed", sans-serif; }
-.map-wrapper    { height: 360px; border: 1px solid var(--border); overflow: hidden; }
-.map-wrapper iframe { width: 100%; height: 100%; }
+.map-wrapper {
+  height: 360px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.map-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  opacity: 0.55;
+  text-align: center;
+  padding: 1rem;
+}
+.map-placeholder-icon { opacity: 0.7; }
+.map-placeholder-text {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1rem;
+  color: var(--muted);
+}
+.map-placeholder-sub {
+  font-family: "Roboto Condensed", sans-serif;
+  font-size: 0.75rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
 
 /* ── Footer ──────────────────────────────────── */
 .footer         { background: var(--bg-card); border-top: 1px solid var(--border); padding: 4rem 0 2rem; }
-.footer-grid    { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
-.footer-logo    { font-family: "Pinyon Script", cursive; font-size: 2rem; color: var(--accent); display: block; margin-bottom: 0.75rem; line-height: 1; }
+.footer-grid    { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; margin-bottom: 2.5rem; }
+.footer-logo    { font-family: "Pinyon Script", cursive; font-size: 2.2rem; color: var(--accent); display: block; margin-bottom: 0.5rem; line-height: 1; }
 .footer-tagline { font-size: 0.85rem; color: var(--muted); line-height: 1.6; font-family: "Cormorant Garamond", serif; }
 .footer-heading { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; font-family: "Roboto Condensed", sans-serif; }
 .footer-text    { font-size: 0.85rem; color: var(--muted); line-height: 1.6; font-family: "Roboto Condensed", sans-serif; }
-.footer-link    { font-size: 0.85rem; color: var(--muted); font-family: "Roboto Condensed", sans-serif; }
+.footer-link    { font-size: 0.85rem; color: var(--muted); font-family: "Roboto Condensed", sans-serif; text-decoration: none; }
 .footer-link:hover { color: var(--accent); }
+.footer-slogan-line {
+  border-top: 1px solid var(--border);
+  padding: 1.5rem 0;
+  text-align: center;
+}
+.footer-slogan {
+  font-family: "Pinyon Script", cursive;
+  font-size: 1.4rem;
+  color: var(--accent);
+  opacity: 0.5;
+  line-height: 1;
+}
 .footer-bottom  { border-top: 1px solid var(--border); padding-top: 1.5rem; font-size: 0.72rem; color: var(--muted); font-family: "Roboto Condensed", sans-serif; }
 
 /* ── Animations ──────────────────────────────── */
@@ -543,23 +628,6 @@
 .fade-up.visible {
   opacity: 1;
   transform: translateY(0);
-}
-.slide-left {
-  opacity: 0;
-  transform: translateX(-40px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-.slide-right {
-  opacity: 0;
-  transform: translateX(40px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-.slide-left.visible, .slide-right.visible {
-  opacity: 1;
-  transform: translateX(0);
-}
-.bounce {
-  animation: bounce 2s ease-in-out infinite;
 }
 @keyframes bounce {
   0%, 100% { transform: translateY(0); }
@@ -584,9 +652,9 @@
 
 /* ── Responsive ──────────────────────────────── */
 @media (max-width: 768px) {
-  .navbar { padding: 1rem 1.5rem; }
+  .navbar { padding: 0.9rem 1.25rem; min-height: 56px; }
   .navbar-links .nav-link { display: none; }
-  .about-grid   { grid-template-columns: 1fr; gap: 2rem; }
+  .about-compact-grid { grid-template-columns: 1fr; gap: 2rem; }
   .features-grid{ grid-template-columns: 1fr; }
   .form-row     { grid-template-columns: 1fr; }
   .location-grid{ grid-template-columns: 1fr; }
