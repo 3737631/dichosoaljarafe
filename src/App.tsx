@@ -164,7 +164,6 @@ function Hero() {
         </div>
       </div>
       <div className="hero-scroll-line">
-        <span className="hero-scroll-text">Desliza</span>
         <span className="hero-scroll-bar" />
       </div>
     </section>
