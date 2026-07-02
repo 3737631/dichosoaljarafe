@@ -18,37 +18,85 @@ const FEATURES = [
   { label: "Atención excelente", desc: "Servicio cercano y profesional." },
 ];
 
-const MENU_CATEGORIES = [
+const MENU_DATA = [
   {
-    key: "entrantes",
-    label: "Entrantes",
-    dishes: [
-      { name: "Croquetas caseras", desc: "De setas y de jamón ibérico. Rebozado perfecto, cremosas por dentro.", price: "9€" },
-      { name: "Tartar de atún", desc: "Con aguacate, sésamo y emulsión de soja.", price: "14€" },
+    title: "ENTRANTES",
+    items: [
+      { name: "Gilda cecina y queso", price: "2,5€ ud." },
+      { name: "Gilda anchoa, boquerón, tomate seco, queso viejo", price: "3€" },
+      { name: "Salmorejo con huevo y jamón ibérico", price: "5,5€" },
+      { name: "Ensaladilla de gambas", price: "4,2€ / 9,7€" },
+      { name: "Ensaladilla de pulpo", price: "4,5€ / 10€" },
+      { name: "Papas aliñás", price: "4€ / 9€" },
+      { name: "Papas bravas", price: "5,5€" },
+      { name: "Tosta de salmorejo con matrimonio de anchoa y boquerón", price: "4,5€" },
     ],
   },
   {
-    key: "principales",
-    label: "Principales",
-    dishes: [
-      { name: "Steak tartar en tuétano", desc: "Nuestro plato más aclamado. Carne de primera con tuétano a la brasa.", price: "18€" },
-      { name: "Sándwich de cecina", desc: "Cecina de primera, queso fundido y alioli de trufa.", price: "12€" },
+    title: "FRITOS",
+    items: [
+      { name: "Croquetas de jamón ibérico de bellota", price: "5€ / 9,5€" },
+      { name: "Croquetas de setas salteadas en mantequilla y soja", price: "5€ / 9,5€" },
+      { name: "Croquetas de gambas al ajillo", price: "5€ / 9,5€" },
+      { name: "Berenjena frita con mayonesa de soja y miel", price: "5,5€" },
+      { name: "Chocos fritos", price: "7,5€ / 15€" },
     ],
   },
   {
-    key: "arroces",
-    label: "Arroces",
-    dishes: [
-      { name: "Arroz del día", desc: "Elaborado al momento con caldo casero. Siempre en su punto.", price: "16€" },
+    title: "LO MÁS DICHOSO",
+    items: [
+      { name: "Patatas arriera", price: "12€" },
+      { name: "Langostinos al ajillo estilo Dichoso", price: "7,5€" },
+      { name: "Sándwich de cecina de vaca, queso viejo y trufa, planchado en mantequilla", price: "7,5€" },
+      { name: "Tortilla de patatas con panceta ibérica y parmesano", price: "9€" },
+      { name: "Tartar de cigala marinado en su esencia", price: "9,5€" },
+      { name: "Steak tartar aliñado con tuétano asado y presentado en su hueso", price: "16,9€" },
+      { name: "Carrillada de cerdo ibérico", price: "5,5€" },
+      { name: "Presa de cerdo ibérico de bellota", price: "9€ / 17€" },
+      { name: "Lomo bajo de vaca", price: "7€ / 100gr" },
     ],
   },
   {
-    key: "postres",
-    label: "Postres",
-    dishes: [
-      { name: "Tarta de queso", desc: "Con base de galleta y coulis de frutos rojos.", price: "7€" },
+    title: "DEL MAR",
+    items: [
+      { name: "Sardinas estilo espeto", price: "9€" },
+      { name: "Mejillones a la marinera", price: "7,5€" },
+      { name: "Gambón a la plancha", price: "2,5€ ud." },
+      { name: "Carabinero a la plancha", price: "15€ ud." },
+      { name: "Navajas", price: "12€" },
+      { name: "Berberechos", price: "10€" },
+      { name: "Calamar de potera a la plancha", price: "6€ / 100gr" },
     ],
   },
+  {
+    title: "ARROCES EN PAELLA",
+    items: [
+      { name: "Arroz de carrillada y queso de cabra", price: "16€ por persona" },
+      { name: "Arroz sabroso de carabinero y huevo frito", price: "21€ por persona" },
+      { name: "Arroz negro con alioli", price: "18€ por persona" },
+    ],
+  },
+  {
+    title: "POSTRES",
+    items: [
+      { name: "Tarta de queso", price: "6€" },
+      { name: "Tarta de la abuela con natilla y caramelo salado", price: "6€" },
+      { name: "Torrija casera con helado de turrón", price: "6,5€" },
+    ],
+  },
+];
+
+const ESPECIALES = [
+  { name: "Navajas", desc: "Del mar" },
+  { name: "Berberechos", desc: "Del mar" },
+  { name: "Sándwich de cecina, queso viejo y trufa", desc: "Planchado en mantequilla" },
+  { name: "Tortilla de patatas con panceta ibérica y parmesano", desc: "Lo más Dichoso" },
+  { name: "Mejillones a la marinera", desc: "Del mar" },
+  { name: "Torrija casera con helado de turrón", desc: "Postre emblemático" },
+  { name: "Tarta de queso", desc: "Postre casero" },
+  { name: "Arroz sabroso de carabinero y huevo frito", desc: "Nuestro arroz estrella" },
+  { name: "Arroz de carrillada y queso de cabra", desc: "Arroz cremoso" },
+  { name: "Croquetas", desc: "Elige tu variedad favorita" },
 ];
 
 const GALLERY = [
@@ -175,34 +223,51 @@ function About() {
 }
 
 function Menu() {
-  const [category, setCategory] = useState(MENU_CATEGORIES[0].key);
-  const current = MENU_CATEGORIES.find((c) => c.key === category)!;
-
   return (
-    <section className="section" id="carta">
-      <div className="container">
-        <p className="section-eyebrow">Nuestra carta</p>
-        <h2 className="section-title">Descubre nuestros platos</h2>
-        <div className="menu-tabs">
-          {MENU_CATEGORIES.map((c) => (
-            <button
-              key={c.key}
-              className={`menu-tab ${category === c.key ? "active" : ""}`}
-              onClick={() => setCategory(c.key)}
-            >
-              {c.label}
-            </button>
+    <section className="carta-section" id="carta">
+      <div className="carta-container">
+        <div className="carta-header">
+          <h2 className="carta-logo">Dichoso</h2>
+          <p className="carta-subtitle">Tapas y arroces</p>
+          <p className="carta-phrase">Dichoso el día que entraste por aquí</p>
+        </div>
+
+        <div className="carta-grid">
+          {MENU_DATA.map((cat) => (
+            <div key={cat.title} className="carta-category">
+              <h3 className="carta-category-title">{cat.title}</h3>
+              <div className="carta-divider" />
+              {cat.items.map((item) => (
+                <div key={item.name} className="carta-item">
+                  <span className="carta-item-name">{item.name}</span>
+                  <span className="carta-item-dots" />
+                  <span className="carta-item-price">{item.price}</span>
+                </div>
+              ))}
+            </div>
           ))}
         </div>
-        <div className="menu-list" key={category}>
-          {current.dishes.map((d, i) => (
-            <div key={d.name} className="menu-item" style={{ animationDelay: `${i * 0.1}s` }}>
-              <div className="menu-item-header">
-                <span className="menu-item-name">{d.name}</span>
-                <span className="menu-item-dots"></span>
-                <span className="menu-item-price">{d.price}</span>
+      </div>
+    </section>
+  );
+}
+
+function Especiales() {
+  return (
+    <section className="especiales-section" id="especiales">
+      <div className="carta-container">
+        <h3 className="especiales-title">Especiales Dichoso</h3>
+        <p className="carta-phrase">Nuestros platos más aclamados</p>
+        <div className="especiales-grid">
+          {ESPECIALES.map((esp) => (
+            <div key={esp.name} className="especial-card">
+              <div className="especial-img-placeholder">
+                <span>Imagen próximamente</span>
               </div>
-              <p className="menu-item-desc">{d.desc}</p>
+              <div className="especial-info">
+                <h4 className="especial-name">{esp.name}</h4>
+                {esp.desc && <p className="especial-desc">{esp.desc}</p>}
+              </div>
             </div>
           ))}
         </div>
@@ -517,6 +582,7 @@ export default function App() {
         <Hero />
         <About />
         <Menu />
+        <Especiales />
         <Gallery />
         <Reviews />
         <Reservation />
