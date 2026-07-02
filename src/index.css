@@ -5,14 +5,15 @@
 }
 
 :root {
-  --bg: #FFFEFA;
-  --bg-card: #E8E1D6;
-  --gold: #644A35;
-  --gold-dim: #5F442C;
-  --cream: #5F442C;
-  --muted: #866F5D;
-  --olive: #708238;
-  --border: #CFC6BA;
+  --bg: #FAF7F2;
+  --bg-card: #F1E9DD;
+  --gold: #6B4B34;
+  --gold-dim: #4E3525;
+  --cream: #4E3525;
+  --muted: #7A6553;
+  --border: #D9CDBE;
+  --accent: #B89168;
+  --white: #FAF7F2;
 }
 
 html {
@@ -29,7 +30,7 @@ body {
 }
 
 h1, h2, h3, h4 {
-  font-family: "Playfair Display", serif;
+  font-family: "Cormorant Garamond", serif;
   font-weight: 400;
   line-height: 1.2;
 }

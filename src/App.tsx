@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import { supabase } from "./supabase";
 
@@ -13,9 +13,8 @@ const MAPS_EMBED =
 const FEATURES = [
   { label: "Cocina contemporánea", desc: "Tradición reinventada con técnicas modernas." },
   { label: "Producto de temporada", desc: "Ingredientes seleccionados con mimo." },
-  { label: "Arroces", desc: "Nuestra especialidad, elaborados al momento." },
+  { label: "Arroces con identidad", desc: "Nuestra especialidad, elaborados al momento." },
   { label: "Tapas creativas", desc: "Bocados llenos de sabor y originalidad." },
-  { label: "Atención excelente", desc: "Servicio cercano y profesional." },
 ];
 
 const MENU_DATA = [
@@ -87,16 +86,16 @@ const MENU_DATA = [
 ];
 
 const ESPECIALES = [
-  { name: "Navajas", desc: "Del mar" },
-  { name: "Berberechos", desc: "Del mar" },
-  { name: "Sándwich de cecina, queso viejo y trufa", desc: "Planchado en mantequilla" },
-  { name: "Tortilla de patatas con panceta ibérica y parmesano", desc: "Lo más Dichoso" },
-  { name: "Mejillones a la marinera", desc: "Del mar" },
-  { name: "Torrija casera con helado de turrón", desc: "Postre emblemático" },
-  { name: "Tarta de queso", desc: "Postre casero" },
-  { name: "Arroz sabroso de carabinero y huevo frito", desc: "Nuestro arroz estrella" },
-  { name: "Arroz de carrillada y queso de cabra", desc: "Arroz cremoso" },
-  { name: "Croquetas", desc: "Elige tu variedad favorita" },
+  { name: "Navajas", desc: "Del mar", price: "12€" },
+  { name: "Berberechos", desc: "Del mar", price: "10€" },
+  { name: "Sándwich de cecina, queso viejo y trufa", desc: "Planchado en mantequilla", price: "7,5€" },
+  { name: "Tortilla de patatas con panceta ibérica y parmesano", desc: "Lo más Dichoso", price: "9€" },
+  { name: "Mejillones a la marinera", desc: "Del mar", price: "7,5€" },
+  { name: "Torrija casera con helado de turrón", desc: "Postre emblemático", price: "6,5€" },
+  { name: "Tarta de queso", desc: "Postre casero", price: "6€" },
+  { name: "Arroz sabroso de carabinero y huevo frito", desc: "Nuestro arroz estrella", price: "21€" },
+  { name: "Arroz de carrillada y queso de cabra", desc: "Arroz cremoso", price: "16€" },
+  { name: "Croquetas", desc: "Elige tu variedad favorita", price: "5€" },
 ];
 
 const GALLERY = [
@@ -112,7 +111,6 @@ const REVIEWS = [
   { text: "Tapas muy ricas, cerveza helada y camareros muy amables.", author: "Cliente Google" },
   { text: "Lo que más me ha gustado han sido los arroces y las croquetas de setas.", author: "Cliente Google" },
   { text: "La comida está increíble, el steak tartar en tuétano está delicioso.", author: "Cliente Google" },
-  { text: "Comida de calidad y camareros amabilísimos. Lo mejor el sándwich de cecina.", author: "Cliente Google" },
 ];
 
 /* ── Components ────────────────────────────────── */
@@ -191,21 +189,16 @@ function About() {
   return (
     <section className="section bg-card" id="nosotros">
       <div className="container">
-        <p className="section-eyebrow">Nuestra filosofía</p>
-        <h2 className="section-title">Elevando lo cotidiano</h2>
         <div className="about-grid">
           <div className="about-text">
+            <p className="section-eyebrow">Nuestra filosofía</p>
+            <h2 className="section-title">Elevando lo cotidiano</h2>
             <p>
-              En Dichoso, creemos que la buena mesa es un arte que debe compartirse. Nacimos
-              con la visión de traer a Mairena del Aljarafe una propuesta gastronómica que
-              desafiara lo convencional sin perder el respeto por nuestras raíces.
-            </p>
-            <p>
-              Cada plato es el resultado de horas de experimentación, buscando el equilibrio
-              perfecto entre sabor, textura y presentación.
+              En Dichoso creemos que la buena mesa se comparte. Producto de temporada,
+              arroces con alma y una cocina que abraza la tradición sin miedo a innovar.
             </p>
             <blockquote className="quote">
-              "No solo damos de comer; creamos momentos para recordar en torno a una mesa."
+              Una taberna elegante, honesta y pensada para compartir.
             </blockquote>
           </div>
           <div className="features-grid">
@@ -223,34 +216,24 @@ function About() {
 }
 
 function Menu() {
-  const [catIndex, setCatIndex] = useState(0);
-  const current = MENU_DATA[catIndex];
-
   return (
     <section className="section" id="carta">
-      <div className="container container-narrow">
-        <div className="carta-header">
+      <div className="container">
+        <div className="carta-intro">
           <h2 className="carta-logo">Dichoso</h2>
           <p className="carta-subtitle">Tapas y arroces</p>
-          <p className="carta-phrase">Dichoso el día que entraste por aquí</p>
         </div>
-        <div className="carta-tabs">
-          {MENU_DATA.map((cat, i) => (
-            <button
-              key={cat.title}
-              className={`carta-tab ${i === catIndex ? "active" : ""}`}
-              onClick={() => setCatIndex(i)}
-            >
-              {cat.title}
-            </button>
-          ))}
-        </div>
-        <div className="carta-list" key={catIndex}>
-          {current.items.map((item, i) => (
-            <div key={item.name} className="carta-item-row" style={{ animationDelay: `${i * 0.1}s` }}>
-              <span className="carta-item-name">{item.name}</span>
-              <span className="carta-item-dots" />
-              <span className="carta-item-price">{item.price}</span>
+        <div className="carta-grid">
+          {MENU_DATA.map((cat) => (
+            <div key={cat.title} className="carta-block">
+              <h3 className="carta-block-title">{cat.title}</h3>
+              {cat.items.map((item) => (
+                <div key={item.name} className="carta-row">
+                  <span className="carta-name">{item.name}</span>
+                  <span className="carta-dots" />
+                  <span className="carta-price">{item.price}</span>
+                </div>
+              ))}
             </div>
           ))}
         </div>
@@ -261,19 +244,20 @@ function Menu() {
 
 function Especiales() {
   return (
-    <section className="especiales-section" id="especiales">
-      <div className="carta-container">
-        <h3 className="especiales-title">Especiales Dichoso</h3>
-        <p className="carta-phrase">Nuestros platos más aclamados</p>
+    <section className="section especiales-section" id="especiales">
+      <div className="container">
+        <p className="section-eyebrow">Especiales</p>
+        <h2 className="section-title">Especiales Dichoso</h2>
         <div className="especiales-grid">
           {ESPECIALES.map((esp) => (
             <div key={esp.name} className="especial-card">
-              <div className="especial-img-placeholder">
+              <div className="especial-img">
                 <span>Imagen próximamente</span>
               </div>
-              <div className="especial-info">
-                <h4 className="especial-name">{esp.name}</h4>
+              <div className="especial-body">
+                <h3 className="especial-name">{esp.name}</h3>
                 {esp.desc && <p className="especial-desc">{esp.desc}</p>}
+                <span className="especial-price">{esp.price}</span>
               </div>
             </div>
           ))}
@@ -284,70 +268,23 @@ function Especiales() {
 }
 
 function Gallery() {
-  const [visible, setVisible] = useState(false);
-  const [lightbox, setLightbox] = useState<number | null>(null);
-  const ref = useRef<HTMLElement>(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(([e]) => { setVisible(e.isIntersecting); }, { threshold: 0.1 });
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (lightbox === null) return;
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setLightbox(null);
-      if (e.key === "ArrowLeft") setLightbox((prev) => (prev !== null ? (prev - 1 + GALLERY.length) % GALLERY.length : null));
-      if (e.key === "ArrowRight") setLightbox((prev) => (prev !== null ? (prev + 1) % GALLERY.length : null));
-    };
-    document.addEventListener("keydown", handler);
-    return () => document.removeEventListener("keydown", handler);
-  }, [lightbox]);
-
-  const next = () => setLightbox((prev) => (prev !== null ? (prev + 1) % GALLERY.length : null));
-  const prev = () => setLightbox((prev) => (prev !== null ? (prev - 1 + GALLERY.length) % GALLERY.length : null));
-
   return (
-    <section className="section" id="galeria" ref={ref}>
+    <section className="section" id="galeria">
       <div className="container">
         <p className="section-eyebrow">Galería</p>
         <h2 className="section-title">Ambiente y cocina</h2>
-        <div className="gallery-grid">
-          {GALLERY.map((img, i) => (
-            <div key={i} className={`gallery-item ${i % 2 === 0 ? "slide-left" : "slide-right"} ${visible ? "visible" : ""}`} style={{ transitionDelay: `${i * 0.12}s` }} onClick={() => setLightbox(i)} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === "Enter") setLightbox(i); }}>
-              <img src={img.src} alt={img.alt} loading="lazy" className="gallery-img" />
-              <div className="gallery-overlay"><span>Ampliar</span></div>
-            </div>
-          ))}
-        </div>
+        <p className="gallery-note">Próximamente podrás ver aquí nuestras instalaciones y platos.</p>
       </div>
-
-      {lightbox !== null && (
-        <div className="lightbox" onClick={() => setLightbox(null)}>
-          <button className="lightbox-close" onClick={() => setLightbox(null)} aria-label="Cerrar">&times;</button>
-          <button className="lightbox-nav lightbox-prev" onClick={(e) => { e.stopPropagation(); prev(); }} aria-label="Anterior">&#8249;</button>
-          <button className="lightbox-nav lightbox-next" onClick={(e) => { e.stopPropagation(); next(); }} aria-label="Siguiente">&#8250;</button>
-          <img src={GALLERY[lightbox].src} alt={GALLERY[lightbox].alt} className="lightbox-img" onClick={(e) => e.stopPropagation()} />
-        </div>
-      )}
     </section>
   );
 }
 
 function Reviews() {
   return (
-    <section className="section bg-card">
+    <section className="section reviews-section">
       <div className="container">
         <p className="section-eyebrow">Opiniones</p>
-        <div className="reviews-header">
-          <h2 className="section-title">Lo que dicen nuestros clientes</h2>
-          <div className="rating-badge">
-            <span className="stars">★★★★★</span>
-            <span className="rating-text">5,0 · 321 reseñas</span>
-          </div>
-        </div>
+        <h2 className="section-title">Lo que dicen nuestros clientes</h2>
         <div className="reviews-grid">
           {REVIEWS.map((r) => (
             <div key={r.text} className="review-card">
