@@ -61,6 +61,16 @@ img {
   display: block;
 }
 
+/* ── Mantel - textura ────────────────────────── */
+.bg-mantel-texture {
+  background-image:
+    radial-gradient(circle at 18% 22%, rgba(255,255,255,0.20), transparent 26%),
+    radial-gradient(circle at 82% 70%, rgba(78,53,37,0.12), transparent 32%),
+    linear-gradient(105deg, rgba(255,255,255,0.12) 0%, transparent 20%, rgba(78,53,37,0.08) 38%, transparent 58%, rgba(255,255,255,0.08) 78%, transparent 100%),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.18) 0px, rgba(255,255,255,0.18) 1px, transparent 1px, transparent 12px),
+    repeating-linear-gradient(0deg, rgba(78,53,37,0.10) 0px, rgba(78,53,37,0.10) 1px, transparent 1px, transparent 14px);
+}
+
 /* ── Animations ──────────────────────────────── */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(24px); }
