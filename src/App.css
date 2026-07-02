@@ -689,14 +689,14 @@
     );
   opacity: 0.75;
 }
-.mantel-inner {
+.mantel-container {
   position: relative;
   max-width: 1100px;
   margin: 0 auto;
   padding: 0 2rem;
   z-index: 1;
 }
-.mantel-header {
+.mantel-intro {
   text-align: center;
   margin-bottom: 3.5rem;
 }
@@ -711,7 +711,7 @@
   display: block;
   margin-bottom: 0.5rem;
 }
-.mantel-title {
+.mantel-heading {
   font-family: "Cormorant Garamond", serif;
   font-size: clamp(2rem, 4.5vw, 3.2rem);
   color: #FAF7F2;
@@ -719,7 +719,7 @@
   line-height: 1.15;
   margin-bottom: 0.5rem;
 }
-.mantel-desc {
+.mantel-sub {
   font-family: "Roboto Condensed", sans-serif;
   font-size: 0.85rem;
   color: #FAF7F2;
@@ -729,65 +729,144 @@
   font-weight: 300;
   letter-spacing: 0.04em;
 }
-.mantel-cards {
+
+/* Mantel Rows (alternating editorial layout) */
+.mantel-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.mantel-row {
+  width: 100%;
+}
+.mantel-row-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.25rem;
+  gap: 2rem;
+  align-items: center;
 }
-.mantel-card {
+
+/* Visual placeholder */
+.mantel-visual {
+  aspect-ratio: 4 / 3;
+  background: #F1E9DD;
+  border: 1px solid #D9CDBE;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mantel-visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(107,75,52,0.04) 0px,
+      rgba(107,75,52,0.04) 1px,
+      transparent 1px,
+      transparent 18px
+    );
+}
+.mantel-visual-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+  padding: 1rem;
+}
+.mantel-visual-brand {
+  font-family: "Pinyon Script", cursive;
+  font-size: 1.8rem;
+  color: rgba(184,145,104,0.25);
+  line-height: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  white-space: nowrap;
+}
+.mantel-visual-icon {
+  color: rgba(184,145,104,0.3);
+  z-index: 1;
+}
+.mantel-visual-label {
+  font-family: "Roboto Condensed", sans-serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(107,75,52,0.4);
+  z-index: 1;
+  font-weight: 400;
+}
+
+/* Text block */
+.mantel-text {
   background: rgba(250, 247, 242, 0.94);
   border: 1px solid #D9CDBE;
-  box-shadow: 0 16px 40px rgba(78, 53, 37, 0.08);
+  box-shadow: 0 12px 32px rgba(78, 53, 37, 0.06);
   backdrop-filter: blur(6px);
 }
-.mantel-card-body {
-  padding: 1.5rem 1.75rem;
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-}
-.mantel-card-dark {
+.mantel-text-dark {
   background: #6B4B34;
-  border: 1px solid rgba(184,145,104,0.2);
+  border-color: rgba(184,145,104,0.2);
 }
-.mantel-card-icon {
+.mantel-text-body {
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.3rem;
+}
+.mantel-text-icon {
   width: 20px;
   height: 20px;
   color: #B89168;
-  flex-shrink: 0;
-  margin-top: 0.15rem;
+  margin-bottom: 0.25rem;
 }
-.mantel-card-dark .mantel-card-icon {
+.mantel-text-dark .mantel-text-icon {
   color: #B89168;
 }
-.mantel-card-label {
+.mantel-text-label {
   font-family: "Roboto Condensed", sans-serif;
   font-size: 0.55rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: #B89168;
   font-weight: 600;
-  display: block;
-  margin-bottom: 0.25rem;
 }
-.mantel-card-title {
+.mantel-text-title {
   font-family: "Cormorant Garamond", serif;
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   font-weight: 500;
   color: #4E3525;
   line-height: 1.25;
-  margin-bottom: 0.35rem;
+  margin: 0.1rem 0 0.35rem;
 }
-.mantel-card-text {
+.mantel-text-dark .mantel-text-title {
+  color: #FAF7F2;
+}
+.mantel-text-desc {
   font-family: "Roboto Condensed", sans-serif;
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   color: #7A6553;
-  line-height: 1.6;
-  margin-bottom: 0.75rem;
+  line-height: 1.65;
+  margin-bottom: 0.6rem;
+}
+.mantel-text-dark .mantel-text-desc {
+  color: #FAF7F2;
+  opacity: 0.85;
 }
 .mantel-btn {
   display: inline-block;
-  padding: 0.55rem 1.25rem;
+  padding: 0.55rem 1.3rem;
   background: #4E3525;
   color: #FAF7F2;
   font-family: "Roboto Condensed", sans-serif;
@@ -811,7 +890,7 @@
 }
 .mantel-btn-outline {
   display: inline-block;
-  padding: 0.55rem 1.25rem;
+  padding: 0.55rem 1.3rem;
   border: 1px solid #B89168;
   color: #B89168;
   background: transparent;
@@ -843,10 +922,12 @@
   .especiales-grid { grid-template-columns: repeat(2, 1fr); }
   .reviews-grid { grid-template-columns: 1fr; }
   .mantel-section { padding: 3.5rem 0; }
-  .mantel-cards { grid-template-columns: 1fr; gap: 1rem; }
-  .mantel-header { margin-bottom: 2.5rem; }
-  .mantel-card-body { padding: 1.25rem 1.5rem; }
-  .mantel-card-title { font-size: 1.05rem; }
+  .mantel-intro { margin-bottom: 2.5rem; }
+  .mantel-row-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+  .mantel-rows { gap: 1.5rem; }
+  .mantel-visual { aspect-ratio: 4 / 3; }
+  .mantel-text-body { padding: 1.25rem 1.5rem; }
+  .mantel-text-title { font-size: 1.1rem; }
 }
 @media (max-width: 480px) {
   .especiales-grid { grid-template-columns: 1fr; }
