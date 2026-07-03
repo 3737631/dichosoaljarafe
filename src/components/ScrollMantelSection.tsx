@@ -101,7 +101,7 @@ body{font-family:'Inter',sans-serif;background:#FAF7F2;color:#6B4423;overflow-x:
 <div id="mantel-sensorial">
   <div class="sticky-wrap">
     <div class="wl"><div class="wl-in"><div class="wl-dot"></div><div class="wl-dot"></div><div class="wl-dot"></div><div class="wl-dot"></div><div class="wl-dot"></div></div></div>
-    <div class="tt" id="tt"><div class="tt-b"><div class="tt-l">Experiencia Sensorial</div><div class="tt-h">Viste Nuestra Mesa</div><div class="tt-p">Desplázate hacia abajo lentamente para extender el mantel de terracota y descubrir nuestra historia y especialidades sobre él.</div></div></div>
+    <div class="tt" id="tt"><div class="tt-b"><div class="tt-l">Experiencia Sensorial</div><div class="tt-h">Viste Nuestra Mesa</div><div class="tt-p">Desplázate para descubrir nuestra cocina, nuestros arroces y todo lo que hace de Dichoso un lugar especial.</div></div></div>
     <div class="tc" id="tc">
       <div class="wav">
         <svg viewBox="0 0 1440 48" fill="#C8A97E" style="display:block;width:100%;height:48px;filter:drop-shadow(0 8px 4px rgba(107,68,35,.15))" preserveAspectRatio="none"><path d="M0,0 Q30,18 60,0 T120,0 T180,0 T240,0 T300,0 T360,0 T420,0 T480,0 T540,0 T600,0 T660,0 T720,0 T780,0 T840,0 T900,0 T960,0 T1020,0 T1080,0 T1140,0 T1200,0 T1260,0 T1320,0 T1380,0 T1440,0 L1440,48 L0,48 Z"/></svg>
@@ -113,23 +113,23 @@ body{font-family:'Inter',sans-serif;background:#FAF7F2;color:#6B4423;overflow-x:
             <div class="cs-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></div>
             <div class="cs-img"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
             <span class="cl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a2.5 2.5 0 0 1 0-5H20"/></svg> Desde 1994</span>
-            <div class="ct">Nuestra Historia</div>
-            <div class="cp">Venta El Capricho nació del sueño de reunir a las familias del Aljarafe sevillano en torno a una mesa generosa y honesta. Cada rincón evoca la calidez de antaño, donde la hospitalidad andaluza se sirve con el cariño de quien recibe a sus propios hermanos en casa.</div>
-            <div class="cf"><span>SABOR AUTÉNTICO</span><span>ALJARAFE DE SEVILLA</span></div>
+            <div class="ct">Cocina con Alma</div>
+            <div class="cp">En Dichoso creemos que la buena mesa se comparte. Producto de temporada, arroces con alma y una cocina que abraza la tradición sin miedo a innovar. Una taberna elegante, honesta y pensada para compartir.</div>
+            <div class="cf"><span>COCINA CONTEMPORÁNEA</span><span>MAIRENA DEL ALJARAFE</span></div>
           </div>
           <div class="card cc" id="d2">
             <div class="cc-r1"></div><div class="cc-r2"></div>
             <div class="cc-iw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg></div>
             <div class="cc-img"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="5"/><path d="M3 21h18"/><path d="M7 13l-2 8"/><path d="M17 13l2 8"/></svg></div>
-            <div class="cc-h">Especialidades</div>
-            <div class="cc-p">Las célebres croquetas cremosas de jamón ibérico, nuestras carnes nobles a la brasa y el tradicional arroz hecho a fuego lento.</div>
+            <div class="cc-h">Lo Más Dichoso</div>
+            <div class="cc-p">Nuestras croquetas de jamón ibérico de bellota, el steak tartar aliñado con tuétano asado y el arroz sabroso de carabinero con huevo frito son los imprescindibles de nuestra casa.</div>
             <a href="#carta" class="cb">Ver la Carta Completa</a>
           </div>
           <div class="card cd" id="d3">
             <span class="cl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg> Celebraciones</span>
-            <div class="ct">Comuniones, Bautizos y Bodas</div>
-            <div class="cp" style="margin-bottom:.75rem">Ofrecemos salones de gran aforo y preciosos patios andaluces al aire libre. Diseñamos menús de celebración a medida para garantizar que vuestro acontecimiento familiar sea insuperable.</div>
-            <div style="margin-top:.75rem"><a href="#eventos" class="cd-lk"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Personalizar mi Evento →</a></div>
+            <div class="ct">Arroces con Identidad</div>
+            <div class="cp" style="margin-bottom:.75rem">Nuestra especialidad, elaborados al momento. Arroz de carrillada y queso de cabra, arroz sabroso de carabinero y huevo frito, y el clásico arroz negro con alioli. Cada bocado es una experiencia única.</div>
+            <div style="margin-top:.75rem"><a href="#carta" class="cd-lk"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Ver Nuestra Carta →</a></div>
             <div class="cd-img"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
           </div>
           <div class="card cbr" id="d4">
@@ -137,10 +137,10 @@ body{font-family:'Inter',sans-serif;background:#FAF7F2;color:#6B4423;overflow-x:
             <div class="cbr-img"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
             <div class="cbr-in">
               <span class="cbr-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Contacto y Reservas</span>
-              <div class="cbr-h">Estamos a tu Lado</div>
+              <div class="cbr-h">Ven a Conocernos</div>
               <div style="display:flex;flex-direction:column;gap:.75rem;font-size:.75rem;font-family:'Sora',sans-serif;color:rgba(250,247,242,.85)">
-                <div class="cbr-ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><div><div class="cbr-b">Visítanos en el Aljarafe</div><div class="cbr-s">Tradición y sabor en cada plato</div></div></div>
-                <div class="cbr-ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><div><div class="cbr-b">Reserva por Teléfono</div><div class="cbr-s">Consulta nuestra carta y especialidades</div></div></div>
+                <div class="cbr-ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><div><div class="cbr-b">Av. de los Descubrimientos, 11</div><div class="cbr-s">41927 Mairena del Aljarafe · Sevilla</div></div></div>
+                <div class="cbr-ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><div><div class="cbr-b">664 24 32 80</div><div class="cbr-s">Almuerzo 13:00–16:30 · Cena 20:00–00:00</div></div></div>
               </div>
               <div class="cbr-ft"><a href="#reservas" class="cbr-btn">Reservar Mesa</a></div>
             </div>
@@ -148,30 +148,30 @@ body{font-family:'Inter',sans-serif;background:#FAF7F2;color:#6B4423;overflow-x:
         </div>
         <div class="ml">
           <div class="mcrd mcs" id="m1">
-            <span class="cl" style="font-size:8px;gap:.25rem;margin-bottom:.375rem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a2.5 2.5 0 0 1 0-5H20"/></svg> Nuestra Historia</span>
-            <div style="font-family:'Playfair Display',serif;font-weight:700;font-size:1.125rem;color:#6B4423;text-transform:uppercase;letter-spacing:.02em;margin-bottom:.5rem">Tradición Familiar</div>
-            <div class="cp">Venta El Capricho nació en 1994 del sueño de reunir a las familias del Aljarafe sevillano en torno a platos generosos y honestos. Conservamos la calidez de la hospitalidad andaluza tradicional.</div>
+            <span class="cl" style="font-size:8px;gap:.25rem;margin-bottom:.375rem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a2.5 2.5 0 0 1 0-5H20"/></svg> Sobre Nosotros</span>
+            <div style="font-family:'Playfair Display',serif;font-weight:700;font-size:1.125rem;color:#6B4423;text-transform:uppercase;letter-spacing:.02em;margin-bottom:.5rem">Cocina con Alma</div>
+            <div class="cp">En Dichoso creemos que la buena mesa se comparte. Producto de temporada, arroces con alma y una cocina que abraza la tradición sin miedo a innovar.</div>
           </div>
           <div class="mcrd" id="m2">
             <div class="mcc">
               <div class="mcc-r"></div>
               <div style="padding:.5rem;background:rgba(200,169,126,.1);border-radius:50%;margin-bottom:.375rem;position:relative;z-index:10"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:14px;height:14px;color:#6B4423"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg></div>
-              <div style="font-family:'Playfair Display',serif;font-weight:700;font-size:1rem;color:#6B4423;margin-bottom:.25rem;text-transform:uppercase;letter-spacing:.02em;z-index:10;position:relative">Especialidades</div>
-              <div style="font-size:10px;color:rgba(107,68,35,.85);line-height:1.625;max-width:190px;margin-bottom:.75rem;z-index:10;position:relative;font-family:'Sora',sans-serif">Deliciosas croquetas ibéricas de bellota, carnes tiernas al sarmiento y nuestro arroz artesanal dominical.</div>
+              <div style="font-family:'Playfair Display',serif;font-weight:700;font-size:1rem;color:#6B4423;margin-bottom:.25rem;text-transform:uppercase;letter-spacing:.02em;z-index:10;position:relative">Lo M&aacute;s Dichoso</div>
+              <div style="font-size:10px;color:rgba(107,68,35,.85);line-height:1.625;max-width:190px;margin-bottom:.75rem;z-index:10;position:relative;font-family:'Sora',sans-serif">Croquetas de jam&oacute;n ib&eacute;rico, steak tartar en tu&eacute;tano y arroz de carabinero: nuestros imprescindibles.</div>
               <a href="#carta" style="padding:.375rem .75rem;background:#6B4423;color:#FAF7F2;font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.15em;text-decoration:none;z-index:10;position:relative;display:inline-block">Ver Carta</a>
             </div>
           </div>
           <div class="mcrd mccd" id="m3">
             <span class="cl" style="font-size:8px;gap:.25rem;margin-bottom:.375rem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg> Celebraciones</span>
-            <div style="font-family:'Playfair Display',serif;font-weight:700;font-size:1.125rem;color:#6B4423;text-transform:uppercase;letter-spacing:.02em;margin-bottom:.5rem">Comuniones e Hitos</div>
-            <div class="cp">Disponemos de salones climatizados de gran aforo y amplios patios exteriores. Ofrecemos menús de banquete totalmente configurables para momentos memorables.</div>
+            <div style="font-family:'Playfair Display',serif;font-weight:700;font-size:1.125rem;color:#6B4423;text-transform:uppercase;letter-spacing:.02em;margin-bottom:.5rem">Arroces con Identidad</div>
+            <div class="cp">Arroz de carrillada y queso de cabra, arroz sabroso de carabinero y arroz negro con alioli. Elaborados al momento, con producto de temporada.</div>
           </div>
           <div class="mcrd mccb" id="m4">
             <div class="mccb-lb"></div>
             <div class="mccb-in">
               <span style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.2em;color:#C8A97E;display:flex;align-items:center;gap:.25rem;margin-bottom:.25rem;font-family:'Sora',sans-serif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:10px;height:10px"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Contacto y Reservas</span>
-              <div style="font-family:'Playfair Display',serif;font-weight:700;font-size:1.125rem;color:#FAF7F2;text-transform:uppercase;letter-spacing:.02em;margin-bottom:.625rem">Estamos a tu Lado</div>
-              <div style="font-size:11px;font-family:'Sora',sans-serif;color:rgba(250,247,242,.85);margin-bottom:.875rem"><div style="line-height:1.3">En el corazón del Aljarafe</div><div style="line-height:1.3">Tu mesa te espera</div></div>
+              <div style="font-family:'Playfair Display',serif;font-weight:700;font-size:1.125rem;color:#FAF7F2;text-transform:uppercase;letter-spacing:.02em;margin-bottom:.625rem">Ven a Conocernos</div>
+              <div style="font-size:11px;font-family:'Sora',sans-serif;color:rgba(250,247,242,.85);margin-bottom:.875rem"><div style="line-height:1.3">Av. Descubrimientos 11, Mairena</div><div style="line-height:1.3">664 24 32 80</div></div>
               <a href="#reservas" style="display:inline-block;padding:.375rem .875rem;background:#C8A97E;font-size:.75rem;font-weight:700;color:#6B4423;text-transform:uppercase;letter-spacing:.1em;text-decoration:none">Reservar Mesa</a>
             </div>
           </div>
