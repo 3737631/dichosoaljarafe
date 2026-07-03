@@ -35,10 +35,11 @@
 html {
   scroll-behavior: smooth;
   color-scheme: light;
+  background: var(--bg);
 }
 
 body {
-  background-color: var(--bg);
+  background: var(--bg);
   color: var(--cream);
   font-family: "Inter", sans-serif;
   font-weight: 300;
