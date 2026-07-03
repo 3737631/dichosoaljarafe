@@ -1,630 +1,308 @@
-import React, { useRef, useEffect } from 'react';
-
-function lerp(a: number, b: number, t: number) {
-  return a + (b - a) * t;
-}
-
-function clamp(val: number, min: number, max: number) {
-  return Math.max(min, Math.min(max, val));
-}
-
-function smoothstep(edge0: number, edge1: number, x: number) {
-  const t = clamp((x - edge0) / (edge1 - edge0), 0, 1);
-  return t;
-}
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform, useSpring } from 'motion/react';
+import { BookOpen, UtensilsCrossed, Heart, Phone, MapPin, Calendar } from 'lucide-react';
 
 export default function ScrollMantelSection() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const tableclothRef = useRef<HTMLDivElement>(null);
-  const tooltipRef = useRef<HTMLDivElement>(null);
-  const scrollFillRef = useRef<HTMLDivElement>(null);
 
-  const dCard1Ref = useRef<HTMLDivElement>(null);
-  const dCard2Ref = useRef<HTMLDivElement>(null);
-  const dCard3Ref = useRef<HTMLDivElement>(null);
-  const dCard4Ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end end'],
+  });
 
-  const mCard1Ref = useRef<HTMLDivElement>(null);
-  const mCard2Ref = useRef<HTMLDivElement>(null);
-  const mCard3Ref = useRef<HTMLDivElement>(null);
-  const mCard4Ref = useRef<HTMLDivElement>(null);
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 90,
+    damping: 28,
+    restDelta: 0.002
+  });
 
-  useEffect(() => {
-    const mantel = containerRef.current!;
-    const tablecloth = tableclothRef.current!;
-    const tooltip = tooltipRef.current!;
-    const scrollFill = scrollFillRef.current!;
+  const tableclothHeight = useTransform(smoothProgress, [0, 0.32], ['12%', '100%']);
+  const tableclothWaveY = useTransform(smoothProgress, (p) => Math.sin(p * Math.PI * 4.5) * 5);
 
-    function applyTransform(el: HTMLElement | null, opacity: number, scale: number, y: number, rotate: number) {
-      if (!el) return;
-      el.style.opacity = String(opacity);
-      el.style.transform = `scale(${scale}) translateY(${y}px) rotate(${rotate}deg)`;
-    }
+  // Desktop transforms — wider windows for smooth transitions at any speed
+  const item1Opacity = useTransform(smoothProgress, [0.22, 0.44], [0, 1]);
+  const item1Scale = useTransform(smoothProgress, [0.22, 0.46], [0.94, 1]);
+  const item1Y = useTransform(smoothProgress, [0.22, 0.46], [30, 0]);
+  const item1Rotate = useTransform(smoothProgress, [0.22, 0.46], [-3, -1]);
 
-    function update() {
-      const rect = mantel.getBoundingClientRect();
-      const totalHeight = mantel.clientHeight;
-      const viewHeight = window.innerHeight;
+  const item2Opacity = useTransform(smoothProgress, [0.38, 0.60], [0, 1]);
+  const item2Scale = useTransform(smoothProgress, [0.38, 0.62], [0.94, 1]);
+  const item2Y = useTransform(smoothProgress, [0.38, 0.62], [30, 0]);
+  const item2Rotate = useTransform(smoothProgress, [0.38, 0.62], [4, 1]);
 
-      const progress = clamp(1 - (rect.bottom - viewHeight) / (totalHeight - viewHeight), 0, 1);
-      const p = progress;
+  const item3Opacity = useTransform(smoothProgress, [0.54, 0.76], [0, 1]);
+  const item3Scale = useTransform(smoothProgress, [0.54, 0.78], [0.94, 1]);
+  const item3Y = useTransform(smoothProgress, [0.54, 0.78], [30, 0]);
+  const item3Rotate = useTransform(smoothProgress, [0.54, 0.78], [-2, 0.5]);
 
-      // Tablecloth height
-      const h = smoothstep(0, 0.32, p);
-      tablecloth.style.height = lerp(12, 100, h) + '%';
+  const item4Opacity = useTransform(smoothProgress, [0.70, 0.90], [0, 1]);
+  const item4Scale = useTransform(smoothProgress, [0.70, 0.92], [0.94, 1]);
+  const item4Y = useTransform(smoothProgress, [0.70, 0.92], [30, 0]);
+  const item4Rotate = useTransform(smoothProgress, [0.70, 0.92], [3, -0.5]);
 
-      const waveY = Math.sin(p * Math.PI * 4.5) * 5;
-      tablecloth.style.transform = `translateY(${waveY}px)`;
+  // Mobile transforms — wide cross-fade windows so no speed skips
+  const mItem1Opacity = useTransform(smoothProgress, [0.20, 0.28, 0.44, 0.52], [0, 1, 1, 0]);
+  const mItem1Y = useTransform(smoothProgress, [0.20, 0.28, 0.44, 0.52], [20, 0, 0, -20]);
 
-      scrollFill.style.transform = `scaleY(${p})`;
+  const mItem2Opacity = useTransform(smoothProgress, [0.44, 0.52, 0.66, 0.74], [0, 1, 1, 0]);
+  const mItem2Y = useTransform(smoothProgress, [0.44, 0.52, 0.66, 0.74], [20, 0, 0, -20]);
 
-      // Tooltip
-      const tipOpacity = 1 - smoothstep(0, 0.18, p);
-      if (tipOpacity <= 0) {
-        tooltip.style.opacity = '0';
-        tooltip.style.pointerEvents = 'none';
-      } else {
-        tooltip.style.opacity = String(tipOpacity);
-        tooltip.style.transform = `translateY(${smoothstep(0, 0.18, p) * -25}px)`;
-        tooltip.style.pointerEvents = 'none';
-      }
+  const mItem3Opacity = useTransform(smoothProgress, [0.56, 0.64, 0.76, 0.82], [0, 1, 1, 0]);
+  const mItem3Y = useTransform(smoothProgress, [0.56, 0.64, 0.76, 0.82], [20, 0, 0, -20]);
 
-      const isDesktop = window.innerWidth >= 768;
-
-      if (isDesktop) {
-        const p1 = smoothstep(0.22, 0.44, p);
-        applyTransform(dCard1Ref.current, p1, lerp(0.94, 1, p1), lerp(30, 0, p1), lerp(-3, -1, p1));
-
-        const p2 = smoothstep(0.38, 0.60, p);
-        applyTransform(dCard2Ref.current, p2, lerp(0.94, 1, p2), lerp(30, 0, p2), lerp(4, 1, p2));
-
-        const p3 = smoothstep(0.54, 0.76, p);
-        applyTransform(dCard3Ref.current, p3, lerp(0.94, 1, p3), lerp(30, 0, p3), lerp(-2, 0.5, p3));
-
-        const p4 = smoothstep(0.70, 0.90, p);
-        applyTransform(dCard4Ref.current, p4, lerp(0.94, 1, p4), lerp(30, 0, p4), lerp(3, -0.5, p4));
-      } else {
-        const mp1 = smoothstep(0.20, 0.28, p);
-        const mp1out = smoothstep(0.44, 0.52, p);
-        if (mCard1Ref.current) {
-          if (p < 0.44) {
-            mCard1Ref.current.style.opacity = String(mp1);
-            mCard1Ref.current.style.transform = `translateY(${lerp(20, 0, mp1)}px)`;
-          } else {
-            mCard1Ref.current.style.opacity = String(1 - mp1out);
-            mCard1Ref.current.style.transform = `translateY(${lerp(0, -20, mp1out)}px)`;
-          }
-        }
-
-        const mp2 = smoothstep(0.44, 0.52, p);
-        const mp2out = smoothstep(0.66, 0.74, p);
-        if (mCard2Ref.current) {
-          if (p < 0.66) {
-            mCard2Ref.current.style.opacity = String(mp2);
-            mCard2Ref.current.style.transform = `translateY(${lerp(20, 0, mp2)}px)`;
-          } else {
-            mCard2Ref.current.style.opacity = String(1 - mp2out);
-            mCard2Ref.current.style.transform = `translateY(${lerp(0, -20, mp2out)}px)`;
-          }
-        }
-
-        const mp3 = smoothstep(0.56, 0.64, p);
-        const mp3out = smoothstep(0.76, 0.82, p);
-        if (mCard3Ref.current) {
-          if (p < 0.76) {
-            mCard3Ref.current.style.opacity = String(mp3);
-            mCard3Ref.current.style.transform = `translateY(${lerp(20, 0, mp3)}px)`;
-          } else {
-            mCard3Ref.current.style.opacity = String(1 - mp3out);
-            mCard3Ref.current.style.transform = `translateY(${lerp(0, -20, mp3out)}px)`;
-          }
-        }
-
-        const mp4 = smoothstep(0.72, 0.82, p);
-        if (mCard4Ref.current) {
-          mCard4Ref.current.style.opacity = String(mp4);
-          mCard4Ref.current.style.transform = `translateY(${lerp(20, 0, mp4)}px)`;
-        }
-      }
-
-      requestAnimationFrame(update);
-    }
-
-    requestAnimationFrame(update);
-  }, []);
+  const mItem4Opacity = useTransform(smoothProgress, [0.72, 0.82, 1.0, 1.0], [0, 1, 1, 1]);
+  const mItem4Y = useTransform(smoothProgress, [0.72, 0.82], [20, 0]);
 
   return (
-    <div
+    <div 
       id="mantel-sensorial"
-      ref={containerRef}
-      style={{
-        position: 'relative',
-        width: '100%',
-        height: '500vh',
-      }}
+      ref={containerRef} 
+      className="relative w-full"
+      style={{ height: '500vh' }}
     >
-      <div
-        style={{
-          position: 'sticky',
-          top: 0,
-          height: '100vh',
-          width: '100%',
-          overflow: 'hidden',
-          background: '#FAF7F0',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-          userSelect: 'none',
-        }}
-      >
+      <div className="sticky top-0 h-screen w-full overflow-hidden bg-surface flex flex-col justify-between select-none">
+        
         {/* Wood lines */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            pointerEvents: 'none',
-            opacity: 0.15,
-          }}
-        >
-          <div
-            style={{
-              width: '100%',
-              height: '100%',
-              display: 'flex',
-              justifyContent: 'space-between',
-              padding: '0 2rem',
-            }}
-          >
+        <div className="absolute inset-0 pointer-events-none opacity-15">
+          <div className="w-full h-full flex justify-between px-8 sm:px-12">
             {[...Array(5)].map((_, i) => (
-              <div
-                key={i}
-                style={{
-                  width: '1px',
-                  height: '100%',
-                  background: '#6B5A45',
-                  boxShadow: '0 0 8px rgba(107,90,69,0.3)',
-                }}
-              />
+              <div key={i} className="w-[1px] h-full bg-brown shadow-[0_0_8px_rgba(107,90,69,0.3)]"></div>
             ))}
           </div>
         </div>
 
         {/* Intro tooltip */}
-        <div
-          ref={tooltipRef}
-          style={{
-            position: 'absolute',
-            top: '4rem',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            textAlign: 'center',
-            zIndex: 30,
-            maxWidth: '28rem',
-            width: '100%',
-            padding: '0 1.5rem',
-            pointerEvents: 'none',
-          }}
-        >
-          <div
-            style={{
-              background: 'rgba(250,247,240,0.95)',
-              border: '1px solid #D6C3A5',
-              padding: '1.25rem',
-              boxShadow: '0 10px 40px rgba(63,52,40,0.12)',
+        <div className="absolute top-16 sm:top-20 left-1/2 -translate-x-1/2 text-center z-30 max-w-sm sm:max-w-md w-full px-6 pointer-events-none">
+          <motion.div 
+            style={{ 
+              opacity: useTransform(smoothProgress, [0, 0.18], [1, 0]),
+              y: useTransform(smoothProgress, [0, 0.18], [0, -25])
             }}
+            className="bg-surface/95 border border-border p-5 sm:p-6 shadow-xl rounded-none backdrop-blur-sm"
           >
-            <span
-              style={{
-                fontSize: '9px',
-                fontWeight: 800,
-                textTransform: 'uppercase',
-                letterSpacing: '0.25em',
-                color: '#B8826A',
-              }}
-            >
+            <span className="text-[9px] font-extrabold uppercase tracking-[0.25em] text-accent">
               Experiencia Sensorial
             </span>
-            <h3
-              style={{
-                fontFamily: "'Playfair Display', serif",
-                fontWeight: 700,
-                fontSize: '1.125rem',
-                color: '#3F3428',
-                marginTop: '0.25rem',
-                textTransform: 'uppercase',
-                letterSpacing: '0.02em',
-              }}
-            >
+            <h3 className="font-serif font-bold text-lg sm:text-xl text-text mt-1 uppercase tracking-wide">
               Viste Nuestra Mesa
             </h3>
-            <p
-              style={{
-                fontSize: '0.75rem',
-                color: '#6B5A45',
-                marginTop: '0.5rem',
-                lineHeight: 1.625,
-              }}
-            >
+            <p className="text-xs text-brown font-sans mt-2 leading-relaxed">
               Desplázate hacia abajo lentamente para extender el mantel de terracota y descubrir nuestra historia y especialidades sobre él.
             </p>
-          </div>
+
+          </motion.div>
         </div>
 
-        {/* Tablecloth */}
-        <div
-          ref={tableclothRef}
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            zIndex: 10,
-            height: '12%',
-            backgroundColor: '#B8826A',
-            boxShadow: '0 15px 40px rgba(63,52,40,0.18)',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            overflow: 'hidden',
+        {/* The tablecloth */}
+        <motion.div 
+          style={{ 
+            height: tableclothHeight,
+            y: tableclothWaveY,
+            backgroundColor: '#B8826A'
           }}
+          className="absolute top-0 left-0 w-full z-10 shadow-[0_15px_40px_rgba(63,52,40,0.18)] flex flex-col justify-between overflow-hidden"
         >
-          <div
+          <div 
+            className="absolute inset-0 opacity-[0.14] pointer-events-none"
             style={{
-              position: 'absolute',
-              inset: 0,
-              opacity: 0.14,
-              pointerEvents: 'none',
-              backgroundImage:
-                'linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(0deg, rgba(255,255,255,0.5) 1px, transparent 1px)',
-              backgroundSize: '10px 10px',
+              backgroundImage: `
+                linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px),
+                linear-gradient(0deg, rgba(255,255,255,0.5) 1px, transparent 1px)
+              `,
+              backgroundSize: '10px 10px'
             }}
           />
 
           {/* SVG Wavy Trim */}
-          <div
-            style={{
-              position: 'absolute',
-              bottom: 0,
-              left: 0,
-              width: '100%',
-              zIndex: 25,
-              transform: 'translateY(96%)',
-              pointerEvents: 'none',
-              userSelect: 'none',
-            }}
-          >
-            <svg viewBox="0 0 1440 48" fill="#B8826A" style={{ width: '100%', height: 48, filter: 'drop-shadow(0 8px 4px rgba(63,52,40,0.15))' }} preserveAspectRatio="none">
+          <div className="absolute bottom-0 left-0 w-full z-25 translate-y-[96%] pointer-events-none select-none">
+            <svg 
+              viewBox="0 0 1440 48" 
+              fill="#B8826A" 
+              className="w-full h-12 drop-shadow-[0_8px_4px_rgba(63,52,40,0.15)]"
+              preserveAspectRatio="none"
+            >
               <path d="M0,0 Q30,18 60,0 T120,0 T180,0 T240,0 T300,0 T360,0 T420,0 T480,0 T540,0 T600,0 T660,0 T720,0 T780,0 T840,0 T900,0 T960,0 T1020,0 T1080,0 T1140,0 T1200,0 T1260,0 T1320,0 T1380,0 T1440,0 L1440,48 L0,48 Z" />
             </svg>
-            <svg viewBox="0 0 1440 24" fill="none" stroke="#F3EEE4" strokeWidth="2" strokeDasharray="4 6" style={{ width: '100%', height: 24, marginTop: -40, opacity: 0.35 }} preserveAspectRatio="none">
+            <svg 
+              viewBox="0 0 1440 24" 
+              fill="none" 
+              stroke="#F3EEE4" 
+              strokeWidth="2" 
+              strokeDasharray="4 6"
+              className="w-full h-6 -mt-10 opacity-35"
+              preserveAspectRatio="none"
+            >
               <path d="M0,0 Q30,12 60,0 T120,0 T180,0 T240,0 T300,0 T360,0 T420,0 T480,0 T540,0 T600,0 T660,0 T720,0 T780,0 T840,0 T900,0 T960,0 T1020,0 T1080,0 T1140,0 T1200,0 T1260,0 T1320,0 T1380,0 T1440,0" />
             </svg>
           </div>
-
-          <div
-            style={{
-              width: '100%',
-              height: '100%',
-              maxWidth: '72rem',
-              margin: '0 auto',
-              padding: '3.5rem 1rem',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              position: 'relative',
-              zIndex: 20,
-              overflow: 'hidden',
-            }}
-          >
-            {/* Desktop grid */}
-            <div
-              style={{
-                display: 'none',
-                gridTemplateColumns: '1fr 1fr',
-                gap: '1.5rem',
-                alignItems: 'center',
-              }}
-              className="md:grid lg:gap-8"
-            >
-              {/* Card 1 */}
-              <div
-                ref={dCard1Ref}
-                style={{
-                  background: '#FAF7F0',
-                  border: '1px solid #D6C3A5',
-                  padding: '1.75rem',
-                  position: 'relative',
-                  overflow: 'hidden',
-                }}
+          
+          <div className="w-full h-full max-w-6xl mx-auto px-4 sm:px-6 py-14 md:py-20 flex flex-col justify-center relative z-20 overflow-hidden">
+            
+            {/* Desktop balanced layout */}
+            <div className="hidden md:grid grid-cols-2 gap-6 lg:gap-8 items-center justify-center">
+              
+              <motion.div 
+                style={{ opacity: item1Opacity, scale: item1Scale, y: item1Y, rotate: item1Rotate }}
+                className="bg-surface p-7 border border-border rounded-none relative overflow-hidden"
               >
-                <div style={{ position: 'absolute', right: '-1.5rem', bottom: '-1.5rem', width: '6rem', height: '6rem', color: 'rgba(184,130,106,0.1)', pointerEvents: 'none' }}>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style={{ width: '100%', height: '100%', strokeWidth: 1 }}><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+                <div className="absolute -right-6 -bottom-6 w-24 h-24 text-accent/10 pointer-events-none">
+                  <BookOpen className="w-full h-full stroke-[1]" />
                 </div>
-                <span style={{ fontSize: '9px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.2em', color: '#B8826A', display: 'flex', alignItems: 'center', gap: '0.375rem', marginBottom: '0.5rem' }}>
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
-                  Desde 1994
+                <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-accent font-sans flex items-center gap-1.5 mb-2">
+                  <BookOpen className="w-3 h-3" /> Desde 1994
                 </span>
-                <h4 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: '1.25rem', color: '#3F3428', lineHeight: 1, marginBottom: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.02em' }}>
+                <h4 className="font-serif font-bold text-xl text-text leading-none mb-3 uppercase tracking-wide">
                   Nuestra Historia
                 </h4>
-                <p style={{ fontSize: '0.8125rem', color: 'rgba(63,52,40,0.9)', lineHeight: 1.625 }}>
+                <p className="text-xs sm:text-sm text-text/90 leading-relaxed font-sans">
                   Venta El Capricho nació del sueño de reunir a las familias del Aljarafe sevillano en torno a una mesa generosa y honesta. Cada rincón evoca la calidez de antaño, donde la hospitalidad andaluza se sirve con el cariño de quien recibe a sus propios hermanos en casa.
                 </p>
-                <div style={{ marginTop: '1rem', paddingTop: '0.875rem', borderTop: '1px solid rgba(214,195,165,0.5)', display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: '#6B5A45', fontFamily: 'monospace' }}>
+                <div className="mt-4 pt-3.5 border-t border-border/50 flex items-center justify-between text-[10px] text-brown font-mono">
                   <span>SABOR AUTÉNTICO</span>
                   <span>ALJARAFE DE SEVILLA</span>
                 </div>
-              </div>
+              </motion.div>
 
-              {/* Card 2 circle */}
-              <div
-                ref={dCard2Ref}
-                style={{
-                  background: '#F3EEE4',
-                  border: '4px solid #FAF7F0',
-                  width: '100%',
-                  maxWidth: '320px',
-                  aspectRatio: '1/1',
-                  borderRadius: '50%',
-                  margin: '0 auto',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  textAlign: 'center',
-                  position: 'relative',
-                  overflow: 'hidden',
-                }}
+              <motion.div 
+                style={{ opacity: item2Opacity, scale: item2Scale, y: item2Y, rotate: item2Rotate }}
+                className="bg-background p-6 rounded-full aspect-square max-w-[320px] lg:max-w-[340px] mx-auto border-4 border-surface flex flex-col justify-center items-center text-center relative overflow-hidden"
               >
-                <div style={{ position: 'absolute', inset: '10px', borderRadius: '50%', border: '1px dashed rgba(214,195,165,0.3)', pointerEvents: 'none' }} />
-                <div style={{ position: 'absolute', inset: '16px', borderRadius: '50%', border: '1px solid rgba(214,195,165,0.5)', pointerEvents: 'none' }} />
-                <div style={{ padding: '0.625rem', background: 'rgba(184,130,106,0.1)', borderRadius: '50%', marginBottom: '0.625rem', position: 'relative', zIndex: 10 }}>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B8826A"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>
+                <div className="absolute inset-2.5 rounded-full border border-dashed border-border/30 pointer-events-none" />
+                <div className="absolute inset-4 rounded-full border border-border/50 pointer-events-none" />
+                <div className="p-2.5 bg-accent/10 rounded-full mb-2.5 relative z-10">
+                  <UtensilsCrossed className="w-4 h-4 text-accent" />
                 </div>
-                <h4 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: '1.125rem', color: '#3F3428', marginBottom: '0.25rem', position: 'relative', zIndex: 10, textTransform: 'uppercase', letterSpacing: '0.02em' }}>
+                <h4 className="font-serif font-bold text-lg text-text mb-1 relative z-10 uppercase tracking-wide">
                   Especialidades
                 </h4>
-                <p style={{ fontSize: '0.75rem', color: 'rgba(63,52,40,0.95)', lineHeight: 1.625, maxWidth: '210px', position: 'relative', zIndex: 10, marginBottom: '0.75rem' }}>
+                <p className="text-xs text-text/95 leading-relaxed font-sans max-w-[210px] relative z-10 mb-3">
                   Las célebres croquetas cremosas de jamón ibérico, nuestras carnes nobles a la brasa y el tradicional arroz hecho a fuego lento.
                 </p>
-                <a href="#carta" style={{ padding: '0.375rem 0.875rem', background: '#3F3428', color: '#fff', fontSize: '8px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.15em', textDecoration: 'none', position: 'relative', zIndex: 10 }}>
+                <a href="#carta" className="px-3.5 py-1.5 bg-text hover:bg-brown text-[8px] font-bold text-white uppercase tracking-widest transition-colors duration-200 pointer-events-auto rounded-none relative z-10">
                   Ver la Carta Completa
                 </a>
-              </div>
+              </motion.div>
 
-              {/* Card 3 */}
-              <div
-                ref={dCard3Ref}
-                style={{
-                  background: '#FAF7F0',
-                  border: '4px double #D6C3A5',
-                  padding: '1.75rem',
-                  position: 'relative',
-                  overflow: 'hidden',
-                }}
+              <motion.div 
+                style={{ opacity: item3Opacity, scale: item3Scale, y: item3Y, rotate: item3Rotate }}
+                className="bg-surface p-7 border-4 border-double border-border rounded-none relative overflow-hidden"
               >
-                <span style={{ fontSize: '9px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.2em', color: '#B8826A', display: 'flex', alignItems: 'center', gap: '0.375rem', marginBottom: '0.5rem' }}>
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
-                  Celebraciones
+                <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-accent font-sans flex items-center gap-1.5 mb-2">
+                  <Heart className="w-3 h-3 text-accent" /> Celebraciones
                 </span>
-                <h4 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: '1.25rem', color: '#3F3428', lineHeight: 1, marginBottom: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.02em' }}>
+                <h4 className="font-serif font-bold text-xl text-text leading-none mb-3 uppercase tracking-wide">
                   Comuniones, Bautizos y Bodas
                 </h4>
-                <p style={{ fontSize: '0.8125rem', color: 'rgba(63,52,40,0.9)', lineHeight: 1.625, marginBottom: '0.75rem' }}>
+                <p className="text-xs sm:text-sm text-text/90 leading-relaxed font-sans mb-3">
                   Ofrecemos salones de gran aforo y preciosos patios andaluces al aire libre. Diseñamos menús de celebración a medida para garantizar que vuestro acontecimiento familiar sea insuperable.
                 </p>
-                <a href="#eventos" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.375rem', fontSize: '0.75rem', fontWeight: 700, color: '#B8826A', textDecoration: 'none' }}>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                  Personalizar mi Evento →
+                <a href="#eventos" className="inline-flex items-center gap-1.5 text-xs font-bold text-accent hover:text-text transition-colors pointer-events-auto">
+                  <Calendar className="w-4 h-4" /> Personalizar mi Evento →
                 </a>
-              </div>
+              </motion.div>
 
-              {/* Card 4 brown */}
-              <div
-                ref={dCard4Ref}
-                style={{
-                  background: '#6B5A45',
-                  color: '#F3EEE4',
-                  padding: '1.75rem',
-                  border: '1px solid rgba(207,194,174,0.25)',
-                  position: 'relative',
-                  overflow: 'hidden',
-                }}
+              <motion.div 
+                style={{ opacity: item4Opacity, scale: item4Scale, y: item4Y, rotate: item4Rotate }}
+                className="bg-brown text-[#F3EEE4] p-7 border border-[#CFC2AE]/25 rounded-none relative overflow-hidden"
               >
-                <div style={{ position: 'absolute', top: 0, left: 0, width: '12px', height: '100%', background: 'rgba(0,0,0,0.15)', pointerEvents: 'none' }} />
-                <div style={{ paddingLeft: '0.875rem' }}>
-                  <span style={{ fontSize: '9px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.2em', color: '#B8826A', display: 'flex', alignItems: 'center', gap: '0.375rem', marginBottom: '0.5rem' }}>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                    Datos de Contacto
+                <div className="absolute top-0 left-0 w-3 h-full bg-black/15 pointer-events-none" />
+                <div className="pl-3.5">
+                  <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#B8826A] font-sans flex items-center gap-1.5 mb-2">
+                    <Phone className="w-3 h-3" /> Datos de Contacto
                   </span>
-                  <h4 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: '1.25rem', color: '#fff', lineHeight: 1, marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.02em' }}>
+                  <h4 className="font-serif font-bold text-xl text-white leading-none mb-4 uppercase tracking-wide">
                     Reservas y Dirección
                   </h4>
-                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.625rem', marginBottom: '0.75rem', fontSize: '0.75rem', color: 'rgba(243,238,228,0.85)' }}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B8826A" style={{ flexShrink: 0, marginTop: '2px' }}><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                    <div>
-                      <p style={{ fontWeight: 700, color: '#fff' }}>Venta El Capricho</p>
-                      <p style={{ color: 'rgba(243,238,228,0.7)' }}>Calle Mandarina 2, Mairena del Aljarafe</p>
+                  <div className="space-y-3 text-xs font-sans text-[#F3EEE4]/85">
+                    <div className="flex items-start gap-2.5">
+                      <MapPin className="w-3.5 h-3.5 text-[#B8826A] shrink-0 mt-0.5" />
+                      <div>
+                        <p className="font-bold text-white">Venta El Capricho</p>
+                        <p className="text-[#F3EEE4]/70">Calle Mandarina 2, Mairena del Aljarafe</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2.5">
+                      <Phone className="w-3.5 h-3.5 text-[#B8826A] shrink-0 mt-0.5" />
+                      <div>
+                        <p className="font-bold text-white">Llámanos</p>
+                        <p className="text-[#F3EEE4]/70">664 424 736 (Atención rápida)</p>
+                      </div>
                     </div>
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.625rem', marginBottom: '0.75rem', fontSize: '0.75rem', color: 'rgba(243,238,228,0.85)' }}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B8826A" style={{ flexShrink: 0, marginTop: '2px' }}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                    <div>
-                      <p style={{ fontWeight: 700, color: '#fff' }}>Llámanos</p>
-                      <p style={{ color: 'rgba(243,238,228,0.7)' }}>664 424 736 (Atención rápida)</p>
-                    </div>
-                  </div>
-                  <div style={{ marginTop: '1.25rem', paddingTop: '0.75rem', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
-                    <a href="#reservas" style={{ padding: '0.375rem 0.875rem', background: '#B8826A', color: '#3F3428', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', textDecoration: 'none', display: 'inline-block' }}>
+                  <div className="mt-5 pt-3 border-t border-white/10 flex">
+                    <a href="#reservas" className="px-3.5 py-1.5 bg-[#B8826A] hover:bg-white text-xs font-bold text-text uppercase tracking-wider transition-colors duration-200 pointer-events-auto rounded-none">
                       Reservar Mesa
                     </a>
                   </div>
                 </div>
-              </div>
+              </motion.div>
+
             </div>
 
             {/* Mobile layout */}
-            <div
-              style={{
-                display: 'flex',
-                position: 'relative',
-                width: '100%',
-                height: '60vh',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-              className="md:hidden"
-            >
-              {/* Mobile card 1 */}
-              <div
-                ref={mCard1Ref}
-                style={{
-                  position: 'absolute',
-                  left: '0.5rem',
-                  right: '0.5rem',
-                  background: '#FAF7F0',
-                  border: '1px solid #D6C3A5',
-                  padding: '1.25rem',
-                }}
-              >
-                <span style={{ fontSize: '8px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.2em', color: '#B8826A', display: 'flex', alignItems: 'center', gap: '0.25rem', marginBottom: '0.375rem' }}>
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
-                  Nuestra Historia
+            <div className="md:hidden relative w-full h-[60vh] flex items-center justify-center">
+              
+              <motion.div style={{ opacity: mItem1Opacity, y: mItem1Y }} className="absolute inset-x-2 bg-surface p-5 border border-border rounded-none">
+                <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-accent font-sans flex items-center gap-1 mb-1.5">
+                  <BookOpen className="w-3 h-3" /> Nuestra Historia
                 </span>
-                <h4 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: '1.125rem', color: '#3F3428', textTransform: 'uppercase', letterSpacing: '0.02em', marginBottom: '0.5rem' }}>
-                  Tradición Familiar
-                </h4>
-                <p style={{ fontSize: '0.75rem', color: 'rgba(63,52,40,0.9)', lineHeight: 1.625 }}>
+                <h4 className="font-serif font-bold text-lg text-text uppercase tracking-wide mb-2">Tradición Familiar</h4>
+                <p className="text-xs text-text/90 leading-relaxed font-sans">
                   Venta El Capricho nació en 1994 del sueño de reunir a las familias del Aljarafe sevillano en torno a platos generosos y honestos. Conservamos la calidez de la hospitalidad andaluza tradicional.
                 </p>
-              </div>
+              </motion.div>
 
-              {/* Mobile card 2 */}
-              <div
-                ref={mCard2Ref}
-                style={{
-                  position: 'absolute',
-                  width: '270px',
-                  height: '270px',
-                  background: '#F3EEE4',
-                  borderRadius: '50%',
-                  border: '4px solid #FAF7F0',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  textAlign: 'center',
-                  padding: '1.25rem',
-                  overflow: 'hidden',
-                }}
-              >
-                <div style={{ position: 'absolute', inset: '10px', borderRadius: '50%', border: '1px dashed rgba(214,195,165,0.3)', pointerEvents: 'none' }} />
-                <div style={{ padding: '0.5rem', background: 'rgba(184,130,106,0.1)', borderRadius: '50%', marginBottom: '0.375rem', position: 'relative', zIndex: 10 }}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B8826A"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>
+              <motion.div style={{ opacity: mItem2Opacity, y: mItem2Y }} className="absolute w-[270px] h-[270px] bg-background rounded-full border-4 border-surface flex flex-col justify-center items-center text-center p-5 relative overflow-hidden">
+                <div className="absolute inset-2.5 bg-dashed border border-dashed border-border/30 pointer-events-none rounded-full" />
+                <div className="p-2 bg-accent/10 rounded-full mb-1.5 relative z-10">
+                  <UtensilsCrossed className="w-3.5 h-3.5 text-accent" />
                 </div>
-                <h4 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: '1rem', color: '#3F3428', textTransform: 'uppercase', letterSpacing: '0.02em', marginBottom: '0.25rem', position: 'relative', zIndex: 10 }}>
-                  Especialidades
-                </h4>
-                <p style={{ fontSize: '10px', color: 'rgba(63,52,40,0.95)', lineHeight: 1.625, maxWidth: '190px', marginBottom: '0.75rem', position: 'relative', zIndex: 10 }}>
+                <h4 className="font-serif font-bold text-base text-text uppercase tracking-wide mb-1">Especialidades</h4>
+                <p className="text-[10px] text-text/95 leading-relaxed font-sans max-w-[190px] mb-3">
                   Deliciosas croquetas ibéricas de bellota, carnes tiernas al sarmiento y nuestro arroz artesanal dominical.
                 </p>
-                <a href="#carta" style={{ padding: '0.375rem 0.75rem', background: '#3F3428', color: '#fff', fontSize: '8px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.15em', textDecoration: 'none', position: 'relative', zIndex: 10 }}>
-                  Ver Carta
-                </a>
-              </div>
+                <a href="#carta" className="px-3 py-1 bg-text text-[8px] font-bold text-white uppercase tracking-widest rounded-none relative z-10">Ver Carta</a>
+              </motion.div>
 
-              {/* Mobile card 3 */}
-              <div
-                ref={mCard3Ref}
-                style={{
-                  position: 'absolute',
-                  left: '0.5rem',
-                  right: '0.5rem',
-                  background: '#FAF7F0',
-                  border: '4px double #D6C3A5',
-                  padding: '1.25rem',
-                }}
-              >
-                <span style={{ fontSize: '8px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.2em', color: '#B8826A', display: 'flex', alignItems: 'center', gap: '0.25rem', marginBottom: '0.375rem' }}>
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
-                  Celebraciones
+              <motion.div style={{ opacity: mItem3Opacity, y: mItem3Y }} className="absolute inset-x-2 bg-surface p-5 border-4 border-double border-border rounded-none">
+                <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-accent font-sans flex items-center gap-1 mb-1.5">
+                  <Heart className="w-3 h-3 text-accent" /> Celebraciones
                 </span>
-                <h4 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: '1.125rem', color: '#3F3428', textTransform: 'uppercase', letterSpacing: '0.02em', marginBottom: '0.5rem' }}>
-                  Comuniones e Hitos
-                </h4>
-                <p style={{ fontSize: '0.75rem', color: 'rgba(63,52,40,0.9)', lineHeight: 1.625 }}>
+                <h4 className="font-serif font-bold text-lg text-text uppercase tracking-wide mb-2">Comuniones e Hitos</h4>
+                <p className="text-xs text-text/90 leading-relaxed font-sans mb-3.5">
                   Disponemos de salones climatizados de gran aforo y amplios patios exteriores. Ofrecemos menús de banquete totalmente configurables para momentos memorables.
                 </p>
-              </div>
+              </motion.div>
 
-              {/* Mobile card 4 */}
-              <div
-                ref={mCard4Ref}
-                style={{
-                  position: 'absolute',
-                  left: '0.5rem',
-                  right: '0.5rem',
-                  background: '#6B5A45',
-                  color: '#F3EEE4',
-                  padding: '1.25rem',
-                  border: '1px solid rgba(207,194,174,0.25)',
-                }}
-              >
-                <div style={{ position: 'absolute', top: 0, left: 0, width: '10px', height: '100%', background: 'rgba(0,0,0,0.15)', pointerEvents: 'none' }} />
-                <div style={{ paddingLeft: '0.75rem' }}>
-                  <span style={{ fontSize: '8px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.2em', color: '#B8826A', display: 'flex', alignItems: 'center', gap: '0.25rem', marginBottom: '0.25rem' }}>
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                    Datos Útiles
+              <motion.div style={{ opacity: mItem4Opacity, y: mItem4Y }} className="absolute inset-x-2 bg-brown text-[#F3EEE4] p-5 border border-[#CFC2AE]/25 rounded-none">
+                <div className="absolute top-0 left-0 w-2.5 h-full bg-black/15 pointer-events-none" />
+                <div className="pl-3">
+                  <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-[#B8826A] font-sans flex items-center gap-1 mb-1">
+                    <Phone className="w-2.5 h-2.5" /> Datos Útiles
                   </span>
-                  <h4 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: '1.125rem', color: '#fff', textTransform: 'uppercase', letterSpacing: '0.02em', marginBottom: '0.625rem' }}>
-                    Contacto
-                  </h4>
-                  <div style={{ fontSize: '11px', color: 'rgba(243,238,228,0.85)', marginBottom: '0.875rem' }}>
-                    <p style={{ lineHeight: 1.3 }}>Calle Mandarina 2, Mairena del Aljarafe</p>
-                    <p style={{ lineHeight: 1.3 }}>664 424 736</p>
+                  <h4 className="font-serif font-bold text-lg text-white uppercase tracking-wide mb-2.5">Contacto</h4>
+                  <div className="space-y-2 text-[11px] font-sans text-[#F3EEE4]/85 mb-3.5">
+                    <p className="leading-tight">Calle Mandarina 2, Mairena del Aljarafe</p>
+                    <p className="leading-tight">664 424 736</p>
                   </div>
-                  <a href="#reservas" style={{ display: 'inline-block', padding: '0.375rem 0.875rem', background: '#B8826A', fontSize: '0.75rem', fontWeight: 700, color: '#3F3428', textTransform: 'uppercase', letterSpacing: '0.1em', textDecoration: 'none' }}>
-                    Reservar Mesa
-                  </a>
+                  <a href="#reservas" className="inline-block px-3.5 py-1.5 bg-[#B8826A] text-xs font-bold text-text uppercase tracking-wider rounded-none">Reservar Mesa</a>
                 </div>
-              </div>
+              </motion.div>
+
             </div>
+
           </div>
+        </motion.div>
+
+        {/* Side Scroll tracker dots */}
+        <div className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 z-30 hidden xs:flex flex-col items-center gap-4 text-[#3F3428]/40 font-mono text-[9px]">
+          <span className="rotate-90 origin-center translate-y-3.5 uppercase tracking-wider">HISTORIA</span>
+          <div className="w-[1.5px] h-16 bg-[#3F3428]/10 relative">
+            <motion.div style={{ scaleY: smoothProgress, originY: 0 }} className="absolute inset-0 bg-accent" />
+          </div>
+          <span className="rotate-90 origin-center -translate-y-1 uppercase tracking-wider">CONTACTO</span>
         </div>
 
-        {/* Side Scroll tracker */}
-        <div
-          style={{
-            position: 'absolute',
-            right: '1rem',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            zIndex: 30,
-            display: 'none',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '1rem',
-            color: 'rgba(63,52,40,0.4)',
-            fontFamily: 'monospace',
-            fontSize: '9px',
-          }}
-          className="xs:flex sm:right-6"
-        >
-          <span style={{ transform: 'rotate(90deg)', translate: '0 14px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>HISTORIA</span>
-          <div style={{ width: '1.5px', height: '64px', background: 'rgba(63,52,40,0.1)', position: 'relative' }}>
-            <div
-              ref={scrollFillRef}
-              style={{
-                position: 'absolute',
-                inset: 0,
-                background: '#B8826A',
-                transformOrigin: 'top center',
-                transform: 'scaleY(0)',
-              }}
-            />
-          </div>
-          <span style={{ transform: 'rotate(90deg)', translate: '0 -4px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>CONTACTO</span>
-        </div>
       </div>
     </div>
   );
