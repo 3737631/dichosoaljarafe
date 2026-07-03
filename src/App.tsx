@@ -121,9 +121,14 @@ function Navbar() {
             {l}
           </button>
         ))}
-        <a href={`tel:+34${PHONE}`} className="btn btn-gold">
-          Reservar
-        </a>
+        <span style={{display:"flex",gap:"0.5rem",alignItems:"center"}}>
+          <button onClick={() => scrollTo("carta")} className="btn btn-gold" style={{background:"none",border:"1px solid var(--accent)",color:"var(--accent)",fontSize:"0.6rem",padding:"0.45rem 0.75rem",letterSpacing:"0.1em",textTransform:"uppercase",cursor:"pointer",fontFamily:"'Roboto Condensed',sans-serif",borderRadius:0}}>
+            Carta
+          </button>
+          <button onClick={() => scrollTo("reservas")} className="btn btn-gold" style={{padding:"0.45rem 0.85rem",fontSize:"0.6rem",letterSpacing:"0.1em",textTransform:"uppercase",cursor:"pointer",border:"none",fontFamily:"'Roboto Condensed',sans-serif",borderRadius:0}}>
+            Reservar
+          </button>
+        </span>
       </div>
     </nav>
   );
@@ -525,14 +530,7 @@ function Location() {
             </div>
           </div>
           <div className="map-wrapper">
-            <div className="map-placeholder">
-              <svg className="map-placeholder-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#B89168" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                <circle cx="12" cy="10" r="3" />
-              </svg>
-              <p className="map-placeholder-text">Ubicación en mapa</p>
-              <p className="map-placeholder-sub">Av. de los Descubrimientos 11, Mairena del Aljarafe</p>
-            </div>
+            <iframe src="https://www.google.com/maps?q=Av.+de+los+Descubrimientos+11,+Mairena+del+Aljarafe&output=embed" allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Ubicación de Dichoso"></iframe>
           </div>
         </motion.div>
       </div>
