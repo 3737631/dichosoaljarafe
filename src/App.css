@@ -497,6 +497,13 @@
   max-width: 320px;
   font-family: "Cormorant Garamond", serif;
 }
+.reservation-done-sub {
+  font-family: "Playfair Display", serif;
+  font-size: 1.15rem;
+  color: var(--accent);
+  font-style: italic;
+  margin-top: -0.5rem;
+}
 .reservation-detail {
   background: rgba(107,75,52,0.04);
   border: 1px solid rgba(107,75,52,0.15);
@@ -614,6 +621,8 @@
   .navbar-links { gap: 1.25rem; }
   .navbar-links .nav-link { display: none; }
   .navbar-links .btn { padding: 0.45rem 1rem; font-size: 0.6rem; }
+  .btn-carta-nav { border: none !important; background: none !important; color: var(--muted) !important; padding: 0 !important; font-size: 0.65rem !important; letter-spacing: 0.1em; }
+  .btn-carta-nav:hover { color: var(--accent) !important; }
 
   .hero {
     box-sizing: border-box;
@@ -628,6 +637,7 @@
     flex-direction: column;
     gap: 12px;
   }
+  .hero-actions .btn { padding: 0.5rem 1.25rem; font-size: 0.7rem; }
 
   .about-compact {
     padding: 72px 0;

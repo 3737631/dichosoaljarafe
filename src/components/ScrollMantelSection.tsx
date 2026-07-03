@@ -23,7 +23,7 @@ body{font-family:'Inter',sans-serif;background:#FAF7F2;color:#6B4423;overflow-x:
 .tt-h{font-family:'Playfair Display',serif;font-weight:700;font-size:1.125rem;color:#6B4423;margin-top:.25rem;text-transform:uppercase;letter-spacing:.02em}
 @media(min-width:640px){.tt-h{font-size:1.25rem}}
 .tt-p{font-size:.75rem;color:#8B7D6B;margin-top:.5rem;line-height:1.625}
-.tc{position:absolute;top:0;left:0;width:100%;z-index:10;height:12%;background:#D4C5A9;box-shadow:0 15px 40px rgba(107,68,35,.18);display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
+.tc{position:absolute;top:0;left:0;width:100%;z-index:10;height:12%;background:#C8A97E;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
 .tc-p{position:absolute;inset:0;opacity:.07;pointer-events:none;background-image:linear-gradient(90deg,rgba(107,68,35,.15) 1px,transparent 1px),linear-gradient(0deg,rgba(107,68,35,.15) 1px,transparent 1px);background-size:24px 24px}
 .wav{position:absolute;bottom:0;left:0;width:100%;z-index:25;transform:translateY(96%);pointer-events:none;user-select:none}
 .mc{width:100%;height:100%;max-width:72rem;margin:0 auto;padding:3.5rem 1rem;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:20;overflow:hidden}
@@ -101,7 +101,7 @@ body{font-family:'Inter',sans-serif;background:#FAF7F2;color:#6B4423;overflow-x:
     <div class="tc" id="tc">
       <div class="tc-p"></div>
       <div class="wav">
-        <svg viewBox="0 0 1440 48" fill="#D4C5A9" style="display:block;width:100%;height:48px;filter:drop-shadow(0 8px 4px rgba(107,68,35,.15))" preserveAspectRatio="none"><path d="M0,0 Q30,18 60,0 T120,0 T180,0 T240,0 T300,0 T360,0 T420,0 T480,0 T540,0 T600,0 T660,0 T720,0 T780,0 T840,0 T900,0 T960,0 T1020,0 T1080,0 T1140,0 T1200,0 T1260,0 T1320,0 T1380,0 T1440,0 L1440,48 L0,48 Z"/></svg>
+        <svg viewBox="0 0 1440 48" fill="#C8A97E" style="display:block;width:100%;height:48px;filter:drop-shadow(0 8px 4px rgba(107,68,35,.15))" preserveAspectRatio="none"><path d="M0,0 Q30,18 60,0 T120,0 T180,0 T240,0 T300,0 T360,0 T420,0 T480,0 T540,0 T600,0 T660,0 T720,0 T780,0 T840,0 T900,0 T960,0 T1020,0 T1080,0 T1140,0 T1200,0 T1260,0 T1320,0 T1380,0 T1440,0 L1440,48 L0,48 Z"/></svg>
         <svg viewBox="0 0 1440 24" fill="none" stroke="#FAF7F2" stroke-width="2" stroke-dasharray="4 6" style="display:block;width:100%;height:24px;margin-top:-40px;opacity:.35" preserveAspectRatio="none"><path d="M0,0 Q30,12 60,0 T120,0 T180,0 T240,0 T300,0 T360,0 T420,0 T480,0 T540,0 T600,0 T660,0 T720,0 T780,0 T840,0 T900,0 T960,0 T1020,0 T1080,0 T1140,0 T1200,0 T1260,0 T1320,0 T1380,0 T1440,0"/></svg>
       </div>
       <div class="mc">
@@ -180,7 +180,7 @@ body{font-family:'Inter',sans-serif;background:#FAF7F2;color:#6B4423;overflow-x:
 </div>
 <script>
 (function(){
-  var M=document.getElementById('mantel-sensorial'),T=document.getElementById('tc'),SF=document.getElementById('strF');
+  var M=document.getElementById('mantel-sensorial'),T=document.getElementById('tc'),TT=document.getElementById('tt'),SF=document.getElementById('strF');
   var d1=document.getElementById('d1'),d2=document.getElementById('d2'),d3=document.getElementById('d3'),d4=document.getElementById('d4');
   var m1=document.getElementById('m1'),m2=document.getElementById('m2'),m3=document.getElementById('m3'),m4=document.getElementById('m4');
   var lastY=-1,lastW=-1,cur=0;
@@ -199,6 +199,9 @@ body{font-family:'Inter',sans-serif;background:#FAF7F2;color:#6B4423;overflow-x:
     T.style.height=lerp(12,100,step(0,.32,s))+'%';
     T.style.transform='translateY('+(Math.sin(s*Math.PI*4.5)*5)+'px) translateZ(0)';
     SF.style.transform='scaleY('+s+')';
+    var ti=1-step(0,.18,s);
+    if(ti<=0){TT.style.opacity='0';TT.style.transform='translateX(-50%) translateY(-25px)'}
+    else{TT.style.opacity=ti;TT.style.transform='translateX(-50%) translateY('+(step(0,.18,s)*-25)+'px)'}
     if(window.innerWidth>=768){
       var p1=step(.22,.44,s);ap(d1,p1,lerp(.94,1,p1),lerp(30,0,p1),lerp(-3,-1,p1));
       var p2=step(.38,.60,s);ap(d2,p2,lerp(.94,1,p2),lerp(30,0,p2),lerp(4,1,p2));

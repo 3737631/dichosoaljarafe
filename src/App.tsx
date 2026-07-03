@@ -122,7 +122,7 @@ function Navbar() {
           </button>
         ))}
         <span style={{display:"flex",gap:"0.5rem",alignItems:"center"}}>
-          <button onClick={() => scrollTo("carta")} className="btn btn-gold" style={{background:"none",border:"1px solid var(--accent)",color:"var(--accent)",fontSize:"0.6rem",padding:"0.45rem 0.75rem",letterSpacing:"0.1em",textTransform:"uppercase",cursor:"pointer",fontFamily:"'Roboto Condensed',sans-serif",borderRadius:0}}>
+          <button onClick={() => scrollTo("carta")} className="btn btn-gold btn-carta-nav" style={{background:"none",border:"1px solid var(--accent)",color:"var(--accent)",fontSize:"0.6rem",padding:"0.45rem 0.75rem",letterSpacing:"0.1em",textTransform:"uppercase",cursor:"pointer",fontFamily:"'Roboto Condensed',sans-serif",borderRadius:0}}>
             Carta
           </button>
           <button onClick={() => scrollTo("reservas")} className="btn btn-gold" style={{padding:"0.45rem 0.85rem",fontSize:"0.6rem",letterSpacing:"0.1em",textTransform:"uppercase",cursor:"pointer",border:"none",fontFamily:"'Roboto Condensed',sans-serif",borderRadius:0}}>
@@ -207,10 +207,10 @@ function About() {
               <motion.div
                 key={f.label}
                 className="feature-card"
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0.4, y: 8 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.2 }}
-                transition={{ duration: 0.55, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                viewport={{ once: false, amount: 0.1 }}
+                transition={{ duration: 0.4, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
               >
                 <h4 className="feature-title">{f.label}</h4>
                 <p className="feature-desc">{f.desc}</p>
@@ -271,10 +271,10 @@ function Especiales() {
             <motion.div
               key={esp.name}
               className="especial-card"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0.4, y: 8 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.15 }}
-              transition={{ duration: 0.5, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
+              viewport={{ once: false, amount: 0.05 }}
+              transition={{ duration: 0.4, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
             >
                 <div className="especial-img">
                   <div className="especial-img-inner">
@@ -409,7 +409,8 @@ function Reservation() {
           <h2 className="section-title">Reserve su mesa</h2>
           <div className="reservation-done">
             <span className="reservation-done-icon">✓</span>
-            <p className="reservation-done-text">Reserva confirmada</p>
+            <p className="reservation-done-text">Hemos guardado tu reserva</p>
+            <p className="reservation-done-sub">Te esperamos en Dichoso</p>
             <div className="reservation-detail">
               <p><strong>Fecha:</strong> {done.date}</p>
               <p><strong>Hora:</strong> {done.time}</p>
@@ -418,7 +419,7 @@ function Reservation() {
               <p><strong>Teléfono:</strong> {done.phone}</p>
               {done.note && <p><strong>Comentarios:</strong> {done.note}</p>}
             </div>
-            <a href={`tel:+34${PHONE}`} className="btn btn-gold">Llamar · 664 24 32 80</a>
+            <a href={`tel:+34${PHONE}`} className="btn btn-gold" style={{fontSize:"0.8rem"}}>Reservado · 664 24 32 80</a>
           </div>
         </div>
       </section>
