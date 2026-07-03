@@ -89,25 +89,25 @@ ${g}`}class oe extends Error{constructor({message:t,code:n,cause:r,name:s}){var 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sora:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Alex+Brush&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',sans-serif;background:#F3EEE4;color:#3F3428;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body{font-family:'Inter',sans-serif;background:#F5E8D8;color:#6B4423;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 .font-serif{font-family:'Playfair Display',Georgia,serif}
 .font-sans{font-family:'Sora',sans-serif}
 .font-mono{font-family:monospace}
 #mantel-sensorial{position:relative;width:100%;height:500vh}
-.sticky-wrap{position:sticky;top:0;height:100vh;width:100%;overflow:hidden;background:#E7DDCC;display:flex;flex-direction:column;justify-content:space-between;user-select:none}
+.sticky-wrap{position:sticky;top:0;height:100vh;width:100%;overflow:hidden;background:#E8DCC8;display:flex;flex-direction:column;justify-content:space-between;user-select:none}
 .wl{position:absolute;inset:0;pointer-events:none;opacity:.15}
 .wl-in{width:100%;height:100%;display:flex;justify-content:space-between;padding:0 2rem}
 @media(min-width:640px){.wl-in{padding:0 3rem}}
-.wl-dot{width:1px;height:100%;background:#6B5A45;box-shadow:0 0 8px rgba(107,90,69,.3)}
+.wl-dot{width:1px;height:100%;background:#6B4423;box-shadow:0 0 8px rgba(107,68,35,.3)}
 .tt{position:absolute;top:4rem;left:50%;transform:translateX(-50%);text-align:center;z-index:30;max-width:24rem;width:100%;padding:0 1.5rem;pointer-events:none}
 @media(min-width:640px){.tt{top:5rem;max-width:28rem}}
-.tt-b{border:1px solid #CFC2AE;padding:1.25rem;box-shadow:0 10px 40px rgba(63,52,40,.12);background:rgba(231,221,204,.95)}
+.tt-b{border:1px solid #C8A97E;padding:1.25rem;box-shadow:0 10px 40px rgba(107,68,35,.12);background:rgba(232,220,200,.95)}
 @media(min-width:640px){.tt-b{padding:1.5rem}}
-.tt-l{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.25em;color:#B8826A}
-.tt-h{font-family:'Playfair Display',serif;font-weight:700;font-size:1.125rem;color:#3F3428;margin-top:.25rem;text-transform:uppercase;letter-spacing:.02em}
+.tt-l{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.25em;color:#C8A97E}
+.tt-h{font-family:'Playfair Display',serif;font-weight:700;font-size:1.125rem;color:#6B4423;margin-top:.25rem;text-transform:uppercase;letter-spacing:.02em}
 @media(min-width:640px){.tt-h{font-size:1.25rem}}
-.tt-p{font-size:.75rem;color:#8A755D;margin-top:.5rem;line-height:1.625}
-.tc{position:absolute;top:0;left:0;width:100%;z-index:10;height:12%;background:#B8826A;box-shadow:0 15px 40px rgba(63,52,40,.18);display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
+.tt-p{font-size:.75rem;color:#8B7D6B;margin-top:.5rem;line-height:1.625}
+.tc{position:absolute;top:0;left:0;width:100%;z-index:10;height:12%;background:#C8A97E;box-shadow:0 15px 40px rgba(107,68,35,.18);display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
 .tc-p{position:absolute;inset:0;opacity:.14;pointer-events:none;background-image:linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px),linear-gradient(0deg,rgba(255,255,255,.5) 1px,transparent 1px);background-size:10px 10px}
 .tc-l{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(180deg,transparent 49.3%,rgba(0,0,0,.1) 49.8%,rgba(255,255,255,.12) 50.1%,transparent 50.6%),linear-gradient(90deg,transparent 49.3%,rgba(0,0,0,.1) 49.8%,rgba(255,255,255,.12) 50.1%,transparent 50.6%);box-shadow:inset 0 0 80px rgba(0,0,0,.14)}
 .wav{position:absolute;bottom:0;left:0;width:100%;z-index:25;transform:translateY(96%);pointer-events:none;user-select:none}
@@ -117,58 +117,58 @@ body{font-family:'Inter',sans-serif;background:#F3EEE4;color:#3F3428;overflow-x:
 @media(min-width:768px){.dg{display:grid}}
 @media(min-width:1024px){.dg{gap:2rem}}
 .card{will-change:opacity,transform}
-.cs{background:#E7DDCC;border:1px solid #CFC2AE;padding:1.75rem;position:relative;overflow:hidden}
-.cs-ico{position:absolute;right:-1.5rem;bottom:-1.5rem;width:6rem;height:6rem;color:rgba(184,130,106,.1);pointer-events:none}
+.cs{background:#E8DCC8;border:1px solid #C8A97E;padding:1.75rem;position:relative;overflow:hidden}
+.cs-ico{position:absolute;right:-1.5rem;bottom:-1.5rem;width:6rem;height:6rem;color:rgba(200,169,126,.1);pointer-events:none}
 .cs-ico svg{width:100%;height:100%;stroke-width:1}
-.cl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.2em;color:#B8826A;display:flex;align-items:center;gap:.375rem;margin-bottom:.5rem;font-family:'Sora',sans-serif}
+.cl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.2em;color:#C8A97E;display:flex;align-items:center;gap:.375rem;margin-bottom:.5rem;font-family:'Sora',sans-serif}
 .cl svg{width:12px;height:12px}
-.ct{font-family:'Playfair Display',serif;font-weight:700;font-size:1.25rem;color:#3F3428;line-height:1;margin-bottom:.75rem;text-transform:uppercase;letter-spacing:.02em}
-.cp{font-size:.75rem;color:rgba(63,52,40,.9);line-height:1.625;font-family:'Sora',sans-serif}
+.ct{font-family:'Playfair Display',serif;font-weight:700;font-size:1.25rem;color:#6B4423;line-height:1;margin-bottom:.75rem;text-transform:uppercase;letter-spacing:.02em}
+.cp{font-size:.75rem;color:rgba(107,68,35,.9);line-height:1.625;font-family:'Sora',sans-serif}
 @media(min-width:640px){.cp{font-size:.8125rem}}
-.cf{margin-top:1rem;padding-top:.875rem;border-top:1px solid rgba(207,194,174,.5);display:flex;justify-content:space-between;font-size:10px;color:#8A755D;font-family:monospace}
-.cc{background:#F3EEE4;border:4px solid #E7DDCC;width:100%;max-width:320px;aspect-ratio:1;border-radius:50%;margin:0 auto;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;overflow:hidden}
+.cf{margin-top:1rem;padding-top:.875rem;border-top:1px solid rgba(200,169,126,.5);display:flex;justify-content:space-between;font-size:10px;color:#8B7D6B;font-family:monospace}
+.cc{background:#F5E8D8;border:4px solid #E8DCC8;width:100%;max-width:320px;aspect-ratio:1;border-radius:50%;margin:0 auto;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;overflow:hidden}
 @media(min-width:1024px){.cc{max-width:340px}}
-.cc-r1{position:absolute;inset:10px;border-radius:50%;border:1px dashed rgba(207,194,174,.3);pointer-events:none}
-.cc-r2{position:absolute;inset:16px;border-radius:50%;border:1px solid rgba(207,194,174,.5);pointer-events:none}
-.cc-iw{padding:.625rem;background:rgba(184,130,106,.1);border-radius:50%;margin-bottom:.625rem;position:relative;z-index:10}
-.cc-iw svg{width:16px;height:16px;color:#B8826A}
-.cc-h{font-family:'Playfair Display',serif;font-weight:700;font-size:1.125rem;color:#3F3428;margin-bottom:.25rem;position:relative;z-index:10;text-transform:uppercase;letter-spacing:.02em}
-.cc-p{font-size:.75rem;color:rgba(63,52,40,.95);line-height:1.625;max-width:210px;position:relative;z-index:10;margin-bottom:.75rem;font-family:'Sora',sans-serif}
-.cb{padding:.375rem .875rem;background:#3F3428;color:#fff;font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.15em;text-decoration:none;position:relative;z-index:10;transition:background .2s}
-.cb:hover{background:#8A755D}
-.cd{background:#E7DDCC;border:4px double #CFC2AE;padding:1.75rem;position:relative;overflow:hidden}
-.cd-lk{display:inline-flex;align-items:center;gap:.375rem;font-size:.75rem;font-weight:700;color:#B8826A;text-decoration:none;transition:color .2s}
-.cd-lk:hover{color:#3F3428}
-.cbr{background:#8A755D;color:#F3EEE4;padding:1.75rem;border:1px solid rgba(207,194,174,.25);position:relative;overflow:hidden}
+.cc-r1{position:absolute;inset:10px;border-radius:50%;border:1px dashed rgba(200,169,126,.3);pointer-events:none}
+.cc-r2{position:absolute;inset:16px;border-radius:50%;border:1px solid rgba(200,169,126,.5);pointer-events:none}
+.cc-iw{padding:.625rem;background:rgba(200,169,126,.1);border-radius:50%;margin-bottom:.625rem;position:relative;z-index:10}
+.cc-iw svg{width:16px;height:16px;color:#C8A97E}
+.cc-h{font-family:'Playfair Display',serif;font-weight:700;font-size:1.125rem;color:#6B4423;margin-bottom:.25rem;position:relative;z-index:10;text-transform:uppercase;letter-spacing:.02em}
+.cc-p{font-size:.75rem;color:rgba(107,68,35,.95);line-height:1.625;max-width:210px;position:relative;z-index:10;margin-bottom:.75rem;font-family:'Sora',sans-serif}
+.cb{padding:.375rem .875rem;background:#6B4423;color:#fff;font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.15em;text-decoration:none;position:relative;z-index:10;transition:background .2s}
+.cb:hover{background:#8B7D6B}
+.cd{background:#E8DCC8;border:4px double #C8A97E;padding:1.75rem;position:relative;overflow:hidden}
+.cd-lk{display:inline-flex;align-items:center;gap:.375rem;font-size:.75rem;font-weight:700;color:#C8A97E;text-decoration:none;transition:color .2s}
+.cd-lk:hover{color:#6B4423}
+.cbr{background:#8B7D6B;color:#F5E8D8;padding:1.75rem;border:1px solid rgba(200,169,126,.25);position:relative;overflow:hidden}
 .cbr-lb{position:absolute;top:0;left:0;width:12px;height:100%;background:rgba(0,0,0,.15);pointer-events:none}
 .cbr-in{padding-left:.875rem}
-.cbr-l{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.2em;color:#B8826A;display:flex;align-items:center;gap:.375rem;margin-bottom:.5rem;font-family:'Sora',sans-serif}
+.cbr-l{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.2em;color:#C8A97E;display:flex;align-items:center;gap:.375rem;margin-bottom:.5rem;font-family:'Sora',sans-serif}
 .cbr-l svg{width:12px;height:12px}
 .cbr-h{font-family:'Playfair Display',serif;font-weight:700;font-size:1.25rem;color:#fff;line-height:1;margin-bottom:1rem;text-transform:uppercase;letter-spacing:.02em}
-.cbr-ci{display:flex;align-items:flex-start;gap:.625rem;margin-bottom:.75rem;font-size:.75rem;color:rgba(243,238,228,.85);font-family:'Sora',sans-serif}
-.cbr-ci svg{width:14px;height:14px;color:#B8826A;flex-shrink:0;margin-top:2px}
+.cbr-ci{display:flex;align-items:flex-start;gap:.625rem;margin-bottom:.75rem;font-size:.75rem;color:rgba(245,232,216,.85);font-family:'Sora',sans-serif}
+.cbr-ci svg{width:14px;height:14px;color:#C8A97E;flex-shrink:0;margin-top:2px}
 .cbr-b{font-weight:700;color:#fff}
-.cbr-s{color:rgba(243,238,228,.7)}
+.cbr-s{color:rgba(245,232,216,.7)}
 .cbr-ft{margin-top:1.25rem;padding-top:.75rem;border-top:1px solid rgba(255,255,255,.1);display:flex}
-.cbr-btn{padding:.375rem .875rem;background:#B8826A;color:#3F3428;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;text-decoration:none;display:inline-block;transition:background .2s}
+.cbr-btn{padding:.375rem .875rem;background:#C8A97E;color:#6B4423;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;text-decoration:none;display:inline-block;transition:background .2s}
 .cbr-btn:hover{background:#fff}
 .ml{display:flex;position:relative;width:100%;height:60vh;align-items:center;justify-content:center}
 @media(min-width:768px){.ml{display:none}}
 .mcrd{position:absolute;left:.5rem;right:.5rem;will-change:opacity,transform}
-.mcs{background:#E7DDCC;border:1px solid #CFC2AE;padding:1.25rem}
-.mcc{width:270px;height:270px;background:#F3EEE4;border-radius:50%;border:4px solid #E7DDCC;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:1.25rem;margin:0 auto;position:relative;overflow:hidden}
-.mcc-r{position:absolute;inset:10px;border-radius:50%;border:1px dashed rgba(207,194,174,.3);pointer-events:none}
-.mccd{background:#E7DDCC;border:4px double #CFC2AE;padding:1.25rem}
-.mccb{background:#8A755D;color:#F3EEE4;padding:1.25rem;border:1px solid rgba(207,194,174,.25);position:relative}
+.mcs{background:#E8DCC8;border:1px solid #C8A97E;padding:1.25rem}
+.mcc{width:270px;height:270px;background:#F5E8D8;border-radius:50%;border:4px solid #E8DCC8;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:1.25rem;margin:0 auto;position:relative;overflow:hidden}
+.mcc-r{position:absolute;inset:10px;border-radius:50%;border:1px dashed rgba(200,169,126,.3);pointer-events:none}
+.mccd{background:#E8DCC8;border:4px double #C8A97E;padding:1.25rem}
+.mccb{background:#8B7D6B;color:#F5E8D8;padding:1.25rem;border:1px solid rgba(200,169,126,.25);position:relative}
 .mccb-lb{position:absolute;top:0;left:0;width:10px;height:100%;background:rgba(0,0,0,.15);pointer-events:none}
 .mccb-in{padding-left:.75rem}
-.str{position:absolute;right:1rem;top:50%;transform:translateY(-50%);z-index:30;display:none;flex-direction:column;align-items:center;gap:1rem;color:rgba(63,52,40,.4);font-family:monospace;font-size:9px}
+.str{position:absolute;right:1rem;top:50%;transform:translateY(-50%);z-index:30;display:none;flex-direction:column;align-items:center;gap:1rem;color:rgba(107,68,35,.4);font-family:monospace;font-size:9px}
 @media(min-width:420px){.str{display:flex}}
 @media(min-width:640px){.str{right:1.5rem}}
 .str-l1{transform:rotate(90deg);transform-origin:center;translate:0 14px;text-transform:uppercase;letter-spacing:.05em}
 .str-l2{transform:rotate(90deg);transform-origin:center;translate:0 -4px;text-transform:uppercase;letter-spacing:.05em}
 .str-b{width:1.5px;height:64px;background:rgba(63,52,40,.1);position:relative}
-.str-f{position:absolute;inset:0;background:#B8826A;transform-origin:top center;transform:scaleY(0)}
+.str-f{position:absolute;inset:0;background:#C8A97E;transform-origin:top center;transform:scaleY(0)}
 </style>
 </head>
 <body>
@@ -179,8 +179,8 @@ body{font-family:'Inter',sans-serif;background:#F3EEE4;color:#3F3428;overflow-x:
     <div class="tc" id="tc">
       <div class="tc-p"></div><div class="tc-l"></div>
       <div class="wav">
-        <svg viewBox="0 0 1440 48" fill="#B8826A" style="display:block;width:100%;height:48px;filter:drop-shadow(0 8px 4px rgba(63,52,40,.15))" preserveAspectRatio="none"><path d="M0,0 Q30,18 60,0 T120,0 T180,0 T240,0 T300,0 T360,0 T420,0 T480,0 T540,0 T600,0 T660,0 T720,0 T780,0 T840,0 T900,0 T960,0 T1020,0 T1080,0 T1140,0 T1200,0 T1260,0 T1320,0 T1380,0 T1440,0 L1440,48 L0,48 Z"/></svg>
-        <svg viewBox="0 0 1440 24" fill="none" stroke="#F3EEE4" stroke-width="2" stroke-dasharray="4 6" style="display:block;width:100%;height:24px;margin-top:-40px;opacity:.35" preserveAspectRatio="none"><path d="M0,0 Q30,12 60,0 T120,0 T180,0 T240,0 T300,0 T360,0 T420,0 T480,0 T540,0 T600,0 T660,0 T720,0 T780,0 T840,0 T900,0 T960,0 T1020,0 T1080,0 T1140,0 T1200,0 T1260,0 T1320,0 T1380,0 T1440,0"/></svg>
+        <svg viewBox="0 0 1440 48" fill="#C8A97E" style="display:block;width:100%;height:48px;filter:drop-shadow(0 8px 4px rgba(63,52,40,.15))" preserveAspectRatio="none"><path d="M0,0 Q30,18 60,0 T120,0 T180,0 T240,0 T300,0 T360,0 T420,0 T480,0 T540,0 T600,0 T660,0 T720,0 T780,0 T840,0 T900,0 T960,0 T1020,0 T1080,0 T1140,0 T1200,0 T1260,0 T1320,0 T1380,0 T1440,0 L1440,48 L0,48 Z"/></svg>
+        <svg viewBox="0 0 1440 24" fill="none" stroke="#FAF7F2" stroke-width="2" stroke-dasharray="4 6" style="display:block;width:100%;height:24px;margin-top:-40px;opacity:.35" preserveAspectRatio="none"><path d="M0,0 Q30,12 60,0 T120,0 T180,0 T240,0 T300,0 T360,0 T420,0 T480,0 T540,0 T600,0 T660,0 T720,0 T780,0 T840,0 T900,0 T960,0 T1020,0 T1080,0 T1140,0 T1200,0 T1260,0 T1320,0 T1380,0 T1440,0"/></svg>
       </div>
       <div class="mc">
         <div class="dg">
@@ -209,7 +209,7 @@ body{font-family:'Inter',sans-serif;background:#F3EEE4;color:#3F3428;overflow-x:
             <div class="cbr-in">
               <span class="cbr-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Datos de Contacto</span>
               <div class="cbr-h">Reservas y Dirección</div>
-              <div style="display:flex;flex-direction:column;gap:.75rem;font-size:.75rem;font-family:'Sora',sans-serif;color:rgba(243,238,228,.85)">
+              <div style="display:flex;flex-direction:column;gap:.75rem;font-size:.75rem;font-family:'Sora',sans-serif;color:rgba(245,232,216,.85)">
                 <div class="cbr-ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><div><div class="cbr-b">Venta El Capricho</div><div class="cbr-s">Calle Mandarina 2, Mairena del Aljarafe</div></div></div>
                 <div class="cbr-ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><div><div class="cbr-b">Llámanos</div><div class="cbr-s">664 424 736 (Atención rápida)</div></div></div>
               </div>
@@ -220,30 +220,30 @@ body{font-family:'Inter',sans-serif;background:#F3EEE4;color:#3F3428;overflow-x:
         <div class="ml">
           <div class="mcrd mcs" id="m1">
             <span class="cl" style="font-size:8px;gap:.25rem;margin-bottom:.375rem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a2.5 2.5 0 0 1 0-5H20"/></svg> Nuestra Historia</span>
-            <div style="font-family:'Playfair Display',serif;font-weight:700;font-size:1.125rem;color:#3F3428;text-transform:uppercase;letter-spacing:.02em;margin-bottom:.5rem">Tradición Familiar</div>
+            <div style="font-family:'Playfair Display',serif;font-weight:700;font-size:1.125rem;color:#6B4423;text-transform:uppercase;letter-spacing:.02em;margin-bottom:.5rem">Tradición Familiar</div>
             <div class="cp">Venta El Capricho nació en 1994 del sueño de reunir a las familias del Aljarafe sevillano en torno a platos generosos y honestos. Conservamos la calidez de la hospitalidad andaluza tradicional.</div>
           </div>
           <div class="mcrd" id="m2">
             <div class="mcc">
               <div class="mcc-r"></div>
-              <div style="padding:.5rem;background:rgba(184,130,106,.1);border-radius:50%;margin-bottom:.375rem;position:relative;z-index:10"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:14px;height:14px;color:#B8826A"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg></div>
-              <div style="font-family:'Playfair Display',serif;font-weight:700;font-size:1rem;color:#3F3428;margin-bottom:.25rem;text-transform:uppercase;letter-spacing:.02em;z-index:10;position:relative">Especialidades</div>
-              <div style="font-size:10px;color:rgba(63,52,40,.95);line-height:1.625;max-width:190px;margin-bottom:.75rem;z-index:10;position:relative;font-family:'Sora',sans-serif">Deliciosas croquetas ibéricas de bellota, carnes tiernas al sarmiento y nuestro arroz artesanal dominical.</div>
-              <a href="#carta" style="padding:.375rem .75rem;background:#3F3428;color:#fff;font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.15em;text-decoration:none;z-index:10;position:relative;display:inline-block">Ver Carta</a>
+              <div style="padding:.5rem;background:rgba(200,169,126,.1);border-radius:50%;margin-bottom:.375rem;position:relative;z-index:10"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:14px;height:14px;color:#C8A97E"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg></div>
+              <div style="font-family:'Playfair Display',serif;font-weight:700;font-size:1rem;color:#6B4423;margin-bottom:.25rem;text-transform:uppercase;letter-spacing:.02em;z-index:10;position:relative">Especialidades</div>
+              <div style="font-size:10px;color:rgba(107,68,35,.95);line-height:1.625;max-width:190px;margin-bottom:.75rem;z-index:10;position:relative;font-family:'Sora',sans-serif">Deliciosas croquetas ibéricas de bellota, carnes tiernas al sarmiento y nuestro arroz artesanal dominical.</div>
+              <a href="#carta" style="padding:.375rem .75rem;background:#6B4423;color:#fff;font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.15em;text-decoration:none;z-index:10;position:relative;display:inline-block">Ver Carta</a>
             </div>
           </div>
           <div class="mcrd mccd" id="m3">
             <span class="cl" style="font-size:8px;gap:.25rem;margin-bottom:.375rem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg> Celebraciones</span>
-            <div style="font-family:'Playfair Display',serif;font-weight:700;font-size:1.125rem;color:#3F3428;text-transform:uppercase;letter-spacing:.02em;margin-bottom:.5rem">Comuniones e Hitos</div>
+            <div style="font-family:'Playfair Display',serif;font-weight:700;font-size:1.125rem;color:#6B4423;text-transform:uppercase;letter-spacing:.02em;margin-bottom:.5rem">Comuniones e Hitos</div>
             <div class="cp">Disponemos de salones climatizados de gran aforo y amplios patios exteriores. Ofrecemos menús de banquete totalmente configurables para momentos memorables.</div>
           </div>
           <div class="mcrd mccb" id="m4">
             <div class="mccb-lb"></div>
             <div class="mccb-in">
-              <span style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.2em;color:#B8826A;display:flex;align-items:center;gap:.25rem;margin-bottom:.25rem;font-family:'Sora',sans-serif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:10px;height:10px"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Datos Útiles</span>
+              <span style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.2em;color:#C8A97E;display:flex;align-items:center;gap:.25rem;margin-bottom:.25rem;font-family:'Sora',sans-serif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:10px;height:10px"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Datos Útiles</span>
               <div style="font-family:'Playfair Display',serif;font-weight:700;font-size:1.125rem;color:#fff;text-transform:uppercase;letter-spacing:.02em;margin-bottom:.625rem">Contacto</div>
-              <div style="font-size:11px;font-family:'Sora',sans-serif;color:rgba(243,238,228,.85);margin-bottom:.875rem"><div style="line-height:1.3">Calle Mandarina 2, Mairena del Aljarafe</div><div style="line-height:1.3">664 424 736</div></div>
-              <a href="#reservas" style="display:inline-block;padding:.375rem .875rem;background:#B8826A;font-size:.75rem;font-weight:700;color:#3F3428;text-transform:uppercase;letter-spacing:.1em;text-decoration:none">Reservar Mesa</a>
+              <div style="font-size:11px;font-family:'Sora',sans-serif;color:rgba(245,232,216,.85);margin-bottom:.875rem"><div style="line-height:1.3">Calle Mandarina 2, Mairena del Aljarafe</div><div style="line-height:1.3">664 424 736</div></div>
+              <a href="#reservas" style="display:inline-block;padding:.375rem .875rem;background:#C8A97E;font-size:.75rem;font-weight:700;color:#6B4423;text-transform:uppercase;letter-spacing:.1em;text-decoration:none">Reservar Mesa</a>
             </div>
           </div>
         </div>
