@@ -122,10 +122,10 @@ function Navbar() {
           </button>
         ))}
         <span style={{display:"flex",gap:"0.5rem",alignItems:"center"}}>
-          <button onClick={() => scrollTo("carta")} className="btn btn-gold btn-carta-nav" style={{background:"none",border:"1px solid var(--accent)",color:"var(--accent)",fontSize:"0.7rem",padding:"0.55rem 1rem",letterSpacing:"0.1em",textTransform:"uppercase",cursor:"pointer",fontFamily:"'Roboto Condensed',sans-serif",borderRadius:0}}>
+          <button onClick={() => scrollTo("carta")} className="btn btn-gold btn-carta-nav" style={{background:"none",border:"1px solid var(--accent)",color:"var(--accent)",fontSize:"0.75rem",padding:"0.65rem 1.2rem",letterSpacing:"0.1em",textTransform:"uppercase",cursor:"pointer",fontFamily:"'Roboto Condensed',sans-serif",borderRadius:0}}>
             Carta
           </button>
-          <button onClick={() => scrollTo("reservas")} className="btn btn-gold" style={{padding:"0.55rem 1rem",fontSize:"0.7rem",letterSpacing:"0.1em",textTransform:"uppercase",cursor:"pointer",border:"none",fontFamily:"'Roboto Condensed',sans-serif",borderRadius:0}}>
+          <button onClick={() => scrollTo("reservas")} className="btn btn-gold" style={{padding:"0.65rem 1.2rem",fontSize:"0.75rem",letterSpacing:"0.1em",textTransform:"uppercase",cursor:"pointer",border:"none",fontFamily:"'Roboto Condensed',sans-serif",borderRadius:0}}>
             Reservar
           </button>
         </span>
