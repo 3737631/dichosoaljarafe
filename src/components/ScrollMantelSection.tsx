@@ -15,7 +15,7 @@ body{font-family:'Inter',sans-serif;color:#6B4423;overflow-x:hidden;-webkit-font
 .font-mono{font-family:monospace}
 #mantel-sensorial{position:relative;width:100%;height:500vh;background:#E8DCC8}
 .sticky-wrap{position:sticky;top:0;height:100vh;width:100%;overflow:hidden;background:#E8DCC8;display:flex;flex-direction:column;justify-content:space-between;user-select:none}
-.sticky-wrap::before{content:'';position:absolute;inset:0;opacity:.1;pointer-events:none;background-image:linear-gradient(90deg,rgba(107,68,35,.2) 1px,transparent 1px),linear-gradient(0deg,rgba(107,68,35,.2) 1px,transparent 1px);background-size:48px 48px}
+.sticky-wrap::before{content:'';position:absolute;inset:0;opacity:.13;pointer-events:none;background-image:linear-gradient(90deg,rgba(107,68,35,.2) 1px,transparent 1px),linear-gradient(0deg,rgba(107,68,35,.2) 1px,transparent 1px);background-size:48px 48px}
 .tt{position:absolute;top:4rem;left:50%;transform:translateX(-50%);text-align:center;z-index:30;max-width:24rem;width:100%;padding:0 1.5rem;pointer-events:none}
 @media(min-width:640px){.tt{top:5rem;max-width:28rem}}
 .tt-b{border:1px solid #C8A97E;padding:1.25rem;box-shadow:0 10px 40px rgba(107,68,35,.12);background:rgba(232,220,200,.95)}
@@ -25,7 +25,7 @@ body{font-family:'Inter',sans-serif;color:#6B4423;overflow-x:hidden;-webkit-font
 @media(min-width:640px){.tt-h{font-size:1.25rem}}
 .tt-p{font-size:.75rem;color:#8B7D6B;margin-top:.5rem;line-height:1.625}
 .tc{position:absolute;top:0;left:0;width:100%;z-index:10;height:12%;background:#C8A97E;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
-.tc-p{position:absolute;inset:0;opacity:.1;pointer-events:none;background-image:linear-gradient(90deg,rgba(250,247,242,.25) 1px,transparent 1px),linear-gradient(0deg,rgba(250,247,242,.25) 1px,transparent 1px);background-size:48px 48px}
+.tc-p{position:absolute;inset:0;opacity:.13;pointer-events:none;background-image:linear-gradient(90deg,rgba(250,247,242,.25) 1px,transparent 1px),linear-gradient(0deg,rgba(250,247,242,.25) 1px,transparent 1px);background-size:48px 48px}
 .wav{position:absolute;bottom:0;left:0;width:100%;z-index:25;transform:translateY(96%);pointer-events:none;user-select:none}
 .mc{width:100%;height:100%;max-width:72rem;margin:0 auto;padding:3.5rem 1rem;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:20;overflow:hidden}
 @media(min-width:768px){.mc{padding:5rem 1.5rem}}
