@@ -356,9 +356,10 @@ function Reservation() {
     if (!date) { setBooked([]); return; }
     const local = localStorage.getItem("reservas_" + date);
     setBooked(local ? JSON.parse(local) : []);
-    supabase.from("slots").select("time").eq("date", date).then(({ data }) => {
-      if (data) setBooked((data || []).map((r) => r.time));
-    }).catch(() => {});
+    supabase.from("slots").select("time").eq("date", date).then(
+      ({ data }) => { if (data) setBooked((data || []).map((r) => r.time)); },
+      () => {}
+    );
   }, [date]);
 
   const today = new Date().toISOString().slice(0, 10);
@@ -385,9 +386,11 @@ function Reservation() {
     localStorage.setItem(localKey, JSON.stringify(existing));
     setBooked(existing);
 
-    supabase.from("slots").insert([
-      { date, time, name, phone, persons, note, created_at: new Date().toISOString() },
-    ]).catch(() => {});
+    try {
+      await supabase.from("slots").insert([
+        { date, time, name, phone, persons, note, created_at: new Date().toISOString() },
+      ]);
+    } catch (_) {}
 
     setSending(false);
     setDone({ date, time, name, phone, persons, note });
