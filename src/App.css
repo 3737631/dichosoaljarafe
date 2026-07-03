@@ -3,6 +3,7 @@
 .container-narrow{ max-width: 800px;  margin: 0 auto; padding: 0 2rem; }
 .section         { padding: 7rem 0; }
 .bg-card         { background-color: var(--bg-card); }
+.bg-mantel       { background-color: #B8826A; }
 
 /* ── Section headings ────────────────────────── */
 .section-eyebrow {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion } from "motion/react";
+import { motion, useScroll, useTransform } from "motion/react";
 import "./App.css";
 import { supabase } from "./supabase";
 import ScrollMantelSection from "./components/ScrollMantelSection";
@@ -133,8 +133,22 @@ function Hero() {
   const [visible, setVisible] = useState(false);
   useEffect(() => { setVisible(true); }, []);
 
+  const { scrollY } = useScroll();
+  const mantelY = useTransform(scrollY, [0, 1000], [0, 240]);
+  const mantelHeight = useTransform(scrollY, [0, 1000], [20, 120]);
+
   return (
     <section className="hero" id="hero">
+      {/* Dynamic Hanging Tablecloth Decor */}
+      <motion.div
+        style={{ y: mantelY }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.4, ease: "easeOut", delay: 0.2 }}
+        className="absolute top-[68px] left-0 w-full z-10 pointer-events-none select-none"
+      >
+        <motion.div style={{ height: mantelHeight }} className="bg-mantel w-full shadow-inner"></motion.div>
+      </motion.div>
       <div className="hero-watermark">Dichoso</div>
       <div className="hero-content">
         <p className={`hero-eyebrow fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.2s" }}>Mairena del Aljarafe · Sevilla</p>
