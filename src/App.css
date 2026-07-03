@@ -640,7 +640,7 @@
     flex-direction: column;
     gap: 12px;
   }
-  .hero-actions .btn { padding: 0.2rem 1rem; font-size: 0.65rem; }
+  .hero-actions .btn { padding: 0.15rem 1.75rem; font-size: 0.7rem; }
 
   .about-compact {
     padding: 72px 0;
