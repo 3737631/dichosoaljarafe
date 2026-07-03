@@ -354,18 +354,11 @@ function Reservation() {
 
   useEffect(() => {
     if (!date) { setBooked([]); return; }
-    const channel = supabase
-      .channel("slots-" + date)
-      .on("postgres_changes", { event: "*", schema: "public", table: "slots", filter: `date=eq.${date}` }, () => {
-        supabase.from("slots").select("time").eq("date", date).then(({ data }) => {
-          setBooked((data || []).map((r) => r.time));
-        });
-      })
-      .subscribe();
+    const local = localStorage.getItem("reservas_" + date);
+    setBooked(local ? JSON.parse(local) : []);
     supabase.from("slots").select("time").eq("date", date).then(({ data }) => {
-      setBooked((data || []).map((r) => r.time));
-    });
-    return () => { channel.unsubscribe(); };
+      if (data) setBooked((data || []).map((r) => r.time));
+    }).catch(() => {});
   }, [date]);
 
   const today = new Date().toISOString().slice(0, 10);
@@ -378,19 +371,23 @@ function Reservation() {
     setError("");
     setSending(true);
 
-    const { error: insertErr } = await supabase.from("slots").insert([
-      { date, time, name, phone, persons, note, created_at: new Date().toISOString() },
-    ]);
+    const localKey = "reservas_" + date;
+    const local = localStorage.getItem(localKey);
+    const existing: string[] = local ? JSON.parse(local) : [];
 
-    if (insertErr) {
+    if (existing.includes(time)) {
       setSending(false);
-      if (insertErr.code === "23505") {
-        setError("Este horario acaba de ser reservado por otra persona.");
-      } else {
-        setError(insertErr.message);
-      }
+      setError("Este horario acaba de ser reservado por otra persona.");
       return;
     }
+
+    existing.push(time);
+    localStorage.setItem(localKey, JSON.stringify(existing));
+    setBooked(existing);
+
+    supabase.from("slots").insert([
+      { date, time, name, phone, persons, note, created_at: new Date().toISOString() },
+    ]).catch(() => {});
 
     setSending(false);
     setDone({ date, time, name, phone, persons, note });
