@@ -89,13 +89,13 @@ ${g}`}class oe extends Error{constructor({message:t,code:n,cause:r,name:s}){var 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sora:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Alex+Brush&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',sans-serif;background:#FAF7F2;color:#6B4423;overflow-x:hidden;-webkit-font-smoothing:antialiased}html{color-scheme:light}
+body{font-family:'Inter',sans-serif;background:inherit;color:#6B4423;overflow-x:hidden;-webkit-font-smoothing:antialiased}html{color-scheme:light}
 .font-serif{font-family:'Playfair Display',Georgia,serif}
 .font-sans{font-family:'Sora',sans-serif}
 .font-mono{font-family:monospace}
 #mantel-sensorial{position:relative;width:100%;height:500vh}
 .sticky-wrap{position:sticky;top:0;height:100vh;width:100%;overflow:hidden;background:#E8DCC8;display:flex;flex-direction:column;justify-content:space-between;user-select:none}
-.sticky-wrap::before{content:'';position:absolute;inset:0;opacity:.06;pointer-events:none;background-image:linear-gradient(90deg,rgba(107,68,35,.2) 1px,transparent 1px),linear-gradient(0deg,rgba(107,68,35,.2) 1px,transparent 1px);background-size:32px 32px}
+.sticky-wrap::before{content:'';position:absolute;inset:0;opacity:.1;pointer-events:none;background-image:linear-gradient(90deg,rgba(107,68,35,.35) 1px,transparent 1px),linear-gradient(0deg,rgba(107,68,35,.35) 1px,transparent 1px);background-size:32px 32px}
 .tt{position:absolute;top:4rem;left:50%;transform:translateX(-50%);text-align:center;z-index:30;max-width:24rem;width:100%;padding:0 1.5rem;pointer-events:none}
 @media(min-width:640px){.tt{top:5rem;max-width:28rem}}
 .tt-b{border:1px solid #C8A97E;padding:1.25rem;box-shadow:0 10px 40px rgba(107,68,35,.12);background:rgba(232,220,200,.95)}
