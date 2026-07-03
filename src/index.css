@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #F5E8D8;
+  --color-background: #FAF7F2;
   --color-surface: #E8DCC8;
   --color-primary: #C8A97E;
   --color-accent: #C8A97E;
@@ -21,7 +21,7 @@
 }
 
 :root {
-  --bg: #F5E8D8;
+  --bg: #FAF7F2;
   --bg-card: #E8DCC8;
   --gold: #6B4423;
   --gold-dim: #6B4423;
@@ -29,7 +29,7 @@
   --muted: #8B7D6B;
   --border: #C8A97E;
   --accent: #C8A97E;
-  --white: #F5E8D8;
+  --white: #FAF7F2;
 }
 
 html {

@@ -9,7 +9,7 @@ const html = `<!DOCTYPE html>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sora:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Alex+Brush&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',sans-serif;background:#FAF7F2;color:#6B4423;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body{font-family:'Inter',sans-serif;background:#FAF7F2;color:#6B4423;overflow-x:hidden;-webkit-font-smoothing:antialiased}html{color-scheme:light}
 .font-serif{font-family:'Playfair Display',Georgia,serif}
 .font-sans{font-family:'Sora',sans-serif}
 .font-mono{font-family:monospace}
