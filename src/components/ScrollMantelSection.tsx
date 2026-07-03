@@ -15,6 +15,7 @@ body{font-family:'Inter',sans-serif;background:#FAF7F2;color:#6B4423;overflow-x:
 .font-mono{font-family:monospace}
 #mantel-sensorial{position:relative;width:100%;height:500vh}
 .sticky-wrap{position:sticky;top:0;height:100vh;width:100%;overflow:hidden;background:#E8DCC8;display:flex;flex-direction:column;justify-content:space-between;user-select:none}
+.sticky-wrap::before{content:'';position:absolute;inset:0;opacity:.06;pointer-events:none;background-image:linear-gradient(90deg,rgba(107,68,35,.2) 1px,transparent 1px),linear-gradient(0deg,rgba(107,68,35,.2) 1px,transparent 1px);background-size:32px 32px}
 .tt{position:absolute;top:4rem;left:50%;transform:translateX(-50%);text-align:center;z-index:30;max-width:24rem;width:100%;padding:0 1.5rem;pointer-events:none}
 @media(min-width:640px){.tt{top:5rem;max-width:28rem}}
 .tt-b{border:1px solid #C8A97E;padding:1.25rem;box-shadow:0 10px 40px rgba(107,68,35,.12);background:rgba(232,220,200,.95)}

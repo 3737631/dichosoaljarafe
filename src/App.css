@@ -583,6 +583,8 @@
   line-height: 1;
 }
 .footer-bottom  { border-top: 1px solid var(--border); padding-top: 1.5rem; font-size: 0.72rem; color: var(--muted); font-family: "Roboto Condensed", sans-serif; }
+.footer-credit { margin-top: 0.5rem; font-size: 0.65rem; opacity: 0.6; }
+.footer-credit a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
 
 /* ── Animations ──────────────────────────────── */
 .fade-up {
@@ -616,9 +618,10 @@
     height: 76px;
     min-height: 76px;
     padding: 0 1.25rem;
+    border-bottom: none;
   }
   .navbar-logo { font-size: 1.8rem; }
-  .navbar-links { gap: 1.25rem; }
+  .navbar-links { gap: 0.75rem; }
   .navbar-links .nav-link { display: none; }
   .navbar-links .btn { padding: 0.45rem 1rem; font-size: 0.6rem; }
   .btn-carta-nav { border: none !important; background: none !important; color: var(--muted) !important; padding: 0 !important; font-size: 0.65rem !important; letter-spacing: 0.1em; }
@@ -637,7 +640,7 @@
     flex-direction: column;
     gap: 12px;
   }
-  .hero-actions .btn { padding: 0.5rem 1.25rem; font-size: 0.7rem; }
+  .hero-actions .btn { padding: 0.4rem 1rem; font-size: 0.65rem; }
 
   .about-compact {
     padding: 72px 0;

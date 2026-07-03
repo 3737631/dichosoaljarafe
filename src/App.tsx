@@ -568,6 +568,7 @@ function Footer() {
         </div>
         <div className="footer-bottom">
           <p>© {new Date().getFullYear()} Dichoso. Todos los derechos reservados.</p>
+          <p className="footer-credit">Realizado por <a href="https://franciscoortuno.duckdns.org/" target="_blank" rel="noreferrer">Francisco Ortuño</a></p>
         </div>
       </div>
     </motion.footer>
