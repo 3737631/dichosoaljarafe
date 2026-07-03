@@ -641,7 +641,8 @@
     align-items: center;
     gap: 12px;
   }
-  .hero-actions .btn { padding: 0.7rem 1.75rem; font-size: 0.85rem; }
+  .hero-eyebrow { margin-top: 1.2rem; }
+  .hero-actions .btn { padding: 0.5rem 1.4rem; font-size: 0.75rem; }
 
   .about-compact {
     padding: 72px 0;

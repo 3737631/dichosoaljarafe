@@ -121,7 +121,7 @@ function Navbar() {
             {l}
           </button>
         ))}
-        <span style={{display:"flex",gap:"0.5rem",alignItems:"center"}}>
+        <span style={{display:"flex",gap:"1.25rem",alignItems:"center"}}>
           <button onClick={() => scrollTo("carta")} className="btn btn-gold btn-carta-nav" style={{background:"none",border:"1px solid var(--accent)",color:"var(--accent)",fontSize:"0.75rem",padding:"0.65rem 1.2rem",letterSpacing:"0.1em",textTransform:"uppercase",cursor:"pointer",fontFamily:"'Roboto Condensed',sans-serif",borderRadius:0}}>
             Carta
           </button>
