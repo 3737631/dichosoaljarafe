@@ -394,6 +394,16 @@ function Reservation() {
 
     setSending(false);
     setDone({ date, time, name, phone, persons, note });
+
+    const fmtDate = date.split("-").reverse().join("/");
+    const msg =
+`🟤 *Nueva reserva — Dichoso*
+📅 Fecha: ${fmtDate}
+⏰ Hora: ${time}
+👥 Personas: ${persons}
+👤 Nombre: ${name}
+📞 Teléfono: ${phone}${note ? `\n📝 Notas: ${note}` : ""}`;
+    window.open(`https://wa.me/34691233213?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
   const times = [
