@@ -386,12 +386,15 @@ function Reservation() {
 
     const fmtDate = date.split("-").reverse().join("/");
     const msg =
-`🟤 *Nueva reserva — Dichoso*
-📅 Fecha: ${fmtDate}
-⏰ Hora: ${time}
-👥 Personas: ${persons}
-👤 Nombre: ${name}
-📞 Teléfono: ${phone}${note ? `\n📝 Notas: ${note}` : ""}`;
+`Dichoso — Nueva reserva
+
+📅 ${fmtDate}
+⏰ ${time}
+👥 ${persons} personas
+👤 ${name}
+📞 ${phone}${note ? `\n📝 ${note}` : ""}
+
+*Te esperamos en Dichoso*`;
     window.open(`https://wa.me/34691233213?text=${encodeURIComponent(msg)}`, "_blank");
 
     supabase.insertSlot({ date, time, name, phone, persons, note });
