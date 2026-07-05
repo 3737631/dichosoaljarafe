@@ -500,6 +500,7 @@ function Reservation() {
               Llamar · 664 24 32 80
             </a>
           </div>
+          <p style={{fontSize:"0.65rem",color:"var(--muted)",textAlign:"center",marginTop:"1rem",letterSpacing:"0.04em",opacity:0.6}}>Al reservar se abrirá WhatsApp. Pulsa enviar para confirmar.</p>
         </motion.form>
       </div>
     </section>
