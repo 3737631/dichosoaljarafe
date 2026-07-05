@@ -354,12 +354,10 @@ function Reservation() {
 
   useEffect(() => {
     if (!date) { setBooked([]); return; }
-    const local = localStorage.getItem("reservas_" + date);
-    setBooked(local ? JSON.parse(local) : []);
-    supabase.from("slots").select("time").eq("date", date).then(
-      ({ data }) => { if (data) setBooked((data || []).map((r) => r.time)); },
-      () => {}
-    );
+    supabase.fetchSlots(date).then((times) => {
+      setBooked(times);
+      localStorage.setItem("reservas_" + date, JSON.stringify(times));
+    });
   }, [date]);
 
   const today = new Date().toISOString().slice(0, 10);
@@ -367,7 +365,7 @@ function Reservation() {
   const isPast = (t: string) => date === today && t < `${String(now.getHours()).padStart(2,"0")}:${String(now.getMinutes()).padStart(2,"0")}`;
   const isBooked = (t: string) => booked.includes(t) || isPast(t);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setSending(true);
@@ -386,15 +384,6 @@ function Reservation() {
     localStorage.setItem(localKey, JSON.stringify(existing));
     setBooked(existing);
 
-    try {
-      await supabase.from("slots").insert([
-        { date, time, name, phone, persons, note, created_at: new Date().toISOString() },
-      ]);
-    } catch (_) {}
-
-    setSending(false);
-    setDone({ date, time, name, phone, persons, note });
-
     const fmtDate = date.split("-").reverse().join("/");
     const msg =
 `🟤 *Nueva reserva — Dichoso*
@@ -404,6 +393,11 @@ function Reservation() {
 👤 Nombre: ${name}
 📞 Teléfono: ${phone}${note ? `\n📝 Notas: ${note}` : ""}`;
     window.open(`https://wa.me/34691233213?text=${encodeURIComponent(msg)}`, "_blank");
+
+    supabase.insertSlot({ date, time, name, phone, persons, note });
+
+    setSending(false);
+    setDone({ date, time, name, phone, persons, note });
   };
 
   const times = [
