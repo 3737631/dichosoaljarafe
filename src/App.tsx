@@ -1,17 +1,17 @@
-import { useState, useEffect, useRef } from "react";
+﻿import { useState, useEffect, useRef } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import "./App.css";
 import { supabase } from "./supabase";
 import ScrollMantelSection from "./components/ScrollMantelSection";
 
-/* ── Data ──────────────────────────────────────── */
+/* â”€â”€ Data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 const PHONE = "664243280";
 const ADDRESS = "Av. de los Descubrimientos, 11, 41927 Mairena del Aljarafe";
 const MAPS_URL =
   "https://maps.google.com/?q=Av.+de+los+Descubrimientos+11,+Mairena+del+Aljarafe";
 
 const FEATURES = [
-  { label: "Cocina contemporánea", desc: "Tradición reinventada con técnicas modernas." },
+  { label: "Cocina contemporÃ¡nea", desc: "TradiciÃ³n reinventada con tÃ©cnicas modernas." },
   { label: "Producto de temporada", desc: "Ingredientes seleccionados con mimo." },
   { label: "Arroces con identidad", desc: "Nuestra especialidad, elaborados al momento." },
   { label: "Tapas creativas", desc: "Bocados llenos de sabor y originalidad." },
@@ -21,155 +21,155 @@ const MENU_DATA = [
   {
     title: "ENTRANTES",
     items: [
-      { name: "Gilda cecina y queso", price: "2,5€ ud." },
-      { name: "Gilda anchoa, boquerón, tomate seco, queso viejo", price: "3€" },
-      { name: "Salmorejo con huevo y jamón ibérico", price: "5,5€" },
-      { name: "Ensaladilla de gambas", price: "4,2€ / 9,7€" },
-      { name: "Ensaladilla de pulpo", price: "4,5€ / 10€" },
-      { name: "Papas aliñás", price: "4€ / 9€" },
-      { name: "Papas bravas", price: "5,5€" },
-      { name: "Tosta de salmorejo con matrimonio de anchoa y boquerón", price: "4,5€" },
+      { name: "Gilda cecina y queso", price: "2,5â‚¬ ud." },
+      { name: "Gilda anchoa, boquerÃ³n, tomate seco, queso viejo", price: "3â‚¬" },
+      { name: "Salmorejo con huevo y jamÃ³n ibÃ©rico", price: "5,5â‚¬" },
+      { name: "Ensaladilla de gambas", price: "4,2â‚¬ / 9,7â‚¬" },
+      { name: "Ensaladilla de pulpo", price: "4,5â‚¬ / 10â‚¬" },
+      { name: "Papas aliÃ±Ã¡s", price: "4â‚¬ / 9â‚¬" },
+      { name: "Papas bravas", price: "5,5â‚¬" },
+      { name: "Tosta de salmorejo con matrimonio de anchoa y boquerÃ³n", price: "4,5â‚¬" },
     ],
   },
   {
     title: "FRITOS",
     items: [
-      { name: "Croquetas de jamón ibérico de bellota", price: "5€ / 9,5€" },
-      { name: "Croquetas de setas salteadas en mantequilla y soja", price: "5€ / 9,5€" },
-      { name: "Croquetas de gambas al ajillo", price: "5€ / 9,5€" },
-      { name: "Berenjena frita con mayonesa de soja y miel", price: "5,5€" },
-      { name: "Chocos fritos", price: "7,5€ / 15€" },
+      { name: "Croquetas de jamÃ³n ibÃ©rico de bellota", price: "5â‚¬ / 9,5â‚¬" },
+      { name: "Croquetas de setas salteadas en mantequilla y soja", price: "5â‚¬ / 9,5â‚¬" },
+      { name: "Croquetas de gambas al ajillo", price: "5â‚¬ / 9,5â‚¬" },
+      { name: "Berenjena frita con mayonesa de soja y miel", price: "5,5â‚¬" },
+      { name: "Chocos fritos", price: "7,5â‚¬ / 15â‚¬" },
     ],
   },
   {
-    title: "LO MÁS DICHOSO",
+    title: "LO MÃS DICHOSO",
     items: [
-      { name: "Patatas arriera", price: "12€" },
-      { name: "Langostinos al ajillo estilo Dichoso", price: "7,5€" },
-      { name: "Sándwich de cecina de vaca, queso viejo y trufa, planchado en mantequilla", price: "7,5€" },
-      { name: "Tortilla de patatas con panceta ibérica y parmesano", price: "9€" },
-      { name: "Tartar de cigala marinado en su esencia", price: "9,5€" },
-      { name: "Steak tartar aliñado con tuétano asado y presentado en su hueso", price: "16,9€" },
-      { name: "Carrillada de cerdo ibérico", price: "5,5€" },
-      { name: "Presa de cerdo ibérico de bellota", price: "9€ / 17€" },
-      { name: "Lomo bajo de vaca", price: "7€ / 100gr" },
+      { name: "Patatas arriera", price: "12â‚¬" },
+      { name: "Langostinos al ajillo estilo Dichoso", price: "7,5â‚¬" },
+      { name: "SÃ¡ndwich de cecina de vaca, queso viejo y trufa, planchado en mantequilla", price: "7,5â‚¬" },
+      { name: "Tortilla de patatas con panceta ibÃ©rica y parmesano", price: "9â‚¬" },
+      { name: "Tartar de cigala marinado en su esencia", price: "9,5â‚¬" },
+      { name: "Steak tartar aliÃ±ado con tuÃ©tano asado y presentado en su hueso", price: "16,9â‚¬" },
+      { name: "Carrillada de cerdo ibÃ©rico", price: "5,5â‚¬" },
+      { name: "Presa de cerdo ibÃ©rico de bellota", price: "9â‚¬ / 17â‚¬" },
+      { name: "Lomo bajo de vaca", price: "7â‚¬ / 100gr" },
     ],
   },
   {
     title: "DEL MAR",
     items: [
-      { name: "Sardinas estilo espeto", price: "9€" },
-      { name: "Mejillones a la marinera", price: "7,5€" },
-      { name: "Gambón a la plancha", price: "2,5€ ud." },
-      { name: "Carabinero a la plancha", price: "15€ ud." },
-      { name: "Navajas", price: "12€" },
-      { name: "Berberechos", price: "10€" },
-      { name: "Calamar de potera a la plancha", price: "6€ / 100gr" },
+      { name: "Sardinas estilo espeto", price: "9â‚¬" },
+      { name: "Mejillones a la marinera", price: "7,5â‚¬" },
+      { name: "GambÃ³n a la plancha", price: "2,5â‚¬ ud." },
+      { name: "Carabinero a la plancha", price: "15â‚¬ ud." },
+      { name: "Navajas", price: "12â‚¬" },
+      { name: "Berberechos", price: "10â‚¬" },
+      { name: "Calamar de potera a la plancha", price: "6â‚¬ / 100gr" },
     ],
   },
   {
     title: "ARROCES EN PAELLA",
     items: [
-      { name: "Arroz de carrillada y queso de cabra", price: "16€ por persona" },
-      { name: "Arroz sabroso de carabinero y huevo frito", price: "21€ por persona" },
-      { name: "Arroz negro con alioli", price: "18€ por persona" },
+      { name: "Arroz de carrillada y queso de cabra", price: "16â‚¬ por persona" },
+      { name: "Arroz sabroso de carabinero y huevo frito", price: "21â‚¬ por persona" },
+      { name: "Arroz negro con alioli", price: "18â‚¬ por persona" },
     ],
   },
   {
     title: "POSTRES",
     items: [
-      { name: "Tarta de queso", price: "6€" },
-      { name: "Tarta de la abuela con natilla y caramelo salado", price: "6€" },
-      { name: "Torrija casera con helado de turrón", price: "6,5€" },
+      { name: "Tarta de queso", price: "6â‚¬" },
+      { name: "Tarta de la abuela con natilla y caramelo salado", price: "6â‚¬" },
+      { name: "Torrija casera con helado de turrÃ³n", price: "6,5â‚¬" },
     ],
   },
 ];
 
 const ESPECIALES = [
-  { name: "Navajas", desc: "Del mar", price: "12€", images: [] as string[] },
-  { name: "Berberechos", desc: "Del mar", price: "10€", images: [] as string[] },
+  { name: "Navajas", desc: "Del mar", price: "12â‚¬", images: [] as string[] },
+  { name: "Berberechos", desc: "Del mar", price: "10â‚¬", images: [] as string[] },
   {
-    name: "Sándwich de cecina, queso viejo y trufa",
+    name: "SÃ¡ndwich de cecina, queso viejo y trufa",
     desc: "Planchado en mantequilla",
-    price: "7,5€",
+    price: "7,5â‚¬",
     images: [
-      "/images/especiales/sandwich-cecina-trufa/6R8A8966.jpg",
-      "/images/especiales/sandwich-cecina-trufa/6R8A8968.jpg",
+      "/dichosoaljarafe/images/especiales/sandwich-cecina-trufa/6R8A8966.jpg",
+      "/dichosoaljarafe/images/especiales/sandwich-cecina-trufa/6R8A8968.jpg",
     ],
   },
   {
-    name: "Tortilla de patatas con panceta ibérica y parmesano",
-    desc: "Lo más Dichoso",
-    price: "9€",
+    name: "Tortilla de patatas con panceta ibÃ©rica y parmesano",
+    desc: "Lo mÃ¡s Dichoso",
+    price: "9â‚¬",
     images: [
-      "/images/especiales/tortilla-patatas-panceta/2025_10_30_7970.jpg",
-      "/images/especiales/tortilla-patatas-panceta/2025_10_30_7972.jpg",
+      "/dichosoaljarafe/images/especiales/tortilla-patatas-panceta/2025_10_30_7970.jpg",
+      "/dichosoaljarafe/images/especiales/tortilla-patatas-panceta/2025_10_30_7972.jpg",
     ],
   },
   {
     name: "Mejillones a la marinera",
     desc: "Del mar",
-    price: "7,5€",
+    price: "7,5â‚¬",
     images: [
-      "/images/especiales/mejillones-marinera/2025_10_30_8051.jpg",
-      "/images/especiales/mejillones-marinera/2025_10_30_8055.jpg",
-      "/images/especiales/mejillones-marinera/2025_10_30_8066.jpg",
-      "/images/especiales/mejillones-marinera/2025_10_30_8083.jpg",
-      "/images/especiales/mejillones-marinera/2025_10_30_8091.jpg",
+      "/dichosoaljarafe/images/especiales/mejillones-marinera/2025_10_30_8051.jpg",
+      "/dichosoaljarafe/images/especiales/mejillones-marinera/2025_10_30_8055.jpg",
+      "/dichosoaljarafe/images/especiales/mejillones-marinera/2025_10_30_8066.jpg",
+      "/dichosoaljarafe/images/especiales/mejillones-marinera/2025_10_30_8083.jpg",
+      "/dichosoaljarafe/images/especiales/mejillones-marinera/2025_10_30_8091.jpg",
     ],
   },
-  { name: "Torrija casera con helado de turrón", desc: "Postre emblemático", price: "6,5€", images: [] as string[] },
+  { name: "Torrija casera con helado de turrÃ³n", desc: "Postre emblemÃ¡tico", price: "6,5â‚¬", images: [] as string[] },
   {
     name: "Tarta de queso",
     desc: "Postre casero",
-    price: "6€",
+    price: "6â‚¬",
     images: [
-      "/images/especiales/tarta-queso/6R8A9433.jpg",
-      "/images/especiales/tarta-queso/6R8A9437-2.jpg",
-      "/images/especiales/tarta-queso/6R8A9437.jpg",
-      "/images/especiales/tarta-queso/6R8A9438.jpg",
+      "/dichosoaljarafe/images/especiales/tarta-queso/6R8A9433.jpg",
+      "/dichosoaljarafe/images/especiales/tarta-queso/6R8A9437-2.jpg",
+      "/dichosoaljarafe/images/especiales/tarta-queso/6R8A9437.jpg",
+      "/dichosoaljarafe/images/especiales/tarta-queso/6R8A9438.jpg",
     ],
   },
   {
     name: "Arroz sabroso de carabinero y huevo frito",
     desc: "Nuestro arroz estrella",
-    price: "21€",
+    price: "21â‚¬",
     images: [
-      "/images/especiales/arroz-carabinero-huevo/6R8A6587.jpg",
-      "/images/especiales/arroz-carabinero-huevo/6R8A6596.jpg",
-      "/images/especiales/arroz-carabinero-huevo/6R8A6604.jpg",
-      "/images/especiales/arroz-carabinero-huevo/6R8A9011.jpg",
-      "/images/especiales/arroz-carabinero-huevo/6R8A9025.jpg",
-      "/images/especiales/arroz-carabinero-huevo/6R8A9041.jpg",
+      "/dichosoaljarafe/images/especiales/arroz-carabinero-huevo/6R8A6587.jpg",
+      "/dichosoaljarafe/images/especiales/arroz-carabinero-huevo/6R8A6596.jpg",
+      "/dichosoaljarafe/images/especiales/arroz-carabinero-huevo/6R8A6604.jpg",
+      "/dichosoaljarafe/images/especiales/arroz-carabinero-huevo/6R8A9011.jpg",
+      "/dichosoaljarafe/images/especiales/arroz-carabinero-huevo/6R8A9025.jpg",
+      "/dichosoaljarafe/images/especiales/arroz-carabinero-huevo/6R8A9041.jpg",
     ],
   },
   {
     name: "Arroz de carrillada y queso de cabra",
     desc: "Arroz cremoso",
-    price: "16€",
+    price: "16â‚¬",
     images: [
-      "/images/especiales/arroz-carrillada-queso/2025_10_30_8131.jpg",
-      "/images/especiales/arroz-carrillada-queso/2025_10_30_8135.jpg",
-      "/images/especiales/arroz-carrillada-queso/2025_10_30_8141.jpg",
-      "/images/especiales/arroz-carrillada-queso/2025_10_30_8144.jpg",
-      "/images/especiales/arroz-carrillada-queso/2025_10_30_8151.jpg",
-      "/images/especiales/arroz-carrillada-queso/2025_10_30_8154.jpg",
-      "/images/especiales/arroz-carrillada-queso/6R8A8974.jpg",
-      "/images/especiales/arroz-carrillada-queso/6R8A8978.jpg",
-      "/images/especiales/arroz-carrillada-queso/6R8A8979.jpg",
-      "/images/especiales/arroz-carrillada-queso/6R8A9029.jpg",
+      "/dichosoaljarafe/images/especiales/arroz-carrillada-queso/2025_10_30_8131.jpg",
+      "/dichosoaljarafe/images/especiales/arroz-carrillada-queso/2025_10_30_8135.jpg",
+      "/dichosoaljarafe/images/especiales/arroz-carrillada-queso/2025_10_30_8141.jpg",
+      "/dichosoaljarafe/images/especiales/arroz-carrillada-queso/2025_10_30_8144.jpg",
+      "/dichosoaljarafe/images/especiales/arroz-carrillada-queso/2025_10_30_8151.jpg",
+      "/dichosoaljarafe/images/especiales/arroz-carrillada-queso/2025_10_30_8154.jpg",
+      "/dichosoaljarafe/images/especiales/arroz-carrillada-queso/6R8A8974.jpg",
+      "/dichosoaljarafe/images/especiales/arroz-carrillada-queso/6R8A8978.jpg",
+      "/dichosoaljarafe/images/especiales/arroz-carrillada-queso/6R8A8979.jpg",
+      "/dichosoaljarafe/images/especiales/arroz-carrillada-queso/6R8A9029.jpg",
     ],
   },
-  { name: "Croquetas", desc: "Elige tu variedad favorita", price: "5€", images: [] as string[] },
+  { name: "Croquetas", desc: "Elige tu variedad favorita", price: "5â‚¬", images: [] as string[] },
 ];
 
 const REVIEWS = [
   { text: "Tapas muy ricas, cerveza helada y camareros muy amables.", author: "Cliente Google" },
-  { text: "Lo que más me ha gustado han sido los arroces y las croquetas de setas.", author: "Cliente Google" },
-  { text: "La comida está increíble, el steak tartar en tuétano está delicioso.", author: "Cliente Google" },
+  { text: "Lo que mÃ¡s me ha gustado han sido los arroces y las croquetas de setas.", author: "Cliente Google" },
+  { text: "La comida estÃ¡ increÃ­ble, el steak tartar en tuÃ©tano estÃ¡ delicioso.", author: "Cliente Google" },
 ];
 
-/* ── Components ────────────────────────────────── */
+/* â”€â”€ Components â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function Navbar() {
   const links = ["Carta", "Nosotros", "Reservas", "Contacto"];
   const ids = ["carta", "nosotros", "reservas", "contacto"];
@@ -251,7 +251,7 @@ function Hero() {
       <div className="hero-watermark">Dichoso</div>
       <div className="hero-content">
         <p className={`hero-eyebrow fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.2s" }}>
-          Mairena del Aljarafe · Sevilla
+          Mairena del Aljarafe Â· Sevilla
         </p>
         <h1 className={`hero-title fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.4s" }}>
           Sabores que
@@ -259,10 +259,10 @@ function Hero() {
           <em>sorprenden</em>
         </h1>
         <p className={`hero-subtitle fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.6s" }}>
-          Cocina contemporánea, producto cuidado y una experiencia gastronómica diferente.
+          Cocina contemporÃ¡nea, producto cuidado y una experiencia gastronÃ³mica diferente.
         </p>
         <p className={`hero-slogan fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.7s" }}>
-          Dichoso el día que entraste por aquí
+          Dichoso el dÃ­a que entraste por aquÃ­
         </p>
         <div className={`hero-actions fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.8s" }}>
           <button className="btn btn-gold" onClick={() => document.getElementById("carta")?.scrollIntoView({ behavior: "smooth" })}>
@@ -283,11 +283,11 @@ function About() {
       <div className="container">
         <div className="about-compact-grid">
           <div className="about-compact-text">
-            <p className="section-eyebrow">Nuestra filosofía</p>
+            <p className="section-eyebrow">Nuestra filosofÃ­a</p>
             <h2 className="section-title">Elevando lo cotidiano</h2>
             <p>
               En Dichoso creemos que la buena mesa se comparte. Producto de temporada, arroces con alma y una cocina
-              que abraza la tradición sin miedo a innovar.
+              que abraza la tradiciÃ³n sin miedo a innovar.
             </p>
             <blockquote className="quote">Una taberna elegante, honesta y pensada para compartir.</blockquote>
           </div>
@@ -322,7 +322,7 @@ function Menu() {
         <div className="carta-intro">
           <h2 className="carta-logo">Dichoso</h2>
           <p className="carta-subtitle">Tapas y arroces</p>
-          <p className="carta-slogan">Dichoso el día que entraste por aquí</p>
+          <p className="carta-slogan">Dichoso el dÃ­a que entraste por aquÃ­</p>
         </div>
         <div className="carta-tabs">
           {MENU_DATA.map((cat, i) => (
@@ -393,14 +393,14 @@ function EspecialCard({ esp, index }: { esp: (typeof ESPECIALES)[number]; index:
                 aria-label="Anterior"
                 onClick={() => setCurrent((c) => (c - 1 + images.length) % images.length)}
               >
-                ‹
+                â€¹
               </button>
               <button
                 className="especial-arrow especial-arrow--right"
                 aria-label="Siguiente"
                 onClick={() => setCurrent((c) => (c + 1) % images.length)}
               >
-                ›
+                â€º
               </button>
               <div className="especial-dots">
                 {images.map((_, i) => (
@@ -418,8 +418,8 @@ function EspecialCard({ esp, index }: { esp: (typeof ESPECIALES)[number]; index:
       ) : (
         <div className="especial-img">
           <div className="especial-img-inner">
-            <span className="especial-img-icon">⊞</span>
-            <span className="especial-img-label">Imagen próximamente</span>
+            <span className="especial-img-icon">âŠž</span>
+            <span className="especial-img-label">Imagen prÃ³ximamente</span>
           </div>
         </div>
       )}
@@ -457,8 +457,8 @@ function SloganSection() {
     <section className="slogan-section">
       <div className="container container-narrow">
         <p className="slogan-eyebrow">Dichoso</p>
-        <p className="slogan-text">Dichoso el día que entraste por aquí</p>
-        <p className="slogan-sub">Una experiencia gastronómica para recordar</p>
+        <p className="slogan-text">Dichoso el dÃ­a que entraste por aquÃ­</p>
+        <p className="slogan-sub">Una experiencia gastronÃ³mica para recordar</p>
       </div>
     </section>
   );
@@ -480,7 +480,7 @@ function Reviews() {
               viewport={{ once: false, amount: 0.2 }}
               transition={{ duration: 0.5, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div className="review-stars">★★★★★</div>
+              <div className="review-stars">â˜…â˜…â˜…â˜…â˜…</div>
               <p className="review-text">"{r.text}"</p>
               <span className="review-author">{r.author}</span>
             </motion.div>
@@ -539,13 +539,13 @@ function Reservation() {
     setBooked(existing);
 
     const fmtDate = date.split("-").reverse().join("/");
-    const msg = `Dichoso — Nueva reserva
+    const msg = `Dichoso â€” Nueva reserva
 
-📅 ${fmtDate}
-⏰ ${time}
-👥 ${persons} personas
-👤 ${name}
-📞 ${phone}${note ? `\n📝 ${note}` : ""}
+ðŸ“… ${fmtDate}
+â° ${time}
+ðŸ‘¥ ${persons} personas
+ðŸ‘¤ ${name}
+ðŸ“ž ${phone}${note ? `\nðŸ“ ${note}` : ""}
 
 *Te esperamos en Dichoso*`;
     window.open(`https://wa.me/34691233213?text=${encodeURIComponent(msg)}`, "_blank");
@@ -568,7 +568,7 @@ function Reservation() {
           <p className="section-eyebrow">Reservas</p>
           <h2 className="section-title">Reserve su mesa</h2>
           <div className="reservation-done">
-            <span className="reservation-done-icon">✓</span>
+            <span className="reservation-done-icon">âœ“</span>
             <p className="reservation-done-text">Hemos guardado tu reserva</p>
             <p className="reservation-done-sub">Te esperamos en Dichoso</p>
             <div className="reservation-detail">
@@ -585,7 +585,7 @@ function Reservation() {
                 <strong>Nombre:</strong> {done.name}
               </p>
               <p>
-                <strong>Teléfono:</strong> {done.phone}
+                <strong>TelÃ©fono:</strong> {done.phone}
               </p>
               {done.note && (
                 <p>
@@ -594,7 +594,7 @@ function Reservation() {
               )}
             </div>
             <a href={`tel:+34${PHONE}`} className="btn btn-gold" style={{ fontSize: "0.8rem" }}>
-              Reservado · 664 24 32 80
+              Reservado Â· 664 24 32 80
             </a>
           </div>
         </div>
@@ -647,7 +647,7 @@ function Reservation() {
                       return (
                         <option key={t} value={t} disabled={taken}>
                           {t}
-                          {taken ? " — reservado" : ""}
+                          {taken ? " â€” reservado" : ""}
                         </option>
                       );
                     })}
@@ -659,7 +659,7 @@ function Reservation() {
               <label className="form-label">Personas</label>
               <select className="form-input" required value={persons} onChange={(e) => setPersons(e.target.value)}>
                 <option value="" disabled>
-                  N.º
+                  N.Âº
                 </option>
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
                   <option key={n} value={n}>
@@ -682,7 +682,7 @@ function Reservation() {
               />
             </div>
             <div className="form-group">
-              <label className="form-label">Teléfono</label>
+              <label className="form-label">TelÃ©fono</label>
               <input
                 type="tel"
                 className="form-input"
@@ -712,7 +712,7 @@ function Reservation() {
               {sending ? "Reservando..." : time && isBooked(time) ? "No disponible" : "Confirmar reserva"}
             </button>
             <a href={`tel:+34${PHONE}`} className="btn btn-outline btn-lg">
-              Llamar · 664 24 32 80
+              Llamar Â· 664 24 32 80
             </a>
           </div>
           <p
@@ -725,7 +725,7 @@ function Reservation() {
               opacity: 0.6,
             }}
           >
-            Al reservar se abrirá WhatsApp. Pulsa enviar para confirmar.
+            Al reservar se abrirÃ¡ WhatsApp. Pulsa enviar para confirmar.
           </p>
         </motion.form>
       </div>
@@ -737,8 +737,8 @@ function Location() {
   return (
     <section className="section bg-card" id="contacto">
       <div className="container">
-        <p className="section-eyebrow">Cómo llegar</p>
-        <h2 className="section-title">Ubicación</h2>
+        <p className="section-eyebrow">CÃ³mo llegar</p>
+        <h2 className="section-title">UbicaciÃ³n</h2>
         <motion.div
           className="location-grid"
           initial={{ opacity: 0, y: 20 }}
@@ -759,8 +759,8 @@ function Location() {
               </div>
               <div className="schedule">
                 <h4 className="schedule-title">Horario</h4>
-                <p>Almuerzo: 13:00 – 16:30</p>
-                <p>Cena: 20:00 – 00:00</p>
+                <p>Almuerzo: 13:00 â€“ 16:30</p>
+                <p>Cena: 20:00 â€“ 00:00</p>
               </div>
             </div>
           </div>
@@ -770,7 +770,7 @@ function Location() {
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="Ubicación de Dichoso"
+              title="UbicaciÃ³n de Dichoso"
             ></iframe>
           </div>
         </motion.div>
@@ -792,10 +792,10 @@ function Footer() {
         <div className="footer-grid">
           <div>
             <span className="footer-logo">Dichoso</span>
-            <p className="footer-tagline">Cocina contemporánea en Mairena del Aljarafe.</p>
+            <p className="footer-tagline">Cocina contemporÃ¡nea en Mairena del Aljarafe.</p>
           </div>
           <div>
-            <p className="footer-heading">Dirección</p>
+            <p className="footer-heading">DirecciÃ³n</p>
             <p className="footer-text">{ADDRESS}</p>
           </div>
           <div>
@@ -806,14 +806,14 @@ function Footer() {
           </div>
         </div>
         <div className="footer-slogan-line">
-          <span className="footer-slogan">Dichoso el día que entraste por aquí</span>
+          <span className="footer-slogan">Dichoso el dÃ­a que entraste por aquÃ­</span>
         </div>
         <div className="footer-bottom">
-          <p>© {new Date().getFullYear()} Dichoso. Todos los derechos reservados.</p>
+          <p>Â© {new Date().getFullYear()} Dichoso. Todos los derechos reservados.</p>
           <p className="footer-credit">
             Realizado por{" "}
             <a href="https://franciscoortuno.duckdns.org/" target="_blank" rel="noreferrer">
-              Francisco Ortuño
+              Francisco OrtuÃ±o
             </a>
           </p>
         </div>
@@ -822,7 +822,7 @@ function Footer() {
   );
 }
 
-/* ── App ───────────────────────────────────────── */
+/* â”€â”€ App â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 export default function App() {
   return (
     <>
