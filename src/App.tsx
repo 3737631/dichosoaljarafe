@@ -88,13 +88,13 @@ const MENU_DATA = [
 const ESPECIALES = [
   { name: "Navajas", desc: "Del mar", price: "12€" },
   { name: "Berberechos", desc: "Del mar", price: "10€" },
-  { name: "Sándwich de cecina, queso viejo y trufa", desc: "Planchado en mantequilla", price: "7,5€" },
-  { name: "Tortilla de patatas con panceta ibérica y parmesano", desc: "Lo más Dichoso", price: "9€" },
-  { name: "Mejillones a la marinera", desc: "Del mar", price: "7,5€" },
+  { name: "Sándwich de cecina, queso viejo y trufa", desc: "Planchado en mantequilla", price: "7,5€", image: "/assets/images/especiales/sandwich-cecina-trufa/6R8A8962.jpg" },
+  { name: "Tortilla de patatas con panceta ibérica y parmesano", desc: "Lo más Dichoso", price: "9€", image: "/assets/images/especiales/tortilla-patatas-panceta/2025_10_30_7970.jpg" },
+  { name: "Mejillones a la marinera", desc: "Del mar", price: "7,5€", image: "/assets/images/especiales/mejillones-marinera/2025_10_30_8051.jpg" },
   { name: "Torrija casera con helado de turrón", desc: "Postre emblemático", price: "6,5€" },
-  { name: "Tarta de queso", desc: "Postre casero", price: "6€" },
-  { name: "Arroz sabroso de carabinero y huevo frito", desc: "Nuestro arroz estrella", price: "21€" },
-  { name: "Arroz de carrillada y queso de cabra", desc: "Arroz cremoso", price: "16€" },
+  { name: "Tarta de queso", desc: "Postre casero", price: "6€", image: "/assets/images/especiales/tarta-queso/6R8A9433.jpg" },
+  { name: "Arroz sabroso de carabinero y huevo frito", desc: "Nuestro arroz estrella", price: "21€", image: "/assets/images/especiales/arroz-carabinero-huevo/6R8A6587.jpg" },
+  { name: "Arroz de carrillada y queso de cabra", desc: "Arroz cremoso", price: "16€", image: "/assets/images/especiales/arroz-carrillada-queso/6R8A8974.jpg" },
   { name: "Croquetas", desc: "Elige tu variedad favorita", price: "5€" },
 ];
 
@@ -276,12 +276,22 @@ function Especiales() {
               viewport={{ once: false, amount: 0.05 }}
               transition={{ duration: 0.4, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
             >
+              {esp.image ? (
+                <div className="especial-img">
+                  <img 
+                    src={esp.image} 
+                    alt={esp.name} 
+                    className="especial-img-inner"
+                  />
+                </div>
+              ) : (
                 <div className="especial-img">
                   <div className="especial-img-inner">
                     <span className="especial-img-icon">⊞</span>
                     <span className="especial-img-label">Imagen próximamente</span>
                   </div>
                 </div>
+              )}
               <div className="especial-body">
                 <h3 className="especial-name">{esp.name}</h3>
                 {esp.desc && <p className="especial-desc">{esp.desc}</p>}
