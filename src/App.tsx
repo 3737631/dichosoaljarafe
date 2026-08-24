@@ -1,11 +1,11 @@
-﻿import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, useScroll, useTransform } from "motion/react";
 import "./App.css";
 import { supabase } from "./supabase";
 import ScrollMantelSection from "./components/ScrollMantelSection";
 
-/* â”€â”€ Data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── Data ──────────────────────────────────────── */
 const PHONE = "664243280";
 const ADDRESS = "Av. de los Descubrimientos, 11, 41927 Mairena del Aljarafe";
 const MAPS_URL =
@@ -87,8 +87,6 @@ const MENU_DATA = [
 ];
 
 const ESPECIALES = [
-  { name: "Navajas", desc: "Del mar", price: "12€", images: [] as string[] },
-  { name: "Berberechos", desc: "Del mar", price: "10€", images: [] as string[] },
   {
     name: "Sándwich de cecina, queso viejo y trufa",
     desc: "Planchado en mantequilla",
@@ -161,19 +159,34 @@ const ESPECIALES = [
       "/dichosoaljarafe/images/especiales/arroz-carrillada-queso/6R8A9029.jpg",
     ],
   },
-  { name: "Croquetas", desc: "Elige tu variedad favorita", price: "5€", images: [] as string[] },
+  {
+    name: "Croquetas",
+    desc: "Elige tu variedad favorita",
+    price: "5€",
+    images: [
+      "/dichosoaljarafe/images/especiales/croquetas/6R8A6549.jpg",
+      "/dichosoaljarafe/images/especiales/croquetas/6R8A1083.jpg",
+      "/dichosoaljarafe/images/especiales/croquetas/6R8A1087.jpg",
+      "/dichosoaljarafe/images/especiales/croquetas/6R8A6460.jpg",
+    ],
+  },
+];
+
+const FILOSOFIA_IMAGES: string[] = [
+  // Añade aquí las fotos de la carpeta filosofía cuando las tengas
+  // Ejemplo: "/dichosoaljarafe/images/filosofia/foto1.jpg",
 ];
 
 const REVIEWS = [
   { text: "Tapas muy ricas, cerveza helada y camareros muy amables.", author: "Cliente Google" },
-  { text: "Lo que mÃ¡s me ha gustado han sido los arroces y las croquetas de setas.", author: "Cliente Google" },
-  { text: "La comida estÃ¡ increÃ­ble, el steak tartar en tuÃ©tano estÃ¡ delicioso.", author: "Cliente Google" },
+  { text: "Lo que más me ha gustado han sido los arroces y las croquetas de setas.", author: "Cliente Google" },
+  { text: "La comida está increíble, el steak tartar en tuétano está delicioso.", author: "Cliente Google" },
 ];
 
-/* â”€â”€ Components â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── Components ────────────────────────────────── */
 function Navbar() {
   const links = ["Carta", "Nosotros", "Reservas", "Contacto"];
-  const ids = ["carta", "nosotros", "reservas", "contacto"];
+  const ids   = ["carta", "nosotros", "reservas", "contacto"];
 
   const scrollTo = (id: string) =>
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -187,39 +200,11 @@ function Navbar() {
             {l}
           </button>
         ))}
-        <span style={{ display: "flex", gap: "1.25rem", alignItems: "center" }}>
-          <button
-            onClick={() => scrollTo("carta")}
-            className="btn btn-gold btn-carta-nav"
-            style={{
-              background: "none",
-              border: "1px solid var(--accent)",
-              color: "var(--accent)",
-              fontSize: "0.75rem",
-              padding: "0.65rem 1.2rem",
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-              cursor: "pointer",
-              fontFamily: "'Roboto Condensed',sans-serif",
-              borderRadius: 0,
-            }}
-          >
+        <span style={{display:"flex",gap:"1.25rem",alignItems:"center"}}>
+          <button onClick={() => scrollTo("carta")} className="btn btn-gold btn-carta-nav" style={{background:"none",border:"1px solid var(--accent)",color:"var(--accent)",fontSize:"0.75rem",padding:"0.65rem 1.2rem",letterSpacing:"0.1em",textTransform:"uppercase",cursor:"pointer",fontFamily:"'Roboto Condensed',sans-serif",borderRadius:0}}>
             Carta
           </button>
-          <button
-            onClick={() => scrollTo("reservas")}
-            className="btn btn-gold"
-            style={{
-              padding: "0.65rem 1.2rem",
-              fontSize: "0.75rem",
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-              cursor: "pointer",
-              border: "none",
-              fontFamily: "'Roboto Condensed',sans-serif",
-              borderRadius: 0,
-            }}
-          >
+          <button onClick={() => scrollTo("reservas")} className="btn btn-gold" style={{padding:"0.65rem 1.2rem",fontSize:"0.75rem",letterSpacing:"0.1em",textTransform:"uppercase",cursor:"pointer",border:"none",fontFamily:"'Roboto Condensed',sans-serif",borderRadius:0}}>
             Reservar
           </button>
         </span>
@@ -230,9 +215,7 @@ function Navbar() {
 
 function Hero() {
   const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    setVisible(true);
-  }, []);
+  useEffect(() => { setVisible(true); }, []);
 
   const { scrollY } = useScroll();
   const mantelY = useTransform(scrollY, [0, 1000], [0, 240]);
@@ -240,6 +223,7 @@ function Hero() {
 
   return (
     <section className="hero" id="hero">
+      {/* Dynamic Hanging Tablecloth Decor */}
       <motion.div
         style={{ y: mantelY }}
         initial={{ opacity: 0 }}
@@ -251,25 +235,28 @@ function Hero() {
       </motion.div>
       <div className="hero-watermark">Dichoso</div>
       <div className="hero-content">
-        <p className={`hero-eyebrow fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.2s" }}>
-          Mairena del Aljarafe Â· Sevilla
-        </p>
+        <p className={`hero-eyebrow fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.2s" }}>Mairena del Aljarafe · Sevilla</p>
         <h1 className={`hero-title fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.4s" }}>
-          Sabores que
-          <br />
+          Sabores que<br />
           <em>sorprenden</em>
         </h1>
         <p className={`hero-subtitle fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.6s" }}>
-          Cocina contemporÃ¡nea, producto cuidado y una experiencia gastronÃ³mica diferente.
+          Cocina contemporánea, producto cuidado y una experiencia gastronómica diferente.
         </p>
         <p className={`hero-slogan fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.7s" }}>
-          Dichoso el dÃ­a que entraste por aquÃ­
+          Dichoso el día que entraste por aquí
         </p>
         <div className={`hero-actions fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.8s" }}>
-          <button className="btn btn-gold" onClick={() => document.getElementById("carta")?.scrollIntoView({ behavior: "smooth" })}>
+          <button
+            className="btn btn-gold"
+            onClick={() => document.getElementById("carta")?.scrollIntoView({ behavior: "smooth" })}
+          >
             Ver carta
           </button>
-          <button className="btn btn-outline" onClick={() => document.getElementById("reservas")?.scrollIntoView({ behavior: "smooth" })}>
+          <button
+            className="btn btn-outline"
+            onClick={() => document.getElementById("reservas")?.scrollIntoView({ behavior: "smooth" })}
+          >
             Reservar mesa
           </button>
         </div>
@@ -279,18 +266,22 @@ function Hero() {
 }
 
 function About() {
+  const [showFilosofia, setShowFilosofia] = useState(false);
   return (
     <section className="section about-compact" id="nosotros">
       <div className="container">
         <div className="about-compact-grid">
           <div className="about-compact-text">
-            <p className="section-eyebrow">Nuestra filosofÃ­a</p>
+            <p className="section-eyebrow">Nuestra filosofía</p>
             <h2 className="section-title">Elevando lo cotidiano</h2>
             <p>
-              En Dichoso creemos que la buena mesa se comparte. Producto de temporada, arroces con alma y una cocina
-              que abraza la tradiciÃ³n sin miedo a innovar.
+              En Dichoso creemos que la buena mesa se comparte. Producto de temporada,
+              arroces con alma y una cocina que abraza la tradición sin miedo a innovar.
             </p>
             <blockquote className="quote">Una taberna elegante, honesta y pensada para compartir.</blockquote>
+            <button className="btn btn-outline" style={{ marginTop: "1rem", alignSelf: "flex-start" }} onClick={() => setShowFilosofia(!showFilosofia)}>
+              {showFilosofia ? "Ocultar fotos" : "Ver fotos del local"}
+            </button>
           </div>
           <div className="features-grid">
             {FEATURES.map((f, i) => (
@@ -308,6 +299,49 @@ function About() {
             ))}
           </div>
         </div>
+        {showFilosofia && (
+          <div style={{ marginTop: "3rem" }}>
+            <p className="section-eyebrow">Nuestro local</p>
+            <h3 className="section-title" style={{ fontSize: "1.8rem", marginBottom: "1.5rem" }}>
+              Un espacio para disfrutar
+            </h3>
+            {FILOSOFIA_IMAGES.length > 0 ? (
+              <div className="especiales-grid">
+                {FILOSOFIA_IMAGES.map((src, i) => (
+                  <motion.div
+                    key={src}
+                    className="especial-card"
+                    initial={{ opacity: 0.4, y: 8 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: false, amount: 0.05 }}
+                    transition={{ duration: 0.4, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    <div className="especial-img">
+                      <img src={src} alt={`Filosofía ${i + 1}`} className="especial-carousel-img" loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            ) : (
+              <div className="especiales-grid">
+                {[1, 2, 3].map((n) => (
+                  <div key={n} className="especial-card">
+                    <div className="especial-img">
+                      <div className="especial-img-inner">
+                        <span className="especial-img-icon">⊞</span>
+                        <span className="especial-img-label">Fotos próximamente</span>
+                      </div>
+                    </div>
+                    <div className="especial-body">
+                      <h3 className="especial-name">Nuestro local</h3>
+                      <p className="especial-desc">Pronto añadiremos fotos del espacio</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </section>
   );
@@ -323,7 +357,7 @@ function Menu() {
         <div className="carta-intro">
           <h2 className="carta-logo">Dichoso</h2>
           <p className="carta-subtitle">Tapas y arroces</p>
-          <p className="carta-slogan">Dichoso el dÃ­a que entraste por aquÃ­</p>
+          <p className="carta-slogan">Dichoso el día que entraste por aquí</p>
         </div>
         <div className="carta-tabs">
           {MENU_DATA.map((cat, i) => (
@@ -372,6 +406,7 @@ function EspecialCard({ esp, index }: { esp: (typeof ESPECIALES)[number]; index:
       else setCurrent((c) => (c + 1) % images.length);
     }
   };
+
   return (
     <motion.div
       className="especial-card"
@@ -419,8 +454,8 @@ function EspecialCard({ esp, index }: { esp: (typeof ESPECIALES)[number]; index:
       ) : (
         <div className="especial-img">
           <div className="especial-img-inner">
-            <span className="especial-img-icon">âŠž</span>
-            <span className="especial-img-label">Imagen prÃ³ximamente</span>
+            <span className="especial-img-icon">⊞</span>
+            <span className="especial-img-label">Imagen próximamente</span>
           </div>
         </div>
       )}
@@ -458,8 +493,10 @@ function SloganSection() {
     <section className="slogan-section">
       <div className="container container-narrow">
         <p className="slogan-eyebrow">Dichoso</p>
-        <p className="slogan-text">Dichoso el dÃ­a que entraste por aquÃ­</p>
-        <p className="slogan-sub">Una experiencia gastronÃ³mica para recordar</p>
+        <p className="slogan-text">
+          Dichoso el día que entraste por aquí
+        </p>
+        <p className="slogan-sub">Una experiencia gastronómica para recordar</p>
       </div>
     </section>
   );
@@ -481,7 +518,7 @@ function Reviews() {
               viewport={{ once: false, amount: 0.2 }}
               transition={{ duration: 0.5, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div className="review-stars">â˜…â˜…â˜…â˜…â˜…</div>
+              <div className="review-stars">★★★★★</div>
               <p className="review-text">"{r.text}"</p>
               <span className="review-author">{r.author}</span>
             </motion.div>
@@ -738,8 +775,8 @@ function Location() {
   return (
     <section className="section bg-card" id="contacto">
       <div className="container">
-        <p className="section-eyebrow">CÃ³mo llegar</p>
-        <h2 className="section-title">UbicaciÃ³n</h2>
+        <p className="section-eyebrow">Cómo llegar</p>
+        <h2 className="section-title">Ubicación</h2>
         <motion.div
           className="location-grid"
           initial={{ opacity: 0, y: 20 }}
@@ -760,19 +797,13 @@ function Location() {
               </div>
               <div className="schedule">
                 <h4 className="schedule-title">Horario</h4>
-                <p>Almuerzo: 13:00 â€“ 16:30</p>
-                <p>Cena: 20:00 â€“ 00:00</p>
+                <p>Almuerzo: 13:00 – 16:30</p>
+                <p>Cena: 20:00 – 00:00</p>
               </div>
             </div>
           </div>
           <div className="map-wrapper">
-            <iframe
-              src="https://www.google.com/maps?q=Av.+de+los+Descubrimientos+11,+Mairena+del+Aljarafe&output=embed"
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="UbicaciÃ³n de Dichoso"
-            ></iframe>
+            <iframe src="https://www.google.com/maps?q=Av.+de+los+Descubrimientos+11,+Mairena+del+Aljarafe&output=embed" allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Ubicación de Dichoso"></iframe>
           </div>
         </motion.div>
       </div>
@@ -793,37 +824,30 @@ function Footer() {
         <div className="footer-grid">
           <div>
             <span className="footer-logo">Dichoso</span>
-            <p className="footer-tagline">Cocina contemporÃ¡nea en Mairena del Aljarafe.</p>
+            <p className="footer-tagline">Cocina contemporánea en Mairena del Aljarafe.</p>
           </div>
           <div>
-            <p className="footer-heading">DirecciÃ³n</p>
+            <p className="footer-heading">Dirección</p>
             <p className="footer-text">{ADDRESS}</p>
           </div>
           <div>
             <p className="footer-heading">Contacto</p>
-            <a href={`tel:+34${PHONE}`} className="footer-link">
-              664 24 32 80
-            </a>
+            <a href={`tel:+34${PHONE}`} className="footer-link">664 24 32 80</a>
           </div>
         </div>
         <div className="footer-slogan-line">
-          <span className="footer-slogan">Dichoso el dÃ­a que entraste por aquÃ­</span>
+          <span className="footer-slogan">Dichoso el día que entraste por aquí</span>
         </div>
         <div className="footer-bottom">
-          <p>Â© {new Date().getFullYear()} Dichoso. Todos los derechos reservados.</p>
-          <p className="footer-credit">
-            Realizado por{" "}
-            <a href="https://franciscoortuno.duckdns.org/" target="_blank" rel="noreferrer">
-              Francisco OrtuÃ±o
-            </a>
-          </p>
+          <p>© {new Date().getFullYear()} Dichoso. Todos los derechos reservados.</p>
+          <p className="footer-credit">Realizado por <a href="https://franciscoortuno.duckdns.org/" target="_blank" rel="noreferrer">Francisco Ortuño</a></p>
         </div>
       </div>
     </motion.footer>
   );
 }
 
-/* â”€â”€ App â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── App ───────────────────────────────────────── */
 export default function App() {
   return (
     <>
