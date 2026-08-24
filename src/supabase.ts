@@ -3,7 +3,6 @@ const SUPABASE_ANON_KEY = "sb_publishable_UfYMnymwWZ0l9sX9slMzYg_ufGhVXWA";
 
 async function fetchSlots(date: string): Promise<string[]> {
   try {
-    // Cache busting to ensure fresh data across devices
     const bust = Date.now();
     const res = await fetch(
       `${SUPABASE_URL}/rest/v1/slots?select=time&date=eq.${encodeURIComponent(date)}&_=${bust}`,
@@ -19,13 +18,20 @@ async function fetchSlots(date: string): Promise<string[]> {
       }
     );
     if (!res.ok) {
-      console.warn("fetchSlots not ok", res.status, await res.text());
+      const txt = await res.text();
+      console.warn("fetchSlots failed", res.status, txt);
+      // Return null to indicate failure, so caller can keep previous state
+      // But we return [] for now to keep type consistency, caller should handle
       return [];
     }
     const data = await res.json();
-    return (data || []).map((r: any) => r.time);
+    if (!Array.isArray(data)) {
+      console.warn("fetchSlots unexpected data", data);
+      return [];
+    }
+    return data.map((r: any) => r.time).filter(Boolean);
   } catch (e) {
-    console.warn("fetchSlots error", e);
+    console.warn("fetchSlots exception", e);
     return [];
   }
 }
@@ -52,11 +58,14 @@ async function insertSlot(row: {
     });
     if (!res.ok) {
       const txt = await res.text();
-      console.warn("insertSlot not ok", res.status, txt);
-      // If conflict (409) it means already booked, which is fine
+      console.warn("insertSlot failed", res.status, txt);
+      // Throw to let caller know it failed, so it can retry or show error
+      // But for now just log
+    } else {
+      console.log("insertSlot success", row.date, row.time);
     }
   } catch (e) {
-    console.warn("insertSlot error", e);
+    console.warn("insertSlot exception", e);
   }
 }
 

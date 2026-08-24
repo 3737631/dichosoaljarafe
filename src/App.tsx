@@ -305,7 +305,7 @@ function Hero() {
       </motion.div>
       <div className="hero-watermark">Dichoso</div>
       <div className="hero-content">
-        <p className={`hero-eyebrow fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.2s" }}>Mairena del Aljarafe · Sevilla</p>
+        <p className={`hero-eyebrow fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.2s" }}>Mairena del Aljarafe - Sevilla</p>
         <h1 className={`hero-title fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.4s" }}>
           Sabores que<br />
           <em>sorprenden</em>
@@ -622,7 +622,7 @@ function Reservation() {
     };
     load();
     // Poll every 5s for cross-device sync (when another device books, this device will see it)
-    const id = setInterval(load, 5000);
+    const id = setInterval(load, 3000);
     // Also refetch when window regains focus (user returns to tab)
     const onFocus = () => load();
     window.addEventListener("focus", onFocus);
@@ -828,7 +828,7 @@ Te esperamos en Dichoso`;
               {sending ? "Reservando..." : time && isBooked(time) ? "No disponible" : "Confirmar reserva"}
             </button>
             <a href={`tel:+34${PHONE}`} className="btn btn-outline btn-lg">
-              Llamar Â· 664 24 32 80
+              Llamar - 664 24 32 80
             </a>
           </div>
           <p
