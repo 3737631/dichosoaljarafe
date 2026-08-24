@@ -359,8 +359,7 @@ function About() {
                 key={f.label}
                 className="feature-card"
                 initial={{ opacity: 0.4, y: 8 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.1 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
               >
                 <h4 className="feature-title">{f.label}</h4>
@@ -382,8 +381,7 @@ function About() {
                     key={src}
                     className="especial-card"
                     initial={{ opacity: 0.4, y: 8 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: false, amount: 0.05 }}
+      animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
                   >
                     <div className="especial-img">
@@ -481,8 +479,7 @@ function EspecialCard({ esp, index }: { esp: (typeof ESPECIALES)[number]; index:
     <motion.div
       className="especial-card"
       initial={{ opacity: 0.4, y: 8 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: false, amount: 0.05 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
     >
       {hasImages ? (
@@ -583,9 +580,8 @@ function Reviews() {
             <motion.div
               key={r.text}
               className="review-card"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.2 }}
+              initial={{ opacity: 0.4, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="review-stars">★★★★★</div>
@@ -721,9 +717,8 @@ function Reservation() {
         <motion.form
           className="form"
           onSubmit={handleSubmit}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.15 }}
+          initial={{ opacity: 0.4, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className="form-row">
@@ -849,9 +844,8 @@ function Location() {
         <h2 className="section-title">Ubicación</h2>
         <motion.div
           className="location-grid"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.15 }}
+          initial={{ opacity: 0.4, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className="location-info">
@@ -886,8 +880,7 @@ function Footer() {
     <motion.footer
       className="footer"
       initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: false, amount: 0.1 }}
+      animate={{ opacity: 1 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
     >
       <div className="container">
