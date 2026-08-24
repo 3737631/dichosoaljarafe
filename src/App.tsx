@@ -750,7 +750,7 @@ Te esperamos en Dichoso`;
                       return (
                         <option key={t} value={t} disabled={taken}>
                           {t}
-                          {taken ? " â€” reservado" : ""}
+                          {taken ? " - reservado" : ""}
                         </option>
                       );
                     })}
@@ -859,8 +859,8 @@ function Location() {
               </div>
               <div className="schedule">
                 <h4 className="schedule-title">Horario</h4>
-                <p>Almuerzo: 13:00 – 16:30</p>
-                <p>Cena: 20:00 – 00:00</p>
+                <p>Almuerzo: 13:00 - 16:30</p>
+                <p>Cena: 20:00 - 00:00</p>
               </div>
             </div>
           </div>
