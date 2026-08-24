@@ -97,14 +97,13 @@ const ESPECIALES = [
     ],
   },
   {
-    name: "Tortilla de patatas con panceta ibérica y parmesano",
-    desc: "Lo más Dichoso",
-    price: "9€",
-    images: [
-      "/dichosoaljarafe/images/especiales/tortilla-patatas-panceta/2025_10_30_7970.jpg",
-      "/dichosoaljarafe/images/especiales/tortilla-patatas-panceta/2025_10_30_7972.jpg",
-    ],
-  },
+name: "Tortilla de patatas con panceta ibérica y parmesano",
+     desc: "Lo más Dichoso",
+     price: "9€",
+     images: [
+       "/dichosoaljarafe/images/especiales/tortilla-patatas-panceta/6R8A1099.jpg",
+     ],
+   },
   {
     name: "Mejillones a la marinera",
     desc: "Del mar",
