@@ -12,7 +12,7 @@ const MAPS_URL =
   "https://maps.google.com/?q=Av.+de+los+Descubrimientos+11,+Mairena+del+Aljarafe";
 
 const FEATURES = [
-  { label: "Cocina contemporÃ¡nea", desc: "TradiciÃ³n reinventada con tÃ©cnicas modernas." },
+  { label: "Cocina contemporánea", desc: "Tradición reinventada con técnicas modernas." },
   { label: "Producto de temporada", desc: "Ingredientes seleccionados con mimo." },
   { label: "Arroces con identidad", desc: "Nuestra especialidad, elaborados al momento." },
   { label: "Tapas creativas", desc: "Bocados llenos de sabor y originalidad." },
@@ -22,86 +22,86 @@ const MENU_DATA = [
   {
     title: "ENTRANTES",
     items: [
-      { name: "Gilda cecina y queso", price: "2,5â‚¬ ud." },
-      { name: "Gilda anchoa, boquerÃ³n, tomate seco, queso viejo", price: "3â‚¬" },
-      { name: "Salmorejo con huevo y jamÃ³n ibÃ©rico", price: "5,5â‚¬" },
-      { name: "Ensaladilla de gambas", price: "4,2â‚¬ / 9,7â‚¬" },
-      { name: "Ensaladilla de pulpo", price: "4,5â‚¬ / 10â‚¬" },
-      { name: "Papas aliÃ±Ã¡s", price: "4â‚¬ / 9â‚¬" },
-      { name: "Papas bravas", price: "5,5â‚¬" },
-      { name: "Tosta de salmorejo con matrimonio de anchoa y boquerÃ³n", price: "4,5â‚¬" },
+      { name: "Gilda cecina y queso", price: "2,5€ ud." },
+      { name: "Gilda anchoa, boquerón, tomate seco, queso viejo", price: "3€" },
+      { name: "Salmorejo con huevo y jamón ibérico", price: "5,5€" },
+      { name: "Ensaladilla de gambas", price: "4,2€ / 9,7€" },
+      { name: "Ensaladilla de pulpo", price: "4,5€ / 10€" },
+      { name: "Papas aliñás", price: "4€ / 9€" },
+      { name: "Papas bravas", price: "5,5€" },
+      { name: "Tosta de salmorejo con matrimonio de anchoa y boquerón", price: "4,5€" },
     ],
   },
   {
     title: "FRITOS",
     items: [
-      { name: "Croquetas de jamÃ³n ibÃ©rico de bellota", price: "5â‚¬ / 9,5â‚¬" },
-      { name: "Croquetas de setas salteadas en mantequilla y soja", price: "5â‚¬ / 9,5â‚¬" },
-      { name: "Croquetas de gambas al ajillo", price: "5â‚¬ / 9,5â‚¬" },
-      { name: "Berenjena frita con mayonesa de soja y miel", price: "5,5â‚¬" },
-      { name: "Chocos fritos", price: "7,5â‚¬ / 15â‚¬" },
+      { name: "Croquetas de jamón ibérico de bellota", price: "5€ / 9,5€" },
+      { name: "Croquetas de setas salteadas en mantequilla y soja", price: "5€ / 9,5€" },
+      { name: "Croquetas de gambas al ajillo", price: "5€ / 9,5€" },
+      { name: "Berenjena frita con mayonesa de soja y miel", price: "5,5€" },
+      { name: "Chocos fritos", price: "7,5€ / 15€" },
     ],
   },
   {
-    title: "LO MÃS DICHOSO",
+    title: "LO MÁS DICHOSO",
     items: [
-      { name: "Patatas arriera", price: "12â‚¬" },
-      { name: "Langostinos al ajillo estilo Dichoso", price: "7,5â‚¬" },
-      { name: "SÃ¡ndwich de cecina de vaca, queso viejo y trufa, planchado en mantequilla", price: "7,5â‚¬" },
-      { name: "Tortilla de patatas con panceta ibÃ©rica y parmesano", price: "9â‚¬" },
-      { name: "Tartar de cigala marinado en su esencia", price: "9,5â‚¬" },
-      { name: "Steak tartar aliÃ±ado con tuÃ©tano asado y presentado en su hueso", price: "16,9â‚¬" },
-      { name: "Carrillada de cerdo ibÃ©rico", price: "5,5â‚¬" },
-      { name: "Presa de cerdo ibÃ©rico de bellota", price: "9â‚¬ / 17â‚¬" },
-      { name: "Lomo bajo de vaca", price: "7â‚¬ / 100gr" },
+      { name: "Patatas arriera", price: "12€" },
+      { name: "Langostinos al ajillo estilo Dichoso", price: "7,5€" },
+      { name: "Sándwich de cecina de vaca, queso viejo y trufa, planchado en mantequilla", price: "7,5€" },
+      { name: "Tortilla de patatas con panceta ibérica y parmesano", price: "9€" },
+      { name: "Tartar de cigala marinado en su esencia", price: "9,5€" },
+      { name: "Steak tartar aliñado con tuétano asado y presentado en su hueso", price: "16,9€" },
+      { name: "Carrillada de cerdo ibérico", price: "5,5€" },
+      { name: "Presa de cerdo ibérico de bellota", price: "9€ / 17€" },
+      { name: "Lomo bajo de vaca", price: "7€ / 100gr" },
     ],
   },
   {
     title: "DEL MAR",
     items: [
-      { name: "Sardinas estilo espeto", price: "9â‚¬" },
-      { name: "Mejillones a la marinera", price: "7,5â‚¬" },
-      { name: "GambÃ³n a la plancha", price: "2,5â‚¬ ud." },
-      { name: "Carabinero a la plancha", price: "15â‚¬ ud." },
-      { name: "Navajas", price: "12â‚¬" },
-      { name: "Berberechos", price: "10â‚¬" },
-      { name: "Calamar de potera a la plancha", price: "6â‚¬ / 100gr" },
+      { name: "Sardinas estilo espeto", price: "9€" },
+      { name: "Mejillones a la marinera", price: "7,5€" },
+      { name: "Gambón a la plancha", price: "2,5€ ud." },
+      { name: "Carabinero a la plancha", price: "15€ ud." },
+      { name: "Navajas", price: "12€" },
+      { name: "Berberechos", price: "10€" },
+      { name: "Calamar de potera a la plancha", price: "6€ / 100gr" },
     ],
   },
   {
     title: "ARROCES EN PAELLA",
     items: [
-      { name: "Arroz de carrillada y queso de cabra", price: "16â‚¬ por persona" },
-      { name: "Arroz sabroso de carabinero y huevo frito", price: "21â‚¬ por persona" },
-      { name: "Arroz negro con alioli", price: "18â‚¬ por persona" },
+      { name: "Arroz de carrillada y queso de cabra", price: "16€ por persona" },
+      { name: "Arroz sabroso de carabinero y huevo frito", price: "21€ por persona" },
+      { name: "Arroz negro con alioli", price: "18€ por persona" },
     ],
   },
   {
     title: "POSTRES",
     items: [
-      { name: "Tarta de queso", price: "6â‚¬" },
-      { name: "Tarta de la abuela con natilla y caramelo salado", price: "6â‚¬" },
-      { name: "Torrija casera con helado de turrÃ³n", price: "6,5â‚¬" },
+      { name: "Tarta de queso", price: "6€" },
+      { name: "Tarta de la abuela con natilla y caramelo salado", price: "6€" },
+      { name: "Torrija casera con helado de turrón", price: "6,5€" },
     ],
   },
 ];
 
 const ESPECIALES = [
-  { name: "Navajas", desc: "Del mar", price: "12â‚¬", images: [] as string[] },
-  { name: "Berberechos", desc: "Del mar", price: "10â‚¬", images: [] as string[] },
+  { name: "Navajas", desc: "Del mar", price: "12€", images: [] as string[] },
+  { name: "Berberechos", desc: "Del mar", price: "10€", images: [] as string[] },
   {
-    name: "SÃ¡ndwich de cecina, queso viejo y trufa",
+    name: "Sándwich de cecina, queso viejo y trufa",
     desc: "Planchado en mantequilla",
-    price: "7,5â‚¬",
+    price: "7,5€",
     images: [
       "/dichosoaljarafe/images/especiales/sandwich-cecina-trufa/6R8A8966.jpg",
       "/dichosoaljarafe/images/especiales/sandwich-cecina-trufa/6R8A8968.jpg",
     ],
   },
   {
-    name: "Tortilla de patatas con panceta ibÃ©rica y parmesano",
-    desc: "Lo mÃ¡s Dichoso",
-    price: "9â‚¬",
+    name: "Tortilla de patatas con panceta ibérica y parmesano",
+    desc: "Lo más Dichoso",
+    price: "9€",
     images: [
       "/dichosoaljarafe/images/especiales/tortilla-patatas-panceta/2025_10_30_7970.jpg",
       "/dichosoaljarafe/images/especiales/tortilla-patatas-panceta/2025_10_30_7972.jpg",
@@ -110,7 +110,7 @@ const ESPECIALES = [
   {
     name: "Mejillones a la marinera",
     desc: "Del mar",
-    price: "7,5â‚¬",
+    price: "7,5€",
     images: [
       "/dichosoaljarafe/images/especiales/mejillones-marinera/2025_10_30_8051.jpg",
       "/dichosoaljarafe/images/especiales/mejillones-marinera/2025_10_30_8055.jpg",
@@ -119,11 +119,11 @@ const ESPECIALES = [
       "/dichosoaljarafe/images/especiales/mejillones-marinera/2025_10_30_8091.jpg",
     ],
   },
-  { name: "Torrija casera con helado de turrÃ³n", desc: "Postre emblemÃ¡tico", price: "6,5â‚¬", images: [] as string[] },
+  { name: "Torrija casera con helado de turrón", desc: "Postre emblemático", price: "6,5€", images: [] as string[] },
   {
     name: "Tarta de queso",
     desc: "Postre casero",
-    price: "6â‚¬",
+    price: "6€",
     images: [
       "/dichosoaljarafe/images/especiales/tarta-queso/6R8A9433.jpg",
       "/dichosoaljarafe/images/especiales/tarta-queso/6R8A9437-2.jpg",
@@ -134,7 +134,7 @@ const ESPECIALES = [
   {
     name: "Arroz sabroso de carabinero y huevo frito",
     desc: "Nuestro arroz estrella",
-    price: "21â‚¬",
+    price: "21€",
     images: [
       "/dichosoaljarafe/images/especiales/arroz-carabinero-huevo/6R8A6587.jpg",
       "/dichosoaljarafe/images/especiales/arroz-carabinero-huevo/6R8A6596.jpg",
@@ -147,7 +147,7 @@ const ESPECIALES = [
   {
     name: "Arroz de carrillada y queso de cabra",
     desc: "Arroz cremoso",
-    price: "16â‚¬",
+    price: "16€",
     images: [
       "/dichosoaljarafe/images/especiales/arroz-carrillada-queso/2025_10_30_8131.jpg",
       "/dichosoaljarafe/images/especiales/arroz-carrillada-queso/2025_10_30_8135.jpg",
@@ -161,7 +161,7 @@ const ESPECIALES = [
       "/dichosoaljarafe/images/especiales/arroz-carrillada-queso/6R8A9029.jpg",
     ],
   },
-  { name: "Croquetas", desc: "Elige tu variedad favorita", price: "5â‚¬", images: [] as string[] },
+  { name: "Croquetas", desc: "Elige tu variedad favorita", price: "5€", images: [] as string[] },
 ];
 
 const REVIEWS = [
