@@ -612,10 +612,25 @@ function Reservation() {
       setBooked([]);
       return;
     }
-    supabase.fetchSlots(date).then((times) => {
-      setBooked(times);
-      localStorage.setItem("reservas_" + date, JSON.stringify(times));
-    });
+    let cancelled = false;
+    const load = () => {
+      supabase.fetchSlots(date).then((times) => {
+        if (cancelled) return;
+        setBooked(times);
+        localStorage.setItem("reservas_" + date, JSON.stringify(times));
+      });
+    };
+    load();
+    // Poll every 5s for cross-device sync (when another device books, this device will see it)
+    const id = setInterval(load, 5000);
+    // Also refetch when window regains focus (user returns to tab)
+    const onFocus = () => load();
+    window.addEventListener("focus", onFocus);
+    return () => {
+      cancelled = true;
+      clearInterval(id);
+      window.removeEventListener("focus", onFocus);
+    };
   }, [date]);
 
   const today = new Date().toISOString().slice(0, 10);
@@ -672,7 +687,7 @@ Te esperamos en Dichoso`;
           <p className="section-eyebrow">Reservas</p>
           <h2 className="section-title">Reserve su mesa</h2>
           <div className="reservation-done">
-            <span className="reservation-done-icon">âœ“</span>
+            <span className="reservation-done-icon">✓</span>
             <p className="reservation-done-text">Hemos guardado tu reserva</p>
             <p className="reservation-done-sub">Te esperamos en Dichoso</p>
             <div className="reservation-detail">
@@ -689,7 +704,7 @@ Te esperamos en Dichoso`;
                 <strong>Nombre:</strong> {done.name}
               </p>
               <p>
-                <strong>TelÃ©fono:</strong> {done.phone}
+                <strong>Teléfono:</strong> {done.phone}
               </p>
               {done.note && (
                 <p>
@@ -698,7 +713,7 @@ Te esperamos en Dichoso`;
               )}
             </div>
             <a href={`tel:+34${PHONE}`} className="btn btn-gold" style={{ fontSize: "0.8rem" }}>
-              Reservado Â· 664 24 32 80
+              Reservado - 664 24 32 80
             </a>
           </div>
         </div>
