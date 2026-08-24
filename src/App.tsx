@@ -117,7 +117,12 @@ const ESPECIALES = [
       "/dichosoaljarafe/images/especiales/mejillones-marinera/2025_10_30_8091.jpg",
     ],
   },
-  { name: "Torrija casera con helado de turrón", desc: "Postre emblemático", price: "6,5€", images: [] as string[] },
+    {
+    name: "Torrija casera con helado de turrón",
+    desc: "Postre emblemático",
+    price: "6,5€",
+    images: ["/dichosoaljarafe/images/especiales/torrija/6R8A1054.jpg"],
+  },
   {
     name: "Tarta de queso",
     desc: "Postre casero",
