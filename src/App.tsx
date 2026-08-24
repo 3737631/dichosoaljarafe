@@ -643,15 +643,15 @@ function Reservation() {
     setBooked(existing);
 
     const fmtDate = date.split("-").reverse().join("/");
-    const msg = `Dichoso â€” Nueva reserva
+    const msg = `Dichoso - Nueva reserva
 
-ðŸ“… ${fmtDate}
-â° ${time}
-ðŸ‘¥ ${persons} personas
-ðŸ‘¤ ${name}
-ðŸ“ž ${phone}${note ? `\nðŸ“ ${note}` : ""}
+Fecha: ${fmtDate}
+Hora: ${time}
+Personas: ${persons}
+Nombre: ${name}
+Telefono: ${phone}${note ? `\nNotas: ${note}` : ""}
 
-*Te esperamos en Dichoso*`;
+Te esperamos en Dichoso`;
     window.open(`https://wa.me/34691233213?text=${encodeURIComponent(msg)}`, "_blank");
 
     supabase.insertSlot({ date, time, name, phone, persons, note });
@@ -761,9 +761,7 @@ function Reservation() {
             <div className="form-group">
               <label className="form-label">Personas</label>
               <select className="form-input" required value={persons} onChange={(e) => setPersons(e.target.value)}>
-                <option value="" disabled>
-                  N.Âº
-                </option>
+                <option value="" disabled>N.º</option>
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
                   <option key={n} value={n}>
                     {n}
