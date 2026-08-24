@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import "./App.css";
 import { supabase } from "./supabase";
@@ -86,16 +86,81 @@ const MENU_DATA = [
 ];
 
 const ESPECIALES = [
-  { name: "Navajas", desc: "Del mar", price: "12€" },
-  { name: "Berberechos", desc: "Del mar", price: "10€" },
-  { name: "Sándwich de cecina, queso viejo y trufa", desc: "Planchado en mantequilla", price: "7,5€", image: "/assets/images/especiales/sandwich-cecina-trufa/6R8A8962.jpg" },
-  { name: "Tortilla de patatas con panceta ibérica y parmesano", desc: "Lo más Dichoso", price: "9€", image: "/assets/images/especiales/tortilla-patatas-panceta/2025_10_30_7970.jpg" },
-  { name: "Mejillones a la marinera", desc: "Del mar", price: "7,5€", image: "/assets/images/especiales/mejillones-marinera/2025_10_30_8051.jpg" },
-  { name: "Torrija casera con helado de turrón", desc: "Postre emblemático", price: "6,5€" },
-  { name: "Tarta de queso", desc: "Postre casero", price: "6€", image: "/assets/images/especiales/tarta-queso/6R8A9433.jpg" },
-  { name: "Arroz sabroso de carabinero y huevo frito", desc: "Nuestro arroz estrella", price: "21€", image: "/assets/images/especiales/arroz-carabinero-huevo/6R8A6587.jpg" },
-  { name: "Arroz de carrillada y queso de cabra", desc: "Arroz cremoso", price: "16€", image: "/assets/images/especiales/arroz-carrillada-queso/6R8A8974.jpg" },
-  { name: "Croquetas", desc: "Elige tu variedad favorita", price: "5€" },
+  { name: "Navajas", desc: "Del mar", price: "12€", images: [] as string[] },
+  { name: "Berberechos", desc: "Del mar", price: "10€", images: [] as string[] },
+  {
+    name: "Sándwich de cecina, queso viejo y trufa",
+    desc: "Planchado en mantequilla",
+    price: "7,5€",
+    images: [
+      "/images/especiales/sandwich-cecina-trufa/6R8A8966.jpg",
+      "/images/especiales/sandwich-cecina-trufa/6R8A8968.jpg",
+    ],
+  },
+  {
+    name: "Tortilla de patatas con panceta ibérica y parmesano",
+    desc: "Lo más Dichoso",
+    price: "9€",
+    images: [
+      "/images/especiales/tortilla-patatas-panceta/2025_10_30_7970.jpg",
+      "/images/especiales/tortilla-patatas-panceta/2025_10_30_7972.jpg",
+    ],
+  },
+  {
+    name: "Mejillones a la marinera",
+    desc: "Del mar",
+    price: "7,5€",
+    images: [
+      "/images/especiales/mejillones-marinera/2025_10_30_8051.jpg",
+      "/images/especiales/mejillones-marinera/2025_10_30_8055.jpg",
+      "/images/especiales/mejillones-marinera/2025_10_30_8066.jpg",
+      "/images/especiales/mejillones-marinera/2025_10_30_8083.jpg",
+      "/images/especiales/mejillones-marinera/2025_10_30_8091.jpg",
+    ],
+  },
+  { name: "Torrija casera con helado de turrón", desc: "Postre emblemático", price: "6,5€", images: [] as string[] },
+  {
+    name: "Tarta de queso",
+    desc: "Postre casero",
+    price: "6€",
+    images: [
+      "/images/especiales/tarta-queso/6R8A9433.jpg",
+      "/images/especiales/tarta-queso/6R8A9437-2.jpg",
+      "/images/especiales/tarta-queso/6R8A9437.jpg",
+      "/images/especiales/tarta-queso/6R8A9438.jpg",
+    ],
+  },
+  {
+    name: "Arroz sabroso de carabinero y huevo frito",
+    desc: "Nuestro arroz estrella",
+    price: "21€",
+    images: [
+      "/images/especiales/arroz-carabinero-huevo/6R8A6587.jpg",
+      "/images/especiales/arroz-carabinero-huevo/6R8A6596.jpg",
+      "/images/especiales/arroz-carabinero-huevo/6R8A6604.jpg",
+      "/images/especiales/arroz-carabinero-huevo/6R8A9011.jpg",
+      "/images/especiales/arroz-carabinero-huevo/6R8A9025.jpg",
+      "/images/especiales/arroz-carabinero-huevo/6R8A9041.jpg",
+    ],
+  },
+  {
+    name: "Arroz de carrillada y queso de cabra",
+    desc: "Arroz cremoso",
+    price: "16€",
+    images: [
+      "/images/especiales/arroz-carrillada-queso/2025_10_30_8131.jpg",
+      "/images/especiales/arroz-carrillada-queso/2025_10_30_8135.jpg",
+      "/images/especiales/arroz-carrillada-queso/2025_10_30_8141.jpg",
+      "/images/especiales/arroz-carrillada-queso/2025_10_30_8144.jpg",
+      "/images/especiales/arroz-carrillada-queso/2025_10_30_8151.jpg",
+      "/images/especiales/arroz-carrillada-queso/2025_10_30_8154.jpg",
+      "/images/especiales/arroz-carrillada-queso/6R8A8974.jpg",
+      "/images/especiales/arroz-carrillada-queso/6R8A8978.jpg",
+      "/images/especiales/arroz-carrillada-queso/6R8A8979.jpg",
+      "/images/especiales/arroz-carrillada-queso/6R8A9029.jpg",
+    ],
+  },
+  { name: "Croquetas", desc: "Elige tu variedad favorita", price: "5€", images: [] as string[] },
 ];
 
 const REVIEWS = [
@@ -107,7 +172,7 @@ const REVIEWS = [
 /* ── Components ────────────────────────────────── */
 function Navbar() {
   const links = ["Carta", "Nosotros", "Reservas", "Contacto"];
-  const ids   = ["carta", "nosotros", "reservas", "contacto"];
+  const ids = ["carta", "nosotros", "reservas", "contacto"];
 
   const scrollTo = (id: string) =>
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -121,11 +186,39 @@ function Navbar() {
             {l}
           </button>
         ))}
-        <span style={{display:"flex",gap:"1.25rem",alignItems:"center"}}>
-          <button onClick={() => scrollTo("carta")} className="btn btn-gold btn-carta-nav" style={{background:"none",border:"1px solid var(--accent)",color:"var(--accent)",fontSize:"0.75rem",padding:"0.65rem 1.2rem",letterSpacing:"0.1em",textTransform:"uppercase",cursor:"pointer",fontFamily:"'Roboto Condensed',sans-serif",borderRadius:0}}>
+        <span style={{ display: "flex", gap: "1.25rem", alignItems: "center" }}>
+          <button
+            onClick={() => scrollTo("carta")}
+            className="btn btn-gold btn-carta-nav"
+            style={{
+              background: "none",
+              border: "1px solid var(--accent)",
+              color: "var(--accent)",
+              fontSize: "0.75rem",
+              padding: "0.65rem 1.2rem",
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              cursor: "pointer",
+              fontFamily: "'Roboto Condensed',sans-serif",
+              borderRadius: 0,
+            }}
+          >
             Carta
           </button>
-          <button onClick={() => scrollTo("reservas")} className="btn btn-gold" style={{padding:"0.65rem 1.2rem",fontSize:"0.75rem",letterSpacing:"0.1em",textTransform:"uppercase",cursor:"pointer",border:"none",fontFamily:"'Roboto Condensed',sans-serif",borderRadius:0}}>
+          <button
+            onClick={() => scrollTo("reservas")}
+            className="btn btn-gold"
+            style={{
+              padding: "0.65rem 1.2rem",
+              fontSize: "0.75rem",
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              cursor: "pointer",
+              border: "none",
+              fontFamily: "'Roboto Condensed',sans-serif",
+              borderRadius: 0,
+            }}
+          >
             Reservar
           </button>
         </span>
@@ -136,7 +229,9 @@ function Navbar() {
 
 function Hero() {
   const [visible, setVisible] = useState(false);
-  useEffect(() => { setVisible(true); }, []);
+  useEffect(() => {
+    setVisible(true);
+  }, []);
 
   const { scrollY } = useScroll();
   const mantelY = useTransform(scrollY, [0, 1000], [0, 240]);
@@ -144,7 +239,6 @@ function Hero() {
 
   return (
     <section className="hero" id="hero">
-      {/* Dynamic Hanging Tablecloth Decor */}
       <motion.div
         style={{ y: mantelY }}
         initial={{ opacity: 0 }}
@@ -156,9 +250,12 @@ function Hero() {
       </motion.div>
       <div className="hero-watermark">Dichoso</div>
       <div className="hero-content">
-        <p className={`hero-eyebrow fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.2s" }}>Mairena del Aljarafe · Sevilla</p>
+        <p className={`hero-eyebrow fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.2s" }}>
+          Mairena del Aljarafe · Sevilla
+        </p>
         <h1 className={`hero-title fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.4s" }}>
-          Sabores que<br />
+          Sabores que
+          <br />
           <em>sorprenden</em>
         </h1>
         <p className={`hero-subtitle fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.6s" }}>
@@ -168,16 +265,10 @@ function Hero() {
           Dichoso el día que entraste por aquí
         </p>
         <div className={`hero-actions fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.8s" }}>
-          <button
-            className="btn btn-gold"
-            onClick={() => document.getElementById("carta")?.scrollIntoView({ behavior: "smooth" })}
-          >
+          <button className="btn btn-gold" onClick={() => document.getElementById("carta")?.scrollIntoView({ behavior: "smooth" })}>
             Ver carta
           </button>
-          <button
-            className="btn btn-outline"
-            onClick={() => document.getElementById("reservas")?.scrollIntoView({ behavior: "smooth" })}
-          >
+          <button className="btn btn-outline" onClick={() => document.getElementById("reservas")?.scrollIntoView({ behavior: "smooth" })}>
             Reservar mesa
           </button>
         </div>
@@ -195,12 +286,10 @@ function About() {
             <p className="section-eyebrow">Nuestra filosofía</p>
             <h2 className="section-title">Elevando lo cotidiano</h2>
             <p>
-              En Dichoso creemos que la buena mesa se comparte. Producto de temporada,
-              arroces con alma y una cocina que abraza la tradición sin miedo a innovar.
+              En Dichoso creemos que la buena mesa se comparte. Producto de temporada, arroces con alma y una cocina
+              que abraza la tradición sin miedo a innovar.
             </p>
-            <blockquote className="quote">
-              Una taberna elegante, honesta y pensada para compartir.
-            </blockquote>
+            <blockquote className="quote">Una taberna elegante, honesta y pensada para compartir.</blockquote>
           </div>
           <div className="features-grid">
             {FEATURES.map((f, i) => (
@@ -260,6 +349,89 @@ function Menu() {
   );
 }
 
+function EspecialCard({ esp, index }: { esp: (typeof ESPECIALES)[number]; index: number }) {
+  const images = esp.images ?? [];
+  const hasImages = images.length > 0;
+  const [current, setCurrent] = useState(0);
+  const startXRef = useRef<number>(0);
+
+  useEffect(() => {
+    if (images.length <= 1) return;
+    const id = setInterval(() => setCurrent((c) => (c + 1) % images.length), 3500);
+    return () => clearInterval(id);
+  }, [images.length]);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    startXRef.current = e.touches[0].clientX;
+  };
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const diff = e.changedTouches[0].clientX - startXRef.current;
+    if (Math.abs(diff) > 50 && images.length > 1) {
+      if (diff > 0) setCurrent((c) => (c - 1 + images.length) % images.length);
+      else setCurrent((c) => (c + 1) % images.length);
+    }
+  };
+  return (
+    <motion.div
+      className="especial-card"
+      initial={{ opacity: 0.4, y: 8 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: false, amount: 0.05 }}
+      transition={{ duration: 0.4, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {hasImages ? (
+        <div className="especial-img especial-img--carousel" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+          <div className="especial-carousel-track" style={{ transform: `translateX(-${current * 100}%)` }}>
+            {images.map((src) => (
+              <img key={src} src={src} alt={esp.name} className="especial-carousel-img" loading="lazy" draggable={false} />
+            ))}
+          </div>
+          {images.length > 1 && (
+            <>
+              <button
+                className="especial-arrow especial-arrow--left"
+                aria-label="Anterior"
+                onClick={() => setCurrent((c) => (c - 1 + images.length) % images.length)}
+              >
+                ‹
+              </button>
+              <button
+                className="especial-arrow especial-arrow--right"
+                aria-label="Siguiente"
+                onClick={() => setCurrent((c) => (c + 1) % images.length)}
+              >
+                ›
+              </button>
+              <div className="especial-dots">
+                {images.map((_, i) => (
+                  <button
+                    key={i}
+                    aria-label={`Ir a imagen ${i + 1}`}
+                    className={`especial-dot ${i === current ? "active" : ""}`}
+                    onClick={() => setCurrent(i)}
+                  />
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      ) : (
+        <div className="especial-img">
+          <div className="especial-img-inner">
+            <span className="especial-img-icon">⊞</span>
+            <span className="especial-img-label">Imagen próximamente</span>
+          </div>
+        </div>
+      )}
+      <div className="especial-body">
+        <h3 className="especial-name">{esp.name}</h3>
+        {esp.desc && <p className="especial-desc">{esp.desc}</p>}
+        <span className="especial-price">{esp.price}</span>
+      </div>
+    </motion.div>
+  );
+}
+
 function Especiales() {
   return (
     <section className="section especiales-section" id="especiales">
@@ -268,36 +440,7 @@ function Especiales() {
         <h2 className="section-title">Especiales Dichoso</h2>
         <div className="especiales-grid">
           {ESPECIALES.map((esp, i) => (
-            <motion.div
-              key={esp.name}
-              className="especial-card"
-              initial={{ opacity: 0.4, y: 8 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.05 }}
-              transition={{ duration: 0.4, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
-            >
-              {esp.image ? (
-                <div className="especial-img">
-                  <img 
-                    src={esp.image} 
-                    alt={esp.name} 
-                    className="especial-img-inner"
-                  />
-                </div>
-              ) : (
-                <div className="especial-img">
-                  <div className="especial-img-inner">
-                    <span className="especial-img-icon">⊞</span>
-                    <span className="especial-img-label">Imagen próximamente</span>
-                  </div>
-                </div>
-              )}
-              <div className="especial-body">
-                <h3 className="especial-name">{esp.name}</h3>
-                {esp.desc && <p className="especial-desc">{esp.desc}</p>}
-                <span className="especial-price">{esp.price}</span>
-              </div>
-            </motion.div>
+            <EspecialCard key={esp.name} esp={esp} index={i} />
           ))}
         </div>
       </div>
@@ -314,9 +457,7 @@ function SloganSection() {
     <section className="slogan-section">
       <div className="container container-narrow">
         <p className="slogan-eyebrow">Dichoso</p>
-        <p className="slogan-text">
-          Dichoso el día que entraste por aquí
-        </p>
+        <p className="slogan-text">Dichoso el día que entraste por aquí</p>
         <p className="slogan-sub">Una experiencia gastronómica para recordar</p>
       </div>
     </section>
@@ -363,7 +504,10 @@ function Reservation() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    if (!date) { setBooked([]); return; }
+    if (!date) {
+      setBooked([]);
+      return;
+    }
     supabase.fetchSlots(date).then((times) => {
       setBooked(times);
       localStorage.setItem("reservas_" + date, JSON.stringify(times));
@@ -372,7 +516,7 @@ function Reservation() {
 
   const today = new Date().toISOString().slice(0, 10);
   const now = new Date();
-  const isPast = (t: string) => date === today && t < `${String(now.getHours()).padStart(2,"0")}:${String(now.getMinutes()).padStart(2,"0")}`;
+  const isPast = (t: string) => date === today && t < `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
   const isBooked = (t: string) => booked.includes(t) || isPast(t);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -395,8 +539,7 @@ function Reservation() {
     setBooked(existing);
 
     const fmtDate = date.split("-").reverse().join("/");
-    const msg =
-`Dichoso — Nueva reserva
+    const msg = `Dichoso — Nueva reserva
 
 📅 ${fmtDate}
 ⏰ ${time}
@@ -414,8 +557,8 @@ function Reservation() {
   };
 
   const times = [
-    { group: "Almuerzo", slots: ["13:00","13:30","14:00","14:30","15:00","15:30"] },
-    { group: "Cena",     slots: ["20:00","20:30","21:00","21:30","22:00"] },
+    { group: "Almuerzo", slots: ["13:00", "13:30", "14:00", "14:30", "15:00", "15:30"] },
+    { group: "Cena", slots: ["20:00", "20:30", "21:00", "21:30", "22:00"] },
   ];
 
   if (done) {
@@ -429,14 +572,30 @@ function Reservation() {
             <p className="reservation-done-text">Hemos guardado tu reserva</p>
             <p className="reservation-done-sub">Te esperamos en Dichoso</p>
             <div className="reservation-detail">
-              <p><strong>Fecha:</strong> {done.date}</p>
-              <p><strong>Hora:</strong> {done.time}</p>
-              <p><strong>Personas:</strong> {done.persons}</p>
-              <p><strong>Nombre:</strong> {done.name}</p>
-              <p><strong>Teléfono:</strong> {done.phone}</p>
-              {done.note && <p><strong>Comentarios:</strong> {done.note}</p>}
+              <p>
+                <strong>Fecha:</strong> {done.date}
+              </p>
+              <p>
+                <strong>Hora:</strong> {done.time}
+              </p>
+              <p>
+                <strong>Personas:</strong> {done.persons}
+              </p>
+              <p>
+                <strong>Nombre:</strong> {done.name}
+              </p>
+              <p>
+                <strong>Teléfono:</strong> {done.phone}
+              </p>
+              {done.note && (
+                <p>
+                  <strong>Comentarios:</strong> {done.note}
+                </p>
+              )}
             </div>
-            <a href={`tel:+34${PHONE}`} className="btn btn-gold" style={{fontSize:"0.8rem"}}>Reservado · 664 24 32 80</a>
+            <a href={`tel:+34${PHONE}`} className="btn btn-gold" style={{ fontSize: "0.8rem" }}>
+              Reservado · 664 24 32 80
+            </a>
           </div>
         </div>
       </section>
@@ -462,17 +621,35 @@ function Reservation() {
           <div className="form-row">
             <div className="form-group">
               <label className="form-label">Fecha</label>
-              <input type="date" className="form-input" required value={date} onChange={(e) => { const v = e.target.value; if (v < today) return; setDate(v); setTime(""); }} />
+              <input
+                type="date"
+                className="form-input"
+                required
+                value={date}
+                onChange={(e) => {
+                  const v = e.target.value;
+                  if (v < today) return;
+                  setDate(v);
+                  setTime("");
+                }}
+              />
             </div>
             <div className="form-group">
               <label className="form-label">Hora</label>
               <select className="form-input" required value={time} onChange={(e) => setTime(e.target.value)}>
-                <option value="" disabled>Seleccionar</option>
+                <option value="" disabled>
+                  Seleccionar
+                </option>
                 {times.map((g) => (
                   <optgroup key={g.group} label={g.group}>
                     {g.slots.map((t) => {
                       const taken = isBooked(t);
-                      return <option key={t} value={t} disabled={taken}>{t}{taken ? " — reservado" : ""}</option>;
+                      return (
+                        <option key={t} value={t} disabled={taken}>
+                          {t}
+                          {taken ? " — reservado" : ""}
+                        </option>
+                      );
                     })}
                   </optgroup>
                 ))}
@@ -481,9 +658,13 @@ function Reservation() {
             <div className="form-group">
               <label className="form-label">Personas</label>
               <select className="form-input" required value={persons} onChange={(e) => setPersons(e.target.value)}>
-                <option value="" disabled>N.º</option>
-                {[1,2,3,4,5,6,7,8,9,10].map(n => (
-                  <option key={n} value={n}>{n}</option>
+                <option value="" disabled>
+                  N.º
+                </option>
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
+                  <option key={n} value={n}>
+                    {n}
+                  </option>
                 ))}
               </select>
             </div>
@@ -491,26 +672,61 @@ function Reservation() {
           <div className="form-row">
             <div className="form-group">
               <label className="form-label">Nombre</label>
-              <input type="text" className="form-input" required value={name} onChange={(e) => setName(e.target.value)} placeholder="Su nombre" />
+              <input
+                type="text"
+                className="form-input"
+                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Su nombre"
+              />
             </div>
             <div className="form-group">
               <label className="form-label">Teléfono</label>
-              <input type="tel" className="form-input" required value={phone} onChange={(e) => setPhone(e.target.value.replace(/[^0-9]/g, "").slice(0, 15))} placeholder="600000000" inputMode="numeric" />
+              <input
+                type="tel"
+                className="form-input"
+                required
+                value={phone}
+                onChange={(e) => setPhone(e.target.value.replace(/[^0-9]/g, "").slice(0, 15))}
+                placeholder="600000000"
+                inputMode="numeric"
+              />
             </div>
           </div>
           <div className="form-group">
             <label className="form-label">Comentarios</label>
-            <textarea className="form-input form-textarea" value={note} onChange={(e) => setNote(e.target.value)} placeholder="Alergias, celebraciones, preferencias..." />
+            <textarea
+              className="form-input form-textarea"
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+              placeholder="Alergias, celebraciones, preferencias..."
+            />
           </div>
           <div className="form-actions">
-            <button type="submit" className={`btn btn-lg ${time && isBooked(time) ? "btn-disabled" : "btn-gold"}`} disabled={!date || !time || !name || !phone || !persons || isBooked(time) || sending}>
-              {sending ? "Reservando..." : (time && isBooked(time) ? "No disponible" : "Confirmar reserva")}
+            <button
+              type="submit"
+              className={`btn btn-lg ${time && isBooked(time) ? "btn-disabled" : "btn-gold"}`}
+              disabled={!date || !time || !name || !phone || !persons || isBooked(time) || sending}
+            >
+              {sending ? "Reservando..." : time && isBooked(time) ? "No disponible" : "Confirmar reserva"}
             </button>
             <a href={`tel:+34${PHONE}`} className="btn btn-outline btn-lg">
               Llamar · 664 24 32 80
             </a>
           </div>
-          <p style={{fontSize:"0.65rem",color:"var(--muted)",textAlign:"center",marginTop:"1rem",letterSpacing:"0.04em",opacity:0.6}}>Al reservar se abrirá WhatsApp. Pulsa enviar para confirmar.</p>
+          <p
+            style={{
+              fontSize: "0.65rem",
+              color: "var(--muted)",
+              textAlign: "center",
+              marginTop: "1rem",
+              letterSpacing: "0.04em",
+              opacity: 0.6,
+            }}
+          >
+            Al reservar se abrirá WhatsApp. Pulsa enviar para confirmar.
+          </p>
         </motion.form>
       </div>
     </section>
@@ -549,7 +765,13 @@ function Location() {
             </div>
           </div>
           <div className="map-wrapper">
-            <iframe src="https://www.google.com/maps?q=Av.+de+los+Descubrimientos+11,+Mairena+del+Aljarafe&output=embed" allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Ubicación de Dichoso"></iframe>
+            <iframe
+              src="https://www.google.com/maps?q=Av.+de+los+Descubrimientos+11,+Mairena+del+Aljarafe&output=embed"
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Ubicación de Dichoso"
+            ></iframe>
           </div>
         </motion.div>
       </div>
@@ -578,7 +800,9 @@ function Footer() {
           </div>
           <div>
             <p className="footer-heading">Contacto</p>
-            <a href={`tel:+34${PHONE}`} className="footer-link">664 24 32 80</a>
+            <a href={`tel:+34${PHONE}`} className="footer-link">
+              664 24 32 80
+            </a>
           </div>
         </div>
         <div className="footer-slogan-line">
@@ -586,7 +810,12 @@ function Footer() {
         </div>
         <div className="footer-bottom">
           <p>© {new Date().getFullYear()} Dichoso. Todos los derechos reservados.</p>
-          <p className="footer-credit">Realizado por <a href="https://franciscoortuno.duckdns.org/" target="_blank" rel="noreferrer">Francisco Ortuño</a></p>
+          <p className="footer-credit">
+            Realizado por{" "}
+            <a href="https://franciscoortuno.duckdns.org/" target="_blank" rel="noreferrer">
+              Francisco Ortuño
+            </a>
+          </p>
         </div>
       </div>
     </motion.footer>
