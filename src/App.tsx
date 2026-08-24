@@ -1,4 +1,5 @@
 ﻿import { useState, useEffect, useRef } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, useScroll, useTransform } from "motion/react";
 import "./App.css";
 import { supabase } from "./supabase";
@@ -393,14 +394,14 @@ function EspecialCard({ esp, index }: { esp: (typeof ESPECIALES)[number]; index:
                 aria-label="Anterior"
                 onClick={() => setCurrent((c) => (c - 1 + images.length) % images.length)}
               >
-                â€¹
+                <ChevronLeft size={18} />
               </button>
               <button
                 className="especial-arrow especial-arrow--right"
                 aria-label="Siguiente"
                 onClick={() => setCurrent((c) => (c + 1) % images.length)}
               >
-                â€º
+                <ChevronRight size={18} />
               </button>
               <div className="especial-dots">
                 {images.map((_, i) => (
