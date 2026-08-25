@@ -651,7 +651,6 @@ function Reservation() {
 
     if (booked.includes(time)) {
       setSending(false);
-      setError("Este horario acaba de ser reservado. Por favor elige otro.");
       return;
     }
 
@@ -661,7 +660,6 @@ function Reservation() {
 
     if (existing.includes(time)) {
       setSending(false);
-      setError("Este horario acaba de ser reservado por otra persona.");
       return;
     }
 
@@ -670,7 +668,6 @@ function Reservation() {
       setBooked(latest);
       localStorage.setItem(localKey, JSON.stringify(latest));
       setSending(false);
-      setError("Este horario acaba de ser reservado. Por favor elige otro.");
       return;
     }
 
@@ -686,7 +683,7 @@ Fecha: ${fmtDate}
 Hora: ${time}
 Personas: ${persons}
 Nombre: ${name}
-Telefono: ${phone}${note ? `\nNotas: ${note}` : ""}
+Teléfono: ${phone}${note ? `\nNotas: ${note}` : ""}
 
 Te esperamos en Dichoso`;
     window.open(`https://wa.me/34691233213?text=${encodeURIComponent(msg)}`, "_blank");
@@ -820,7 +817,7 @@ Te esperamos en Dichoso`;
               />
             </div>
             <div className="form-group">
-              <label className="form-label">TelÃ©fono</label>
+              <label className="form-label">Teléfono</label>
               <input
                 type="tel"
                 className="form-input"
@@ -863,7 +860,7 @@ Te esperamos en Dichoso`;
               opacity: 0.6,
             }}
           >
-            Al reservar se abrirÃ¡ WhatsApp. Pulsa enviar para confirmar.
+            Al reservar se abrirá WhatsApp. Pulsa enviar para confirmar.
           </p>
         </motion.form>
       </div>
