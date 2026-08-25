@@ -306,7 +306,7 @@ function Hero() {
       <div className="hero-content">
         <p className={`hero-eyebrow fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.2s" }}>Mairena del Aljarafe - Sevilla</p>
         <h1 className={`hero-title fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.4s" }}>
-          <em>dichoso</em>
+          <em>Dichoso</em>
         </h1>
         <p className={`hero-subtitle fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.6s" }}>
           Cocina contemporánea, producto cuidado y una experiencia gastronómica diferente.
