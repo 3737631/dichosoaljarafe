@@ -1,5 +1,5 @@
-const SUPABASE_URL = "https://xdcqzrpjnhnezeezqgxo.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_UfYMnymwWZ0l9sX9slMzYg_ufGhVXWA";
+const SUPABASE_URL = "https://lfnenhsijsvysmluvllx.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_WuLU41ncfLY_sp48UtV4LA_O0hQ-qUp";
 const KVDB_BUCKET = "dichoso-aljarafe-reservas-2025";
 const KVDB_BASE = `https://kvdb.io/${KVDB_BUCKET}`;
 
@@ -63,10 +63,9 @@ async function fetchSlotsSupabase(date: string): Promise<string[] | null> {
 }
 
 async function fetchSlots(date: string): Promise<string[] | null> {
-  // Try KVDB first (works cross-device, DNS OK), fallback to Supabase
-  const kv = await fetchSlotsKVDB(date);
-  if (kv !== null) return kv;
-  return fetchSlotsSupabase(date);
+  const sb = await fetchSlotsSupabase(date);
+  if (sb !== null) return sb;
+  return fetchSlotsKVDB(date);
 }
 
 async function insertSlotKVDB(row: { date: string; time: string; name: string; phone: string; persons: string; note: string }) {
@@ -118,10 +117,9 @@ async function insertSlotSupabase(row: { date: string; time: string; name: strin
 }
 
 async function insertSlot(row: { date: string; time: string; name: string; phone: string; persons: string; note: string }) {
-  const kvOk = await insertSlotKVDB(row);
-  // Also try Supabase as secondary, don't block on it
-  insertSlotSupabase(row).catch(() => {});
-  return kvOk;
+  const sbOk = await insertSlotSupabase(row);
+  insertSlotKVDB(row).catch(() => {});
+  return sbOk;
 }
 
 export const supabase = { fetchSlots, insertSlot };
