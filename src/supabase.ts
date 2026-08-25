@@ -35,9 +35,8 @@ async function fetchSlotsKVDB(date: string): Promise<string[] | null> {
 
 async function fetchSlotsSupabase(date: string): Promise<string[] | null> {
   try {
-    const bust = Date.now();
     const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/slots?select=time&date=eq.${encodeURIComponent(date)}&_=${bust}`,
+      `${SUPABASE_URL}/rest/v1/slots?select=time&date=eq.${encodeURIComponent(date)}`,
       {
         headers: {
           apikey: SUPABASE_ANON_KEY,
