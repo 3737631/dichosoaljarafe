@@ -633,7 +633,7 @@ function Reservation() {
     };
   }, [date]);
 
-  const today = new Date().toISOString().slice(0, 10);
+  const today = new Date().toLocaleDateString("en-CA");
   const now = new Date();
   const isPast = (t: string) => date === today && t < `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
   const isBooked = (t: string) => booked.includes(t) || isPast(t);
@@ -763,12 +763,15 @@ Te esperamos en Dichoso`;
                 className="form-input"
                 required
                 value={date}
+                min={today}
                 onChange={(e) => {
                   const v = e.target.value;
-                  if (v < today) return;
+                  if (v && v < today) return;
                   setDate(v);
                   setTime("");
                 }}
+                onClick={(e) => (e.target as HTMLInputElement).showPicker?.()}
+                onFocus={(e) => (e.target as HTMLInputElement).showPicker?.()}
               />
             </div>
             <div className="form-group">
