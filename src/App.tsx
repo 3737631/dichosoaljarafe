@@ -304,7 +304,7 @@ function Hero() {
       </motion.div>
       <div className="hero-watermark">Dichoso</div>
       <div className="hero-content">
-        <p className={`hero-eyebrow fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.2s" }}>Mairena del Aljarafe - Sevilla</p>
+        <p className={`hero-eyebrow fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.2s" }}>Av. de los Descubrimientos, 11 - Mairena del Aljarafe, Sevilla</p>
         <h1 className={`hero-title fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.4s" }}>
           <em>Dichoso</em>
         </h1>
