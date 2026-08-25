@@ -306,14 +306,13 @@ function Hero() {
       <div className="hero-content">
         <p className={`hero-eyebrow fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.2s" }}>Mairena del Aljarafe - Sevilla</p>
         <h1 className={`hero-title fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.4s" }}>
-          Sabores que<br />
-          <em>sorprenden</em>
+          <em>dichoso</em>
         </h1>
         <p className={`hero-subtitle fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.6s" }}>
           Cocina contemporánea, producto cuidado y una experiencia gastronómica diferente.
         </p>
         <p className={`hero-slogan fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.7s" }}>
-          Dichoso el día que entraste por aquí
+          Dichoso el día que apareciste por aquí
         </p>
         <div className={`hero-actions fade-up ${visible ? "visible" : ""}`} style={{ transitionDelay: "0.8s" }}>
           <button
@@ -424,7 +423,7 @@ function Menu() {
         <div className="carta-intro">
           <h2 className="carta-logo">Dichoso</h2>
           <p className="carta-subtitle">Tapas y arroces</p>
-          <p className="carta-slogan">Dichoso el día que entraste por aquí</p>
+          <p className="carta-slogan">Dichoso el día que apareciste por aquí</p>
         </div>
         <div className="carta-tabs">
           {MENU_DATA.map((cat, i) => (
@@ -560,7 +559,7 @@ function SloganSection() {
       <div className="container container-narrow">
         <p className="slogan-eyebrow">Dichoso</p>
         <p className="slogan-text">
-          Dichoso el día que entraste por aquí
+          Dichoso el día que apareciste por aquí
         </p>
         <p className="slogan-sub">Una experiencia gastronómica para recordar</p>
       </div>
@@ -943,7 +942,7 @@ function Footer() {
           </div>
         </div>
         <div className="footer-slogan-line">
-          <span className="footer-slogan">Dichoso el día que entraste por aquí</span>
+          <span className="footer-slogan">Dichoso el día que apareciste por aquí</span>
         </div>
         <div className="footer-bottom">
           <p>© {new Date().getFullYear()} Dichoso. Todos los derechos reservados.</p>
