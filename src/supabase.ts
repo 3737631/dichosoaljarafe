@@ -1,7 +1,7 @@
 const SUPABASE_URL = "https://xdcqzrpjnhnezeezqgxo.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_UfYMnymwWZ0l9sX9slMzYg_ufGhVXWA";
 
-async function fetchSlots(date: string): Promise<string[]> {
+async function fetchSlots(date: string): Promise<string[] | null> {
   try {
     const bust = Date.now();
     const res = await fetch(
@@ -20,19 +20,17 @@ async function fetchSlots(date: string): Promise<string[]> {
     if (!res.ok) {
       const txt = await res.text();
       console.warn("fetchSlots failed", res.status, txt);
-      // Return null to indicate failure, so caller can keep previous state
-      // But we return [] for now to keep type consistency, caller should handle
-      return [];
+      return null;
     }
     const data = await res.json();
     if (!Array.isArray(data)) {
       console.warn("fetchSlots unexpected data", data);
-      return [];
+      return null;
     }
     return data.map((r: any) => r.time).filter(Boolean);
   } catch (e) {
     console.warn("fetchSlots exception", e);
-    return [];
+    return null;
   }
 }
 

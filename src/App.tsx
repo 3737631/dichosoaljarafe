@@ -615,12 +615,13 @@ function Reservation() {
     const load = () => {
       supabase.fetchSlots(date).then((times) => {
         if (cancelled) return;
+        if (times === null) return;
         setBooked(times);
         localStorage.setItem("reservas_" + date, JSON.stringify(times));
       });
     };
     load();
-    // Poll every 5s for cross-device sync (when another device books, this device will see it)
+    // Poll every 3s for cross-device sync (when another device books, this device will see it)
     const id = setInterval(load, 3000);
     // Also refetch when window regains focus (user returns to tab)
     const onFocus = () => load();
@@ -637,10 +638,22 @@ function Reservation() {
   const isPast = (t: string) => date === today && t < `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
   const isBooked = (t: string) => booked.includes(t) || isPast(t);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setSending(true);
+
+    if (!date || !time) {
+      setSending(false);
+      setError("Selecciona fecha y hora.");
+      return;
+    }
+
+    if (booked.includes(time)) {
+      setSending(false);
+      setError("Este horario acaba de ser reservado. Por favor elige otro.");
+      return;
+    }
 
     const localKey = "reservas_" + date;
     const local = localStorage.getItem(localKey);
@@ -652,9 +665,19 @@ function Reservation() {
       return;
     }
 
-    existing.push(time);
-    localStorage.setItem(localKey, JSON.stringify(existing));
-    setBooked(existing);
+    const latest = await supabase.fetchSlots(date);
+    if (latest !== null && latest.includes(time)) {
+      setBooked(latest);
+      localStorage.setItem(localKey, JSON.stringify(latest));
+      setSending(false);
+      setError("Este horario acaba de ser reservado. Por favor elige otro.");
+      return;
+    }
+
+    const base = latest !== null ? latest : existing;
+    const newBooked = [...base, time];
+    localStorage.setItem(localKey, JSON.stringify(newBooked));
+    setBooked(newBooked);
 
     const fmtDate = date.split("-").reverse().join("/");
     const msg = `Dichoso - Nueva reserva
@@ -668,7 +691,7 @@ Telefono: ${phone}${note ? `\nNotas: ${note}` : ""}
 Te esperamos en Dichoso`;
     window.open(`https://wa.me/34691233213?text=${encodeURIComponent(msg)}`, "_blank");
 
-    supabase.insertSlot({ date, time, name, phone, persons, note });
+    await supabase.insertSlot({ date, time, name, phone, persons, note });
 
     setSending(false);
     setDone({ date, time, name, phone, persons, note });
