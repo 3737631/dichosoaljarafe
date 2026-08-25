@@ -1,7 +1,11 @@
+import { createClient } from "@supabase/supabase-js";
+
 const SUPABASE_URL = "https://lfnenhsijsvysmluvllx.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_WuLU41ncfLY_sp48UtV4LA_O0hQ-qUp";
 const KVDB_BUCKET = "dichoso-aljarafe-reservas-2025";
 const KVDB_BASE = `https://kvdb.io/${KVDB_BUCKET}`;
+
+const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 async function fetchSlotsKVDB(date: string): Promise<string[] | null> {
   try {
@@ -122,4 +126,17 @@ async function insertSlot(row: { date: string; time: string; name: string; phone
   return sbOk;
 }
 
-export const supabase = { fetchSlots, insertSlot };
+function subscribeSlots(date: string, callback: (times: string[]) => void) {
+  const channel = supabaseClient
+    .channel(`slots-${date}`)
+    .on("postgres_changes", { event: "*", schema: "public", table: "slots", filter: `date=eq.${date}` }, async () => {
+      const times = await fetchSlots(date);
+      if (times !== null) callback(times);
+    })
+    .subscribe();
+  return () => {
+    supabaseClient.removeChannel(channel);
+  };
+}
+
+export const supabase = { fetchSlots, insertSlot, subscribeSlots };

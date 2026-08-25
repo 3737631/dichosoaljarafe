@@ -621,15 +621,24 @@ function Reservation() {
       });
     };
     load();
-    // Poll every 3s for cross-device sync (when another device books, this device will see it)
-    const id = setInterval(load, 3000);
-    // Also refetch when window regains focus (user returns to tab)
+    const id = setInterval(load, 2000);
     const onFocus = () => load();
+    const onVisibility = () => {
+      if (document.visibilityState === "visible") load();
+    };
     window.addEventListener("focus", onFocus);
+    document.addEventListener("visibilitychange", onVisibility);
+    const unsubscribe = supabase.subscribeSlots(date, (times) => {
+      if (cancelled) return;
+      setBooked(times);
+      localStorage.setItem("reservas_" + date, JSON.stringify(times));
+    });
     return () => {
       cancelled = true;
       clearInterval(id);
       window.removeEventListener("focus", onFocus);
+      document.removeEventListener("visibilitychange", onVisibility);
+      unsubscribe();
     };
   }, [date]);
 
