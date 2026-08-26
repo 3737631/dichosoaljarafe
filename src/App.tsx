@@ -704,10 +704,14 @@ Te esperamos en Dichoso`;
     setDone({ date, time, name, phone, persons, note });
   };
 
-  const times = [
-    { group: "Almuerzo", slots: ["13:00", "13:30", "14:00", "14:30", "15:00", "15:30"] },
-    { group: "Cena", slots: ["20:00", "20:30", "21:00", "21:30", "22:00"] },
-  ];
+  const getTimesForDate = (d: string) => {
+    if (!d) return [];
+    const day = new Date(d + "T12:00:00").getDay();
+    if (day === 0) return [{ group: "Mediodía", slots: ["13:00", "13:30", "14:00", "14:30", "15:00", "15:30"] }];
+    if (day >= 2 && day <= 6) return [{ group: "Noche", slots: ["20:00", "20:30", "21:00", "21:30", "22:00"] }];
+    return [];
+  };
+  const times = getTimesForDate(date);
 
   if (done) {
     return (
@@ -790,19 +794,23 @@ Te esperamos en Dichoso`;
                 <option value="" disabled>
                   Seleccionar
                 </option>
-                {times.map((g) => (
-                  <optgroup key={g.group} label={g.group}>
-                    {g.slots.map((t) => {
-                      const taken = isBooked(t);
-                      return (
-                        <option key={t} value={t} disabled={taken}>
-                          {t}
-                          {taken ? " - reservado" : ""}
-                        </option>
-                      );
-                    })}
-                  </optgroup>
-                ))}
+                {times.length === 0 && date ? (
+                  <option disabled>Cerrado — No hay servicio este día</option>
+                ) : (
+                  times.map((g) => (
+                    <optgroup key={g.group} label={g.group}>
+                      {g.slots.map((t) => {
+                        const taken = isBooked(t);
+                        return (
+                          <option key={t} value={t} disabled={taken}>
+                            {t}
+                            {taken ? " - reservado" : ""}
+                          </option>
+                        );
+                      })}
+                    </optgroup>
+                  ))
+                )}
               </select>
             </div>
             <div className="form-group">
