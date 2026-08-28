@@ -641,10 +641,11 @@ function Reservation() {
     };
   }, [date]);
 
-  const today = new Date().toLocaleDateString("en-CA");
+  const today = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
   const now = new Date();
   const isPast = (t: string) => date === today && t < `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
-  const isBooked = (t: string) => booked.includes(t) || isPast(t);
+  const isBooked = (t: string) => booked.filter((x) => x === t).length >= 3 || isPast(t);
+  const bookedCount = (t: string) => booked.filter((x) => x === t).length;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -657,7 +658,7 @@ function Reservation() {
       return;
     }
 
-    if (booked.includes(time)) {
+    if (booked.filter((x) => x === time).length >= 3) {
       setSending(false);
       return;
     }
@@ -666,13 +667,13 @@ function Reservation() {
     const local = localStorage.getItem(localKey);
     const existing: string[] = local ? JSON.parse(local) : [];
 
-    if (existing.includes(time)) {
+    if (existing.filter((x) => x === time).length >= 3) {
       setSending(false);
       return;
     }
 
     const latest = await supabase.fetchSlots(date);
-    if (latest !== null && latest.includes(time)) {
+    if (latest !== null && latest.filter((x) => x === time).length >= 3) {
       setBooked(latest);
       localStorage.setItem(localKey, JSON.stringify(latest));
       setSending(false);
@@ -799,12 +800,13 @@ Te esperamos en Dichoso`;
                     <optgroup key={g.group} label={g.group}>
                       {g.slots.map((t) => {
                         const taken = isBooked(t);
-                        return (
-                          <option key={t} value={t} disabled={taken}>
-                            {t}
-                            {taken ? " - reservado" : ""}
-                          </option>
-                        );
+                      const count = bookedCount(t);
+                      return (
+                        <option key={t} value={t} disabled={taken}>
+                          {t}
+                          {taken ? " - reservado" : count > 0 ? ` - ${count}/3` : ""}
+                        </option>
+                      );
                       })}
                     </optgroup>
                   ))
