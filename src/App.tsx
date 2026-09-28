@@ -7,6 +7,7 @@ import ScrollMantelSection from "./components/ScrollMantelSection";
 
 /* ── Data ──────────────────────────────────────── */
 const PHONE = "664243280";
+const PHONE_FMT = "664 24 32 80";
 const ADDRESS = "Av. de los Descubrimientos, 11, 41927 Mairena del Aljarafe";
 const MAPS_URL =
   "https://maps.google.com/?q=Av.+de+los+Descubrimientos+11,+Mairena+del+Aljarafe";
@@ -643,8 +644,12 @@ function Reservation() {
 
   const today = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
   const now = new Date();
-  const isPast = (t: string) => date === today && t < `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
-  const isBooked = (t: string) => booked.filter((x) => x === t).length >= 3 || isPast(t);
+  const hm = (d: Date) => `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+  const nowHm = hm(now);
+  const limitHm = hm(new Date(now.getTime() + 60 * 60000));
+  const isPast = (t: string) => date === today && t < nowHm;
+  const isPhoneOnly = (t: string) => date === today && t >= nowHm && t < limitHm;
+  const isBooked = (t: string) => booked.filter((x) => x === t).length >= 3 || isPast(t) || isPhoneOnly(t);
   const bookedCount = (t: string) => booked.filter((x) => x === t).length;
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -655,6 +660,18 @@ function Reservation() {
     if (!date || !time) {
       setSending(false);
       setError("Selecciona fecha y hora.");
+      return;
+    }
+
+    if (isPast(time)) {
+      setSending(false);
+      setError("Esa hora ya ha pasado. Elige otra.");
+      return;
+    }
+
+    if (isPhoneOnly(time)) {
+      setSending(false);
+      setError(`Las reservas con menos de 1 hora de antelación solo se pueden hacer por teléfono. Llámanos al ${PHONE_FMT}.`);
       return;
     }
 
@@ -707,10 +724,16 @@ Te esperamos en Dichoso`;
     if (!d) return [];
     const day = new Date(d + "T12:00:00").getDay();
     if (day === 0) return [{ group: "Mediodía", slots: ["13:00", "13:30", "14:00", "14:30", "15:00", "15:30"] }];
-    if (day >= 2 && day <= 6) return [{ group: "Noche", slots: ["20:00", "20:30", "21:00", "21:30", "22:00"] }];
+    if (day >= 3 && day <= 6)
+      return [
+        { group: "Mañana", slots: ["12:00", "12:30", "13:00", "13:30", "14:00"] },
+        { group: "Noche", slots: ["20:00", "20:30", "21:00", "21:30", "22:00"] },
+      ];
     return [];
   };
   const times = getTimesForDate(date);
+  const dayName = date ? ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"][new Date(date + "T12:00:00").getDay()] : "";
+  const selectedPhoneOnly = !!time && isPhoneOnly(time);
 
   if (done) {
     return (
@@ -794,19 +817,23 @@ Te esperamos en Dichoso`;
                   Seleccionar
                 </option>
                 {times.length === 0 && date ? (
-                  <option disabled>Cerrado — No hay servicio este día</option>
+                  <option disabled>
+                    {dayName === "Martes" ? "Martes cerrado" : "Cerrado — No hay servicio este día"}
+                  </option>
                 ) : (
                   times.map((g) => (
                     <optgroup key={g.group} label={g.group}>
                       {g.slots.map((t) => {
-                        const taken = isBooked(t);
-                      const count = bookedCount(t);
-                      return (
-                        <option key={t} value={t} disabled={taken}>
-                          {t}
-                          {taken ? " - reservado" : count > 0 ? ` - ${count}/3` : ""}
-                        </option>
-                      );
+                        const full = bookedCount(t) >= 3;
+                        const phone = isPhoneOnly(t);
+                        const past = isPast(t);
+                        const count = bookedCount(t);
+                        return (
+                          <option key={t} value={t} disabled={full || phone || past}>
+                            {t}
+                            {full ? " - reservado" : past ? " - no disponible" : phone ? " - solo por teléfono" : count > 0 ? ` - ${count}/3` : ""}
+                          </option>
+                        );
                       })}
                     </optgroup>
                   ))
@@ -868,9 +895,30 @@ Te esperamos en Dichoso`;
               {sending ? "Reservando..." : time && isBooked(time) ? "No disponible" : "Confirmar reserva"}
             </button>
             <a href={`tel:+34${PHONE}`} className="btn btn-outline btn-lg">
-              Llamar - 664 24 32 80
+              Llamar - {PHONE_FMT}
             </a>
           </div>
+          {date && times.length > 0 && (
+            <p
+              className="form-msg"
+              style={{ marginTop: "1rem", textAlign: "center" }}
+              role="status"
+            >
+              {selectedPhoneOnly ? (
+                <>
+                  Con menos de 1 hora de antelación la reserva solo se puede hacer por
+                  teléfono. <a href={`tel:+34${PHONE}`} style={{ color: "inherit", fontWeight: 700 }}>{PHONE_FMT}</a>
+                </>
+              ) : (
+                <>Las reservas con menos de 1 hora de antelación solo se pueden hacer por teléfono: {PHONE_FMT}</>
+              )}
+            </p>
+          )}
+          {date && times.length === 0 && dayName === "Martes" && (
+            <p className="form-msg" style={{ marginTop: "1rem", textAlign: "center" }}>
+              Los martes estamos cerrados. Abrimos de miércoles a sábado (comida y cena) y el domingo a mediodía.
+            </p>
+          )}
           <p
             style={{
               fontSize: "0.65rem",
