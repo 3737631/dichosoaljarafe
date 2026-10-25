@@ -2,7 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, useScroll, useTransform } from "motion/react";
 import "./App.css";
-import { supabase } from "./supabase";
+import { supabase, type SlotRow, type Zone } from "./supabase";
+import { disponibilidad, SALON_POR_SERVICIO, TERRAZA_POR_HORA } from "./availability";
 import ScrollMantelSection from "./components/ScrollMantelSection";
 
 /* ── Data ──────────────────────────────────────── */
@@ -601,8 +602,9 @@ function Reservation() {
   const [phone, setPhone] = useState("");
   const [persons, setPersons] = useState("");
   const [note, setNote] = useState("");
-  const [done, setDone] = useState<{ date: string; time: string; name: string; phone: string; persons: string; note: string } | null>(null);
-  const [booked, setBooked] = useState<string[]>([]);
+  const [zone, setZone] = useState<Zone | "">("");
+  const [done, setDone] = useState<{ date: string; time: string; name: string; phone: string; persons: string; note: string; zone: Zone } | null>(null);
+  const [booked, setBooked] = useState<SlotRow[]>([]);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
 
@@ -649,8 +651,16 @@ function Reservation() {
   const limitHm = hm(new Date(now.getTime() + 60 * 60000));
   const isPast = (t: string) => date === today && t < nowHm;
   const isPhoneOnly = (t: string) => date === today && t >= nowHm && t < limitHm;
-  const isBooked = (t: string) => booked.filter((x) => x === t).length >= 3 || isPast(t) || isPhoneOnly(t);
-  const bookedCount = (t: string) => booked.filter((x) => x === t).length;
+  const avail = (t: string, rows: SlotRow[] = booked) => disponibilidad(rows, t);
+  const zoneFree = (t: string, z: Zone, rows: SlotRow[] = booked) => {
+    const a = avail(t, rows);
+    return z === "salon" ? a.salonLibre : a.terrazaLibre;
+  };
+  const noZoneFree = (t: string, rows: SlotRow[] = booked) => !zoneFree(t, "terraza", rows) && !zoneFree(t, "salon", rows);
+  const isBooked = (t: string) => noZoneFree(t) || isPast(t) || isPhoneOnly(t);
+  const bookedCount = (t: string) => avail(t).terrazaCount;
+  const chosenZoneFree = !time || !zone ? true : zoneFree(time, zone);
+  const salonInfo = time ? avail(time) : null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -675,49 +685,96 @@ function Reservation() {
       return;
     }
 
-    if (booked.filter((x) => x === time).length >= 3) {
+    if (zone !== "terraza" && zone !== "salon") {
       setSending(false);
+      setError("Elige dónde quieres sentarte: terraza o salón.");
+      return;
+    }
+
+    const zoneName = zone === "salon" ? "salón" : "terraza";
+    const noFree = `Ya no queda sitio en ${zoneName} a esa hora. Elige otra zona u otra hora, o llámanos al ${PHONE_FMT}.`;
+
+    if (!zoneFree(time, zone)) {
+      setSending(false);
+      setError(noFree);
       return;
     }
 
     const localKey = "reservas_" + date;
     const local = localStorage.getItem(localKey);
-    const existing: string[] = local ? JSON.parse(local) : [];
-
-    if (existing.filter((x) => x === time).length >= 3) {
-      setSending(false);
-      return;
+    let existing: SlotRow[] = [];
+    try {
+      const parsed = local ? JSON.parse(local) : [];
+      // Compatible con la cache antigua, que guardaba solo textos de hora.
+      existing = Array.isArray(parsed)
+        ? parsed.map((x: any) => (typeof x === "string" ? { time: x, zone: null, name: null } : x)).filter((x: any) => x && x.time)
+        : [];
+    } catch {
+      existing = [];
     }
+
+    // WhatsApp se abre en una pestaña en blanco ya (dentro del clic) y se rellena solo si la reserva se acepta.
+    const waWin = window.open("", "_blank");
+    const closeWa = () => {
+      try {
+        waWin?.close();
+      } catch {
+        /* nada */
+      }
+    };
 
     const latest = await supabase.fetchSlots(date);
-    if (latest !== null && latest.filter((x) => x === time).length >= 3) {
-      setBooked(latest);
-      localStorage.setItem(localKey, JSON.stringify(latest));
+    const base = latest !== null ? latest : existing;
+    if (!zoneFree(time, zone, base)) {
+      closeWa();
+      setBooked(base);
+      localStorage.setItem(localKey, JSON.stringify(base));
       setSending(false);
+      setError(noFree);
       return;
     }
-
-    const base = latest !== null ? latest : existing;
-    const newBooked = [...base, time];
-    localStorage.setItem(localKey, JSON.stringify(newBooked));
-    setBooked(newBooked);
 
     const fmtDate = date.split("-").reverse().join("/");
     const msg = `Dichoso - Nueva reserva
 
 Fecha: ${fmtDate}
 Hora: ${time}
+Zona: ${zone === "salon" ? "Salón" : "Terraza"}
 Personas: ${persons}
 Nombre: ${name}
 Teléfono: ${phone}${note ? `\nNotas: ${note}` : ""}
 
 Te esperamos en Dichoso`;
-    window.open(`https://wa.me/34691233213?text=${encodeURIComponent(msg)}`, "_blank");
+    const result = await supabase.insertSlot({ date, time, name, phone, persons, note, zone });
 
-    await supabase.insertSlot({ date, time, name, phone, persons, note });
+    if (!result.ok && (result.reason === "SALON_COMPLETO" || result.reason === "SALON_CERRADO")) {
+      // Otra persona se ha llevado el ultimo sitio del salon mientras reservabas.
+      closeWa();
+      const fresh = await supabase.fetchSlots(date);
+      if (fresh !== null) {
+        setBooked(fresh);
+        localStorage.setItem(localKey, JSON.stringify(fresh));
+      }
+      setZone("");
+      setSending(false);
+      setError(
+        result.reason === "SALON_CERRADO"
+          ? `El salón está cerrado este día. Puedes elegir terraza o llamarnos al ${PHONE_FMT}.`
+          : `El salón se acaba de completar. Puedes elegir terraza u otra hora, o llamarnos al ${PHONE_FMT}.`
+      );
+      return;
+    }
+
+    const waUrl = `https://wa.me/34691233213?text=${encodeURIComponent(msg)}`;
+    if (waWin) waWin.location.href = waUrl;
+    else window.open(waUrl, "_blank");
+
+    const newBooked = [...base, { time, zone, name }];
+    localStorage.setItem(localKey, JSON.stringify(newBooked));
+    setBooked(newBooked);
 
     setSending(false);
-    setDone({ date, time, name, phone, persons, note });
+    setDone({ date, time, name, phone, persons, note, zone });
   };
 
   const getTimesForDate = (d: string) => {
@@ -752,6 +809,9 @@ Te esperamos en Dichoso`;
               </p>
               <p>
                 <strong>Hora:</strong> {done.time}
+              </p>
+              <p>
+                <strong>Zona:</strong> {done.zone === "salon" ? "Salón" : "Terraza"}
               </p>
               <p>
                 <strong>Personas:</strong> {done.persons}
@@ -813,7 +873,17 @@ Te esperamos en Dichoso`;
             </div>
             <div className="form-group">
               <label className="form-label">Hora</label>
-              <select className="form-input" required value={time} onChange={(e) => setTime(e.target.value)}>
+              <select
+                className="form-input"
+                required
+                value={time}
+                onChange={(e) => {
+                  const t = e.target.value;
+                  setTime(t);
+                  // Si la zona elegida ya no esta libre a la nueva hora, se vuelve a elegir.
+                  if (zone && !zoneFree(t, zone)) setZone("");
+                }}
+              >
                 <option value="" disabled>
                   Seleccionar
                 </option>
@@ -825,14 +895,14 @@ Te esperamos en Dichoso`;
                   times.map((g) => (
                     <optgroup key={g.group} label={g.group}>
                       {g.slots.map((t) => {
-                        const full = bookedCount(t) >= 3;
+                        const full = noZoneFree(t);
                         const phone = isPhoneOnly(t);
                         const past = isPast(t);
                         const count = bookedCount(t);
                         return (
                           <option key={t} value={t} disabled={full || phone || past}>
                             {t}
-                            {full ? " - reservado" : past ? " - no disponible" : phone ? " - solo por teléfono" : count > 0 ? ` - ${count}/3` : ""}
+                            {full ? " - reservado" : past ? " - no disponible" : phone ? " - solo por teléfono" : !zoneFree(t, "terraza") ? " - solo salón" : !zoneFree(t, "salon") && count > 0 ? ` - terraza ${count}/${TERRAZA_POR_HORA}` : count > 0 ? ` - ${count}/${TERRAZA_POR_HORA}` : ""}
                           </option>
                         );
                       })}
@@ -852,6 +922,42 @@ Te esperamos en Dichoso`;
                 ))}
               </select>
             </div>
+          </div>
+          <div className="form-group">
+            <label className="form-label">Zona</label>
+            <select
+              className="form-input"
+              required
+              value={zone}
+              disabled={!date || !time}
+              onChange={(e) => setZone(e.target.value as Zone | "")}
+            >
+              <option value="" disabled>
+                {time ? "Terraza o salón" : "Primero elige fecha y hora"}
+              </option>
+              {time && (
+                <>
+                  <option value="terraza" disabled={!zoneFree(time, "terraza")}>
+                    Terraza{zoneFree(time, "terraza") ? "" : " - completa"}
+                  </option>
+                  <option value="salon" disabled={!zoneFree(time, "salon")}>
+                    Salón
+                    {zoneFree(time, "salon")
+                      ? ""
+                      : salonInfo?.salonCerradoDia
+                        ? " - cerrado este día"
+                        : salonInfo?.horaCerrada
+                          ? " - no disponible"
+                          : " - completo"}
+                  </option>
+                </>
+              )}
+            </select>
+            {time && salonInfo && salonInfo.salonLibre && (
+              <p style={{ fontSize: "0.7rem", color: "var(--muted)", marginTop: "0.4rem" }}>
+                Salón: quedan {SALON_POR_SERVICIO - salonInfo.salonCount} de {SALON_POR_SERVICIO} reservas en este servicio.
+              </p>
+            )}
           </div>
           <div className="form-row">
             <div className="form-group">
@@ -890,8 +996,8 @@ Te esperamos en Dichoso`;
           <div className="form-actions">
             <button
               type="submit"
-              className={`btn btn-lg ${time && isBooked(time) ? "btn-disabled" : "btn-gold"}`}
-              disabled={!date || !time || !name || !phone || !persons || isBooked(time) || sending}
+              className={`btn btn-lg ${time && (isBooked(time) || !chosenZoneFree) ? "btn-disabled" : "btn-gold"}`}
+              disabled={!date || !time || !zone || !name || !phone || !persons || isBooked(time) || !chosenZoneFree || sending}
             >
               {sending ? "Reservando..." : time && isBooked(time) ? "No disponible" : "Confirmar reserva"}
             </button>

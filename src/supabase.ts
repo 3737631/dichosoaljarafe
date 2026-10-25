@@ -7,7 +7,21 @@ const KVDB_BASE = `https://kvdb.io/${KVDB_BUCKET}`;
 
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-async function fetchSlotsKVDB(date: string): Promise<string[] | null> {
+export type Zone = "terraza" | "salon";
+
+export type SlotRow = { time: string; zone: Zone | null; name: string | null };
+
+export type InsertResult = { ok: boolean; reason?: "SALON_COMPLETO" | "SALON_CERRADO" | "ERROR" };
+
+export const SALON_CERRADO = "__SALON_CERRADO__";
+export const BLOQUEO = "__BLOQUEO__";
+
+async function fetchSlotsKVDB(date: string): Promise<SlotRow[] | null> {
+  const times = await fetchTimesKVDB(date);
+  return times === null ? null : times.map((time) => ({ time, zone: null, name: null }));
+}
+
+async function fetchTimesKVDB(date: string): Promise<string[] | null> {
   try {
     const bust = Date.now();
     const res = await fetch(`${KVDB_BASE}/slots_${date}?_=${bust}`, {
@@ -33,10 +47,10 @@ async function fetchSlotsKVDB(date: string): Promise<string[] | null> {
   }
 }
 
-async function fetchSlotsSupabase(date: string): Promise<string[] | null> {
+async function fetchSlotsSupabase(date: string): Promise<SlotRow[] | null> {
   try {
     const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/slots?select=time&date=eq.${encodeURIComponent(date)}`,
+      `${SUPABASE_URL}/rest/v1/slots?select=time,zone,name&date=eq.${encodeURIComponent(date)}`,
       {
         headers: {
           apikey: SUPABASE_ANON_KEY,
@@ -58,22 +72,26 @@ async function fetchSlotsSupabase(date: string): Promise<string[] | null> {
       console.warn("fetchSlots unexpected data", data);
       return null;
     }
-    return data.map((r: any) => r.time).filter(Boolean);
+    return data
+      .filter((r: any) => r && r.time)
+      .map((r: any) => ({ time: r.time, zone: r.zone === "salon" || r.zone === "terraza" ? r.zone : null, name: r.name ?? null }));
   } catch (e) {
     console.warn("fetchSlots Supabase exception", e);
     return null;
   }
 }
 
-async function fetchSlots(date: string): Promise<string[] | null> {
+async function fetchSlots(date: string): Promise<SlotRow[] | null> {
   const sb = await fetchSlotsSupabase(date);
   if (sb !== null) return sb;
   return fetchSlotsKVDB(date);
 }
 
-async function insertSlotKVDB(row: { date: string; time: string; name: string; phone: string; persons: string; note: string }) {
+type NewSlot = { date: string; time: string; name: string; phone: string; persons: string; note: string; zone: Zone };
+
+async function insertSlotKVDB(row: NewSlot) {
   try {
-    const current = (await fetchSlotsKVDB(row.date)) || [];
+    const current = (await fetchTimesKVDB(row.date)) || [];
     if (current.includes(row.time)) return true;
     const updated = [...current, row.time];
     const res = await fetch(`${KVDB_BASE}/slots_${row.date}`, {
@@ -93,7 +111,7 @@ async function insertSlotKVDB(row: { date: string; time: string; name: string; p
   }
 }
 
-async function insertSlotSupabase(row: { date: string; time: string; name: string; phone: string; persons: string; note: string }) {
+async function insertSlotSupabase(row: NewSlot): Promise<InsertResult> {
   try {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/slots`, {
       method: "POST",
@@ -109,28 +127,31 @@ async function insertSlotSupabase(row: { date: string; time: string; name: strin
     if (!res.ok) {
       const txt = await res.text();
       console.warn("insertSlot Supabase failed", res.status, txt);
-      return false;
+      if (txt.includes("SALON_COMPLETO")) return { ok: false, reason: "SALON_COMPLETO" };
+      if (txt.includes("SALON_CERRADO")) return { ok: false, reason: "SALON_CERRADO" };
+      return { ok: false, reason: "ERROR" };
     }
     console.log("insertSlot Supabase success", row.date, row.time);
-    return true;
+    return { ok: true };
   } catch (e) {
     console.warn("insertSlot Supabase exception", e);
-    return false;
+    return { ok: false, reason: "ERROR" };
   }
 }
 
-async function insertSlot(row: { date: string; time: string; name: string; phone: string; persons: string; note: string }) {
-  const sbOk = await insertSlotSupabase(row);
-  insertSlotKVDB(row).catch(() => {});
-  return sbOk;
+async function insertSlot(row: NewSlot): Promise<InsertResult> {
+  const result = await insertSlotSupabase(row);
+  // La copia de respaldo solo guarda horas, sin zona: el salon no se copia para no inflar la terraza.
+  if (row.zone !== "salon") insertSlotKVDB(row).catch(() => {});
+  return result;
 }
 
-function subscribeSlots(date: string, callback: (times: string[]) => void) {
+function subscribeSlots(date: string, callback: (rows: SlotRow[]) => void) {
   const channel = supabaseClient
     .channel(`slots-${date}`)
     .on("postgres_changes", { event: "*", schema: "public", table: "slots", filter: `date=eq.${date}` }, async () => {
-      const times = await fetchSlots(date);
-      if (times !== null) callback(times);
+      const rows = await fetchSlots(date);
+      if (rows !== null) callback(rows);
     })
     .subscribe();
   return () => {
