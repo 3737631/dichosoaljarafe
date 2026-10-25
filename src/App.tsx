@@ -6,8 +6,8 @@ import { supabase } from "./supabase";
 import ScrollMantelSection from "./components/ScrollMantelSection";
 
 /* ── Data ──────────────────────────────────────── */
-const PHONE = "664243280";
-const PHONE_FMT = "664 24 32 80";
+const PHONE = "634623494";
+const PHONE_FMT = "634 62 34 94";
 const ADDRESS = "Av. de los Descubrimientos, 11, 41927 Mairena del Aljarafe";
 const MAPS_URL =
   "https://maps.google.com/?q=Av.+de+los+Descubrimientos+11,+Mairena+del+Aljarafe";
@@ -769,7 +769,7 @@ Te esperamos en Dichoso`;
               )}
             </div>
             <a href={`tel:+34${PHONE}`} className="btn btn-gold" style={{ fontSize: "0.8rem" }}>
-              Reservado - 664 24 32 80
+              Reservado - 634 62 34 94
             </a>
           </div>
         </div>
@@ -997,7 +997,7 @@ function Footer() {
           </div>
           <div>
             <p className="footer-heading">Contacto</p>
-            <a href={`tel:+34${PHONE}`} className="footer-link">664 24 32 80</a>
+            <a href={`tel:+34${PHONE}`} className="footer-link">634 62 34 94</a>
           </div>
         </div>
         <div className="footer-slogan-line">

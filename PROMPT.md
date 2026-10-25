@@ -129,7 +129,7 @@ const isBooked = (t: string) => booked.includes(t) || isPast(t);
 - **Teléfono**: `<input type="tel">` required, inputMode="numeric", placeholder "600000000". onChange: e.target.value.replace(/[^0-9]/g, "").slice(0, 15)
 - **Comentarios**: `<textarea>` opcional, placeholder "Alergias, celebraciones, preferencias..."
 - **Botón principal**: disabled si falta date/time/name/phone/persons, o isBooked(time), o sending. Texto: sending ? "Reservando..." : (time && isBooked(time) ? "No disponible" : "Confirmar reserva"). Clase: btn-lg btn-gold, o btn-lg btn-disabled si no disponible.
-- **Botón secundario**: "Llamar · 664 24 32 80" (btn-outline btn-lg, enlace tel)
+- **Botón secundario**: "Llamar · 634 62 34 94" (btn-outline btn-lg, enlace tel)
 
 #### Tiempo real con Supabase
 ```typescript

@@ -138,7 +138,7 @@ body{font-family:'Inter',sans-serif;color:#6B4423;overflow-x:hidden;-webkit-font
               <div class="cbr-h">Ven a Conocernos</div>
               <div style="display:flex;flex-direction:column;gap:.75rem;font-size:.75rem;font-family:'Sora',sans-serif;color:rgba(250,247,242,.85)">
                 <div class="cbr-ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><div><div class="cbr-b">Av. de los Descubrimientos, 11</div><div class="cbr-s">41927 Mairena del Aljarafe · Sevilla</div></div></div>
-                <div class="cbr-ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><div><div class="cbr-b">664 24 32 80</div><div class="cbr-s">Almuerzo 13:00–16:30 · Cena 20:00–00:00</div></div></div>
+                <div class="cbr-ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><div><div class="cbr-b">634 62 34 94</div><div class="cbr-s">Almuerzo 13:00–16:30 · Cena 20:00–00:00</div></div></div>
               </div>
               <div class="cbr-ft"><a href="#reservas" class="cbr-btn">Reservar Mesa</a></div>
             </div>
@@ -169,7 +169,7 @@ body{font-family:'Inter',sans-serif;color:#6B4423;overflow-x:hidden;-webkit-font
             <div class="mccb-in">
               <span style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.2em;color:#C8A97E;display:flex;align-items:center;gap:.25rem;margin-bottom:.25rem;font-family:'Sora',sans-serif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:10px;height:10px"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Contacto y Reservas</span>
               <div style="font-family:'Playfair Display',serif;font-weight:700;font-size:1.125rem;color:#FAF7F2;text-transform:uppercase;letter-spacing:.02em;margin-bottom:.625rem">Ven a Conocernos</div>
-              <div style="font-size:11px;font-family:'Sora',sans-serif;color:rgba(250,247,242,.85);margin-bottom:.875rem"><div style="line-height:1.3">Av. Descubrimientos 11, Mairena</div><div style="line-height:1.3">664 24 32 80</div></div>
+              <div style="font-size:11px;font-family:'Sora',sans-serif;color:rgba(250,247,242,.85);margin-bottom:.875rem"><div style="line-height:1.3">Av. Descubrimientos 11, Mairena</div><div style="line-height:1.3">634 62 34 94</div></div>
               <a href="#reservas" style="display:inline-block;padding:.3rem .65rem;background:#C8A97E;font-size:.65rem;font-weight:700;color:#6B4423;text-transform:uppercase;letter-spacing:.08em;text-decoration:none">Reservar Mesa</a>
             </div>
           </div>
