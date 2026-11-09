@@ -759,7 +759,7 @@ Te esperamos en Dichoso`;
       setSending(false);
       setError(
         result.reason === "SALON_CERRADO"
-          ? `El salón está cerrado este día. Puedes elegir terraza o llamarnos al ${PHONE_FMT}.`
+          ? `El salón está cerrado en este servicio. Puedes elegir terraza o llamarnos al ${PHONE_FMT}.`
           : `El salón se acaba de completar. Puedes elegir terraza u otra hora, o llamarnos al ${PHONE_FMT}.`
       );
       return;
@@ -944,8 +944,8 @@ Te esperamos en Dichoso`;
                     Salón
                     {zoneFree(time, "salon")
                       ? ""
-                      : salonInfo?.salonCerradoDia
-                        ? " - cerrado este día"
+                      : salonInfo?.salonCerrado
+                        ? " - cerrado"
                         : salonInfo?.horaCerrada
                           ? " - no disponible"
                           : " - completo"}
