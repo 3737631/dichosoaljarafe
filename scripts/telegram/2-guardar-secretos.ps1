@@ -77,7 +77,14 @@ if ($res.Codigo -ne 0) { Write-Host "No se pudieron guardar los secretos (codigo
 # 5) Comprobar que estan guardados (solo cuenta los nombres, no lee los valores)
 $check = Invoke-Supabase @("db", "query", "--linked", "--workdir", $work, "-o", "json",
   "select count(*) as n from vault.secrets where name in ('telegram_bot_token','telegram_chat_id')")
-$n = $null; try { $n = ($check.Texto.Substring($check.Texto.IndexOf('{')) | ConvertFrom-Json).rows[0].n } catch {}
+$n = $null
+try {
+  # La CLI devuelve {"rows":[{"n":2}]} o, segun la version/terminal, directamente [{"n":2}]
+  $ini = $check.Texto.IndexOfAny([char[]]@('{', '['))
+  $json = $check.Texto.Substring($ini) | ConvertFrom-Json
+  $fila = if ($json.PSObject.Properties.Name -contains 'rows') { @($json.rows)[0] } else { @($json)[0] }
+  $n = [int]$fila.n
+} catch {}
 if ($n -ne 2) { Write-Host "No he podido confirmar que los dos secretos esten guardados (veo: $n)." -ForegroundColor Red; Write-Host $check.Texto; exit 1 }
 
 Write-Host "Secretos guardados y comprobados en Supabase (2 de 2)." -ForegroundColor Green
