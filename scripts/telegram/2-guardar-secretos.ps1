@@ -80,8 +80,9 @@ $check = Invoke-Supabase @("db", "query", "--linked", "--workdir", $work, "-o", 
 $n = $null
 try {
   # La CLI devuelve {"rows":[{"n":2}]} o, segun la version/terminal, directamente [{"n":2}]
-  $ini = $check.Texto.IndexOfAny([char[]]@('{', '['))
-  $json = $check.Texto.Substring($ini) | ConvertFrom-Json
+  $limpio = $check.Texto -replace '\x1b\[[0-9;]*m', ''   # quita los codigos de color de la terminal
+  $ini = $limpio.IndexOfAny([char[]]@('{', '['))
+  $json = $limpio.Substring($ini) | ConvertFrom-Json
   $fila = if ($json.PSObject.Properties.Name -contains 'rows') { @($json.rows)[0] } else { @($json)[0] }
   $n = [int]$fila.n
 } catch {}
