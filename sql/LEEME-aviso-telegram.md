@@ -24,9 +24,11 @@ No depende de que el cliente envíe el WhatsApp. No avisa de las reservas que el
 - El panel marca sus reservas con `origen = 'panel'` para no avisar de ellas (cambio de 5 líneas en `reservas/src/App.tsx`, rama `feature/aviso-telegram`). Si la columna aún no existe, el panel guarda igual.
 - Coste: ninguno por mensaje ni cuota mensual. Los bots de Telegram son gratuitos y `pg_net` y `vault` están disponibles en todos los planes de Supabase, incluido el gratuito.
 
-## Qué tiene que hacer el dueño (5 minutos)
-1. En Telegram, buscar **@BotFather**, enviarle `/newbot`, elegir un nombre (p. ej. "Dichoso Reservas") y un usuario que termine en `bot`. Al final **BotFather da un token** (texto largo con `:`). No compartirlo por chat: dárselo a quien lo configure en persona o por un canal seguro.
-2. Buscar el bot nuevo en Telegram, abrirlo y pulsar **Iniciar** (o escribir `/start`).
+## Qué hay que preparar en Telegram (5 minutos)
+Los avisos llegan a **un grupo de Telegram**; así lo recibe todo el que esté en el grupo y se suma o quita gente añadiéndola o sacándola del grupo.
+1. Crear el bot: buscar **@BotFather**, enviarle `/newbot`, elegir un nombre (p. ej. "Dichoso Reservas") y un usuario que termine en `bot`. **BotFather da un token** (texto largo con `:`). No compartirlo por chat: dárselo a quien lo configure por un canal seguro.
+2. Crear un grupo (p. ej. "Reservas Dichoso"), **añadir al bot** y añadir al dueño y a quien deba recibir los avisos. Hacerlo **antes** de configurar y no activar temas ni convertirlo en supergrupo después: si el grupo cambia de tipo, su chat id cambia y hay que repetir el paso 2 del despliegue.
+3. Alternativa sin grupo: una persona abre el bot y pulsa **Iniciar**; los avisos van a su chat privado.
 
 ## Orden de despliegue (lo hace el desarrollador)
 Pasos en PowerShell desde la carpeta `dichoso`:
