@@ -14,8 +14,23 @@ $ErrorActionPreference = "Stop"
 $token = $env:TELEGRAM_BOT_TOKEN
 if (-not $token) { Write-Host "Falta la variable TELEGRAM_BOT_TOKEN (ver las instrucciones de arriba)." -ForegroundColor Red; exit 1 }
 
+$token = $token.Trim().Trim('"').Trim("'")   # quita espacios y comillas sobrantes
+if ($token -notmatch '^\d{6,12}:[A-Za-z0-9_-]{30,}$') {
+  Write-Host "El token no tiene el formato esperado: numero, dos puntos y letras, todo junto y sin espacios (ej. 1234567890:AAF...)." -ForegroundColor Red
+  Write-Host ("Longitud recibida: " + $token.Length + " (un token real tiene unos 45). Vuelve a copiarlo entero desde BotFather.") -ForegroundColor Red
+  exit 1
+}
 try { $me = Invoke-RestMethod "https://api.telegram.org/bot$token/getMe" -TimeoutSec 20 }
-catch { Write-Host "Telegram no acepta ese token. Revisa que lo has copiado entero." -ForegroundColor Red; exit 1 }
+catch {
+  $code = 0; try { $code = [int]$_.Exception.Response.StatusCode } catch {}
+  if ($code -eq 401 -or $code -eq 404) {
+    Write-Host "Telegram dice que ese token no es valido. Suele ser porque esta incompleto, porque se ha regenerado con /revoke o porque es de otro bot." -ForegroundColor Red
+    Write-Host "Saca uno vigente: en BotFather escribe /mybots, elige el bot y pulsa API Token." -ForegroundColor Red
+  } else {
+    Write-Host "No se ha podido hablar con Telegram (codigo $code). Es un fallo de conexion, no del token: $($_.Exception.Message)" -ForegroundColor Red
+  }
+  exit 1
+}
 Write-Host ("Bot encontrado: @" + $me.result.username)
 
 $upd = Invoke-RestMethod "https://api.telegram.org/bot$token/getUpdates" -TimeoutSec 20

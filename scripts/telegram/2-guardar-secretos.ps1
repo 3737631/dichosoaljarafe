@@ -16,8 +16,18 @@ if (-not $token -or -not $chat) { Write-Host "Faltan TELEGRAM_BOT_TOKEN y/o TELE
 if ($token -match "'" -or $chat -match "'") { Write-Host "Los valores no pueden llevar comillas simples." -ForegroundColor Red; exit 1 }
 
 # 1) Comprobar el token y que el bot puede escribir al chat, antes de guardar nada
+$token = $token.Trim().Trim('"').Trim("'"); $chat = $chat.Trim().Trim('"').Trim("'")
+if ($token -notmatch '^\d{6,12}:[A-Za-z0-9_-]{30,}$') {
+  Write-Host "El token no tiene el formato esperado (numero:letras, sin espacios). Longitud recibida: $($token.Length)." -ForegroundColor Red; exit 1
+}
+if ($chat -notmatch '^-?\d+$') { Write-Host "El chat id debe ser un numero, con el signo - si es un grupo (ej. -1001234567890)." -ForegroundColor Red; exit 1 }
 try { Invoke-RestMethod "https://api.telegram.org/bot$token/getMe" -TimeoutSec 20 | Out-Null }
-catch { Write-Host "Telegram no acepta ese token." -ForegroundColor Red; exit 1 }
+catch {
+  $code = 0; try { $code = [int]$_.Exception.Response.StatusCode } catch {}
+  if ($code -eq 401 -or $code -eq 404) { Write-Host "Telegram dice que ese token no es valido (incompleto, regenerado o de otro bot)." -ForegroundColor Red }
+  else { Write-Host "No se ha podido hablar con Telegram (codigo $code): fallo de conexion, no del token." -ForegroundColor Red }
+  exit 1
+}
 try {
   Invoke-RestMethod "https://api.telegram.org/bot$token/sendMessage" -Method Post -ContentType "application/json" -TimeoutSec 20 `
     -Body (@{ chat_id = $chat; text = "Dichoso: avisos de reservas conectados. A partir de ahora recibiras aqui cada reserva nueva de la web." } | ConvertTo-Json) | Out-Null
