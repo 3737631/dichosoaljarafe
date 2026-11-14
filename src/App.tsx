@@ -713,20 +713,9 @@ function Reservation() {
       existing = [];
     }
 
-    // WhatsApp se abre en una pestaña en blanco ya (dentro del clic) y se rellena solo si la reserva se acepta.
-    const waWin = window.open("", "_blank");
-    const closeWa = () => {
-      try {
-        waWin?.close();
-      } catch {
-        /* nada */
-      }
-    };
-
     const latest = await supabase.fetchSlots(date);
     const base = latest !== null ? latest : existing;
     if (!zoneFree(time, zone, base)) {
-      closeWa();
       setBooked(base);
       localStorage.setItem(localKey, JSON.stringify(base));
       setSending(false);
@@ -734,22 +723,10 @@ function Reservation() {
       return;
     }
 
-    const fmtDate = date.split("-").reverse().join("/");
-    const msg = `Dichoso - Nueva reserva
-
-Fecha: ${fmtDate}
-Hora: ${time}
-Zona: ${zone === "salon" ? "Salón" : "Terraza"}
-Personas: ${persons}
-Nombre: ${name}
-Teléfono: ${phone}${note ? `\nNotas: ${note}` : ""}
-
-Te esperamos en Dichoso`;
     const result = await supabase.insertSlot({ date, time, name, phone, persons, note, zone });
 
     if (!result.ok && (result.reason === "SALON_COMPLETO" || result.reason === "SALON_CERRADO")) {
       // Otra persona se ha llevado el ultimo sitio del salon mientras reservabas.
-      closeWa();
       const fresh = await supabase.fetchSlots(date);
       if (fresh !== null) {
         setBooked(fresh);
@@ -765,9 +742,12 @@ Te esperamos en Dichoso`;
       return;
     }
 
-    const waUrl = `https://wa.me/34691233213?text=${encodeURIComponent(msg)}`;
-    if (waWin) waWin.location.href = waUrl;
-    else window.open(waUrl, "_blank");
+    if (!result.ok) {
+      // Ya no hay WhatsApp como respaldo: si no se ha podido guardar, el cliente no debe ver una falsa confirmacion.
+      setSending(false);
+      setError(`No hemos podido guardar tu reserva. Inténtalo de nuevo en un momento o llámanos al ${PHONE_FMT}.`);
+      return;
+    }
 
     const newBooked = [...base, { time, zone, name }];
     localStorage.setItem(localKey, JSON.stringify(newBooked));
@@ -801,7 +781,7 @@ Te esperamos en Dichoso`;
           <h2 className="section-title">Reserve su mesa</h2>
           <div className="reservation-done">
             <span className="reservation-done-icon">✓</span>
-            <p className="reservation-done-text">Hemos guardado tu reserva</p>
+            <p className="reservation-done-text">Reserva confirmada</p>
             <p className="reservation-done-sub">Te esperamos en Dichoso</p>
             <div className="reservation-detail">
               <p>
@@ -1036,7 +1016,7 @@ Te esperamos en Dichoso`;
               opacity: 0.6,
             }}
           >
-            Al reservar se abrirá WhatsApp. Pulsa enviar para confirmar.
+            Tu reserva llega al restaurante al instante. Para cambiarla o cancelarla, llámanos al {PHONE_FMT}.
           </p>
         </motion.form>
       </div>
